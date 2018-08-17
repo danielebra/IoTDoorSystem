@@ -3,7 +3,7 @@
 #include <Adafruit_PN532.h>
 #include "Stepper_28BYJ_48.h"
 
-Stepper_28BYJ_48 stepper(7,6,5,4);
+Stepper_28BYJ_48 stepper(6,5,4,3);
 
 #define PN532_SCK  (2)
 #define PN532_MOSI (3)
