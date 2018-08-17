@@ -20,6 +20,32 @@ char ssid[] = "ArduinoTestNetwork";                     // your network SSID (na
 char key[] = "DontHackMeThisIsAnIsolatedNetwork";       // your network key
 int status = WL_IDLE_STATUS;                     // the Wifi radio's status
 
+void setup(void) {
+  Serial.begin(115200);
+  Serial.println("Setting up...");
+  SetupWifi();
+  SetupNFC();
+  Serial.println("Setup complete");
+}
+
+void loop(void) {
+  // Daniel = 729
+  // Ulash = 580
+  int cardID = readCard();
+  if (cardID != 0)
+  {
+    if (cardID == 729)
+    {
+      moveMotor(true);
+    }
+    else if (cardID == 580)
+    {
+      moveMotor(false);
+    }
+  }
+  delay(1000);
+}
+
 void SetupWifi()
 {
   
@@ -70,13 +96,7 @@ void SetupNFC()
   
   Serial.println("Waiting for a card...");
 }
-void setup(void) {
-  Serial.begin(115200);
-  Serial.println("Setting up...");
-  SetupWifi();
-  SetupNFC();
-  Serial.println("Setup complete");
-}
+
 int readCard()
 {
   boolean success;
@@ -118,23 +138,7 @@ void moveMotor(boolean positive)
     Serial.println("Moving motor counter clockwise-wise");
   }
 }
-void loop(void) {
-  // Daniel = 729
-  // Ulash = 580
-  int cardID = readCard();
-  if (cardID != 0)
-  {
-    if (cardID == 729)
-    {
-      moveMotor(true);
-    }
-    else if (cardID == 580)
-    {
-      moveMotor(false);
-    }
-  }
-  delay(1000);
-}
+
 
 // WiFi Methods:
 
