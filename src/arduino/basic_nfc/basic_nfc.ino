@@ -1,5 +1,6 @@
 #include <Wire.h>
 #include <SPI.h>
+#include <WiFi.h>
 #include <Adafruit_PN532.h>
 #include "Stepper_28BYJ_48.h"
 
@@ -15,10 +16,40 @@ Stepper_28BYJ_48 stepper(6,5,4,3);
 
 Adafruit_PN532 nfc(PN532_IRQ, PN532_RESET);
 
+char ssid[] = "ArduinoTestNetwork";                     // your network SSID (name)
+char key[] = "DontHackMeThisIsAnIsolatedNetwork";       // your network key
+int status = WL_IDLE_STATUS;                     // the Wifi radio's status
+
 void setup(void) {
   Serial.begin(115200);
   Serial.println("Setting up...");
+  // Setup Wifi
+  if (WiFi.status() == WL_NO_SHIELD) {
+    Serial.println("WiFi shield not present");
+    // don't continue:
+    while (true);
+  }
 
+  String fv = WiFi.firmwareVersion();
+  if (fv != "1.1.0") {
+    Serial.println("Please upgrade the firmware");
+  }
+
+  // attempt to connect to Wifi network:
+  while (status != WL_CONNECTED) {
+    Serial.print("Attempting to connect to WEP network, SSID: ");
+    Serial.println(ssid);
+    status = WiFi.begin(ssid, key);
+
+    // wait for connection:
+    delay(2000);
+  }
+
+  // once you are connected :
+  Serial.print("You're connected to the network");
+  printCurrentNet();
+  printWifiData();
+  // Setup NFC
   nfc.begin();
 
   uint32_t versiondata = nfc.getFirmwareVersion();
@@ -38,6 +69,7 @@ void setup(void) {
 }
 
 void loop(void) {
+  
   boolean success;
   uint8_t uid[] = { 0, 0, 0, 0, 0, 0, 0 };	// Buffer to store the returned UID
   uint8_t uidLength;				// Length of the UID (4 or 7 bytes depending on ISO14443A card type)
@@ -75,4 +107,63 @@ void loop(void) {
   {
     Serial.println("Timed out waiting for a card");
   }
+}
+
+// WiFi Methods:
+
+void printWifiData() {
+  // print your WiFi shield's IP address:
+  IPAddress ip = WiFi.localIP();
+  Serial.print("IP Address: ");
+  Serial.println(ip);
+  Serial.println(ip);
+
+  // print your MAC address:
+  byte mac[6];
+  WiFi.macAddress(mac);
+  Serial.print("MAC address: ");
+  Serial.print(mac[5], HEX);
+  Serial.print(":");
+  Serial.print(mac[4], HEX);
+  Serial.print(":");
+  Serial.print(mac[3], HEX);
+  Serial.print(":");
+  Serial.print(mac[2], HEX);
+  Serial.print(":");
+  Serial.print(mac[1], HEX);
+  Serial.print(":");
+  Serial.println(mac[0], HEX);
+}
+
+void printCurrentNet() {
+  // print the SSID of the network you're attached to:
+  Serial.print("SSID: ");
+  Serial.println(WiFi.SSID());
+
+  // print the MAC address of the router you're attached to:
+  byte bssid[6];
+  WiFi.BSSID(bssid);
+  Serial.print("BSSID: ");
+  Serial.print(bssid[5], HEX);
+  Serial.print(":");
+  Serial.print(bssid[4], HEX);
+  Serial.print(":");
+  Serial.print(bssid[3], HEX);
+  Serial.print(":");
+  Serial.print(bssid[2], HEX);
+  Serial.print(":");
+  Serial.print(bssid[1], HEX);
+  Serial.print(":");
+  Serial.println(bssid[0], HEX);
+
+  // print the received signal strength:
+  long rssi = WiFi.RSSI();
+  Serial.print("signal strength (RSSI):");
+  Serial.println(rssi);
+
+  // print the encryption type:
+  byte encryption = WiFi.encryptionType();
+  Serial.print("Encryption Type:");
+  Serial.println(encryption, HEX);
+  Serial.println();
 }
