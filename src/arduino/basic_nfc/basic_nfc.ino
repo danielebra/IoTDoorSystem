@@ -3,6 +3,7 @@
 #include <WiFi.h>
 #include <Adafruit_PN532.h>
 #include "Stepper_28BYJ_48.h"
+#include "secrets.h"
 
 Stepper_28BYJ_48 stepper(6,5,4,3);
 
@@ -16,9 +17,9 @@ Stepper_28BYJ_48 stepper(6,5,4,3);
 
 Adafruit_PN532 nfc(PN532_IRQ, PN532_RESET);
 
-char ssid[] = "ArduinoTestNetwork";                     // your network SSID (name)
-char key[] = "DontHackMeThisIsAnIsolatedNetwork";       // your network key
-int status = WL_IDLE_STATUS;                     // the Wifi radio's status
+const char *wifi_ssid = WIFI_SSID;
+const char *wifi_password = WIFI_PASSWORD;
+int status = WL_IDLE_STATUS;
 
 void setup(void) {
   Serial.begin(115200);
@@ -64,8 +65,8 @@ void SetupWifi()
   // attempt to connect to Wifi network:
   while (status != WL_CONNECTED) {
     Serial.print("Attempting to connect to WEP network, SSID: ");
-    Serial.println(ssid);
-    status = WiFi.begin(ssid, key);
+    Serial.println(wifi_ssid);
+    status = WiFi.begin(wifi_ssid, wifi_password);
 
     // wait for connection:
     delay(2000);
