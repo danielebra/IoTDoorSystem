@@ -1,11 +1,9 @@
 #include <Wire.h>
 #include <SPI.h>
 #include <WiFi.h>
+#include <Stepper.h>
 #include <Adafruit_PN532.h>
-#include "Stepper_28BYJ_48.h"
 #include "secrets.h"
-
-Stepper_28BYJ_48 stepper(6,5,4,3);
 
 #define PN532_SCK  (2)
 #define PN532_MOSI (3)
@@ -19,13 +17,17 @@ Adafruit_PN532 nfc(PN532_IRQ, PN532_RESET);
 
 const char *wifi_ssid = WIFI_SSID;
 const char *wifi_password = WIFI_PASSWORD;
+const int stepsPerRevolution = 200;
 int status = WL_IDLE_STATUS;
+
+Stepper stepper(stepsPerRevolution, 6,5,4,3);
 
 void setup(void) {
   Serial.begin(115200);
   Serial.println("Setting up...");
   SetupWifi();
   SetupNFC();
+  stepper.setSpeed(60);
   Serial.println("Setup complete");
 }
 
@@ -37,11 +39,11 @@ void loop(void) {
   {
     if (cardID == 729)
     {
-      moveMotor(true);
+      moveMotor(false);
     }
     else if (cardID == 580)
     {
-      moveMotor(false);
+      moveMotor(true);
     }
   }
   delay(1000);
@@ -130,12 +132,12 @@ void moveMotor(boolean positive)
 {
   if (positive)
   {
-    stepper.step(60);
+    stepper.step(stepsPerRevolution);
     Serial.println("Moving motor clock-wise");
   }
   else
   {
-    stepper.step(-60);
+    stepper.step(-stepsPerRevolution);
     Serial.println("Moving motor counter clockwise-wise");
   }
 }
