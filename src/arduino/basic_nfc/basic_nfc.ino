@@ -39,7 +39,8 @@ void loop(void) {
   {
     if (cardID == 729)
     {
-      moveMotor(false);
+      //moveMotor(false);
+      sendRequest("729&movement=open");
     }
     else if (cardID == 580)
     {
@@ -48,7 +49,45 @@ void loop(void) {
   }
   delay(1000);
 }
-
+WiFiClient client;
+IPAddress server(192,168,1,15);
+void sendRequest(char* msg)
+{
+  if (client.connect(server, 8000))
+    {
+      Serial.println("Connected to server");
+      client.print("GET /auth?id=");
+      client.print(msg);
+      client.print(" HTTP/1.0\n\n");
+      String response = String("");
+      while (client.connected())
+      {
+        delay(50);
+        // block until responce, then disconnect
+        while (client.available()) {
+          char c = client.read();
+          response.concat(c);
+          //Serial.write(c);
+        }      
+      }
+      client.stop();
+      Serial.println("Before");
+      Serial.println(response);
+      response = response.substring(response.indexOf(String("\r\n\r\n")) + 4);
+      Serial.println("After");
+      Serial.println(response);
+      if (!response.equals("1"))
+      {
+        moveMotor(true);
+      }
+      
+    }
+    else
+    {
+      Serial.println("Failed to connect to server");
+    }
+}
+  
 void SetupWifi()
 {
   
@@ -69,7 +108,7 @@ void SetupWifi()
     Serial.print("Attempting to connect to WEP network, SSID: ");
     Serial.println(wifi_ssid);
     status = WiFi.begin(wifi_ssid, wifi_password);
-
+    
     // wait for connection:
     delay(2000);
   }
@@ -137,7 +176,7 @@ void moveMotor(boolean positive)
   }
   else
   {
-    stepper.step(-stepsPerRevolution);
+    stepper.step(-200);
     Serial.println("Moving motor counter clockwise-wise");
   }
 }
