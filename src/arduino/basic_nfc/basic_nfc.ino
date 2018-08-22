@@ -37,6 +37,9 @@ void loop(void) {
   int cardID = readCard();
   if (cardID != 0)
   {
+    String idAsString = String(cardID);
+    sendRequest(idAsString);
+    /*
     if (cardID == 729)
     {
       //moveMotor(false);
@@ -46,12 +49,13 @@ void loop(void) {
     {
       moveMotor(true);
     }
+    */
   }
   delay(1000);
 }
 WiFiClient client;
-IPAddress server(192,168,1,15);
-void sendRequest(char* msg)
+IPAddress server(192,168,1,6);
+void sendRequest(String msg)
 {
   if (client.connect(server, 8000))
     {
@@ -71,14 +75,19 @@ void sendRequest(char* msg)
         }      
       }
       client.stop();
-      Serial.println("Before");
-      Serial.println(response);
+      //Serial.println("Before");
+      //Serial.println(response);
       response = response.substring(response.indexOf(String("\r\n\r\n")) + 4);
-      Serial.println("After");
-      Serial.println(response);
-      if (!response.equals("1"))
+      //Serial.println("After");
+      //Serial.println(response);
+      if (response.equals("1"))
       {
+        Serial.println("Card accepted");
         moveMotor(true);
+      }
+      else
+      {
+        Serial.println("Card declined");
       }
       
     }
