@@ -1,0 +1,16 @@
+image:
+  name: "node:latest"
+
+before_script:
+  - npm install express --save
+  
+stages:
+  - test
+
+test:
+  stage: test
+  only:
+    - master
+  script:
+    - echo "Hello World"
+    
