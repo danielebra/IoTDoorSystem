@@ -2,15 +2,24 @@ image:
   name: "node:latest"
 
 before_script:
-  - npm install express --save
+  - echo "Before script"
   
 stages:
   - test
+  - python
 
 test:
   stage: test
   only:
     - master
   script:
-    - echo "Hello World"
+    - cd src/SSWebApp/
+    - node test.js
+    - echo "Done node unit testing"
+python:
+  stage: python
+  only:
+    - master
+  script:
+    - echo "implement nose tests here"
     
