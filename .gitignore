@@ -1,6 +1,9 @@
 secrets.h
 
 
+# node modules
+src/SSWebApp/node_modules/
+
 # Node ignore (https://github.com/github/gitignore/blob/master/Node.gitignore): 
 
 # Logs
