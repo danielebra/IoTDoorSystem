@@ -10,7 +10,7 @@ import { ic_business } from 'react-icons-kit/md/ic_business';
 class SideNavigationBar extends Component {
     render() {
         return (
-    <div style={{background: '#2c3e50', color: '#FFF', width:50,position:"absolute", height:"100%"}}> 
+    <div style={{background: '#2c3e50', color: '#FFF', width:50,position:"fixed", height:"100%"}}> 
         <SideNav highlightBgColor='#333745' defaultSelected='dashboard' height="100%">       
             <Nav id='dashboard'>
                 <NavIcon><SvgIcon size={20} icon={ic_aspect_ratio}/></NavIcon>  
