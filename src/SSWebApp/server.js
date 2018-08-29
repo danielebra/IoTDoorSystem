@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+const doorHistories = require('./routes/api/DoorHistories')
+
 const app = express();
 
 //Body Parser
@@ -14,6 +16,9 @@ mongoose
     .connect(db, {useNewUrlParser: true})
     .then(() => console.log('database is connected to mongodb'))
     .catch(err => console.log(err));
+
+// Use Routes
+app.use('/api/doorHistories', doorHistories);
 
 app.use(express.static(__dirname))
 
