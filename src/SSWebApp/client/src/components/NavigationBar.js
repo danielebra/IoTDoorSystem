@@ -35,7 +35,7 @@ class NavigationBar extends Component {
             //         <NavbarBrand href="/">Savage Security</NavbarBrand>
             //         <NavbarToggler onClick={this.toggle} />
             //         <Collapse isOpen={this.state.isOpen} navbar>
-            //             <Nav className="ml-auto" navbar>
+            //             <Nav classNameName="ml-auto" navbar>
             //                 <NavLink href="https://www.google.com">Google</NavLink>
             //             </Nav>
             //         </Collapse>
@@ -43,19 +43,19 @@ class NavigationBar extends Component {
 
             // </Navbar>
             // </div>
-            <nav class="navbar navbar-expand-sm navbar-dark dark" style={{background:"#2c3e50"}}>
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Active</a>
+            <nav className="navbar navbar-expand-sm navbar-dark dark" style={{background:"#2c3e50"}}>
+                <ul className="navbar-nav">
+                    <li className="nav-item active">
+                        <a className="nav-link" href="#">Active</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">Link</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                    <li className="nav-item">
+                        <a className="nav-link" href="#">Link</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
+                    <li className="nav-item">
+                        <a className="nav-link disabled" href="#">Disabled</a>
                     </li>
                 </ul>
             </nav>

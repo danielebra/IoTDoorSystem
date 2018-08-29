@@ -4,11 +4,11 @@ import utsDoor from './images/utsDoor.jpg'
 class Card extends Component {
     render() {
         return (
-            <div class="card" style={{width: "18rem", textAlign:"center"}}>
-                <img width="100" class="card-img-top" src={utsDoor} alt="Card image cap"/>
-                <div class="card-body">
-                    <h5 class="card-title">UTS</h5>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+            <div className="card" style={{width: "18rem", textAlign:"center"}}>
+                <img width="100" className="card-img-top" src={utsDoor} alt="Card image cap"/>
+                <div className="card-body">
+                    <h5 className="card-title">UTS</h5>
+                    {/* <button onClick={this.Component.UTSDoor} className="btn btn-primary">Go somewhere</button> */}
                 </div>
             </div>)
 
