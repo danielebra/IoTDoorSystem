@@ -36,7 +36,7 @@ class NavigationBar extends Component {
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
-                        <NavLink href="www.google.com"></NavLink>
+                        <NavLink href="https://www.google.com">Google</NavLink>
                     </Nav>
                 </Collapse>
             </Container>
@@ -46,8 +46,5 @@ class NavigationBar extends Component {
         );
     }
 }
-
-
-
 
 export default NavigationBar;
