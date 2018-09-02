@@ -10,12 +10,14 @@ def home():
 
 @app.route('/auth')
 def auth():
-    print("received auth request")
+    print("Authorization request recieved")
     id = request.args.get('id')
     movement = request.args.get('movement')
     if id == "729":
+        print("/tAccess granted")
         return "1"
     else:
+        print("/tAccess denied")
         return "0"
 
 if __name__ == '__main__':
