@@ -5,22 +5,19 @@ IoT Door Opener
 
 # SSWebApp
 	
-	## Install dependencies
+## Install dependencies
 
-	```
+	
 	cd src/SSWebApp/
 	npm install
 	cd client
 	npm install
 	
-	```
 
-	## Run dev environment
+## Run dev environment
 
-	```
 	cd src/SSWebApp/
 	npm run dev
-	```
 
 
 # Arduino
