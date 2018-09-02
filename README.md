@@ -3,6 +3,26 @@
 Software Engineering Practice Project.
 IoT Door Opener
 
+# SSWebApp
+	
+	## Install dependencies
+
+	```
+	cd src/SSWebApp/
+	npm install
+	cd client
+	npm install
+	
+	```
+
+	## Run dev environment
+
+	```
+	cd src/SSWebApp/
+	npm run dev
+	```
+
+
 # Arduino
 
 ## Dependencies
