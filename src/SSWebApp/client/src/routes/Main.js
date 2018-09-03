@@ -6,7 +6,7 @@ import { Route } from "react-router-dom";
 import { Switch } from "react-router";
 import Rush from './Rush'
 import UTSDoor from './UTSDoor'
-
+import Authorization from './Authorization'
 class Main extends Component {
     render() {
         return (
@@ -20,7 +20,7 @@ class Main extends Component {
                     <Route exact path="/"  component={Card} />
                     <Route path="/rush/:password/:username/:creditcard"  component={Rush} />
                     <Route path="/utsdoor" component={UTSDoor}/>
-
+                    <Route path="/authorize/:card/:room" component={Authorization}/>
 
                     {/* <load 404></load> */}
                     </Switch>
