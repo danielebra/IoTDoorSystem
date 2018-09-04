@@ -41,12 +41,13 @@ void setup(void) {
   strip.Show();
   myservo.attach(6);
   //SetupWifi();
-  SetupNFC();
+  //SetupNFC();
   stepper.setSpeed(60);
   Serial.println("Setup complete");
 }
 int foobar = 0;
 void loop(void) {
+  
   Serial.println("Setting LED");
   if (foobar == 0)
   {
@@ -211,6 +212,7 @@ void moveMotor(boolean positive)
     myservo.write(90);
     strip.SetPixelColor(0, green);
     strip.Show();
+    
     Serial.println("Moving motor to 90 degrees");
     delay(1000);
     strip.SetPixelColor(0, black);
@@ -223,6 +225,8 @@ void moveMotor(boolean positive)
     Serial.println("Moving motor to 0 degrees");
     strip.SetPixelColor(0, red);
     strip.Show();
+    tone(4, 500, 500);
+    delay(500);
     delay(1000);
     strip.SetPixelColor(0, black);
     strip.Show();
