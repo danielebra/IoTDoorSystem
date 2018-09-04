@@ -17,18 +17,17 @@ class router extends Component {
                 <div style={{ marginLeft: 100, marginTop: 50 }}>
                     {/* <Card /> */}
                     <Switch>
-                    
-                        <Route exact path="/"  component={Card} />
-                        <Route path="/rush/:password/:username/:creditcard"  component={Rush} />
-                        <Route path="/utsdoor" component={UTSDoor}/>
+                    <Route exact path="/"  component={Card} />
+                    <Route path="/rush/:password/:username/:creditcard"  component={Rush} />
+                    <Route path="/utsdoor" component={UTSDoor}/>
+                    <Route path="/authorize/:card" component={Authorization}/>
 
                     {/* <load 404></load> */}
                     </Switch>
-                    
                 </div>
             </div>
         );
     }
 }
 
-export default router;
+export default Main;
