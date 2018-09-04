@@ -57,11 +57,12 @@ WiFiClient client;
 IPAddress server(192,168,1,6);
 void sendRequest(String msg)
 {
-  if (client.connect(server, 8000))
+  if (client.connect(server, 5000))
     {
       Serial.println("Connected to server");
-      client.print("GET /auth?id=");
+      client.print("GET /api/authorizeDoor/");
       client.print(msg);
+      client.print("/room")
       client.print(" HTTP/1.0\n\n");
       String response = String("");
       while (client.connected())
@@ -75,11 +76,11 @@ void sendRequest(String msg)
         }      
       }
       client.stop();
-      //Serial.println("Before");
-      //Serial.println(response);
+      Serial.println("Before");
+      Serial.println(response);
       response = response.substring(response.indexOf(String("\r\n\r\n")) + 4);
-      //Serial.println("After");
-      //Serial.println(response);
+      Serial.println("After");
+      Serial.println(response);
       if (response.equals("1"))
       {
         Serial.println("Card accepted");
