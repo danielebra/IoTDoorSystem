@@ -20,6 +20,9 @@ const char *wifi_password = WIFI_PASSWORD;
 const int stepsPerRevolution = 200;
 int status = WL_IDLE_STATUS;
 
+WiFiClient client;
+IPAddress server(ips[0],ips[1],ips[2], ips[3]);
+
 Stepper stepper(stepsPerRevolution, 6,5,4,3);
 
 void setup(void) {
@@ -53,8 +56,7 @@ void loop(void) {
   }
   delay(1000);
 }
-WiFiClient client;
-IPAddress server(192,168,1,6);
+
 void sendRequest(String msg)
 {
   if (client.connect(server, 5000))
@@ -62,7 +64,7 @@ void sendRequest(String msg)
       Serial.println("Connected to server");
       client.print("GET /api/authorizeDoor/");
       client.print(msg);
-      client.print("/room")
+      client.print("/room");
       client.print(" HTTP/1.0\n\n");
       String response = String("");
       while (client.connected())
@@ -76,11 +78,11 @@ void sendRequest(String msg)
         }      
       }
       client.stop();
-      Serial.println("Before");
-      Serial.println(response);
+      //Serial.println("Before");
+      //Serial.println(response);
       response = response.substring(response.indexOf(String("\r\n\r\n")) + 4);
-      Serial.println("After");
-      Serial.println(response);
+      //Serial.println("After");
+      //Serial.println(response);
       if (response.equals("1"))
       {
         Serial.println("Card accepted");
