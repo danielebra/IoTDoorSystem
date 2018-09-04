@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const doorHistories = require('./routes/api/DoorHistories')
-
+const authorizeDoor = require('./routes/api/AuthorizeDoor')
 const app = express();
 
 //Body Parser
@@ -19,8 +19,9 @@ mongoose
 
 // Use Routes
 app.use('/api/doorHistories', doorHistories);
+app.use('/api/authorizeDoor', authorizeDoor);
 
-app.use(express.static(__dirname))
+app.use(express.static(__dirname));
 
 var server = app.listen(5000, () => {
     console.log('server is listening on port', server.address().port)
