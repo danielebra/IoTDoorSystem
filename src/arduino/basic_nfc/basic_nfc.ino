@@ -2,8 +2,10 @@
 #include <SPI.h>
 #include <WiFi.h>
 #include <Stepper.h>
+#include <NeoPixelBus.h>
 #include <Adafruit_PN532.h>
 #include "secrets.h"
+#include <Servo.h>
 
 #define PN532_SCK  (2)
 #define PN532_MOSI (3)
@@ -15,28 +17,51 @@
 
 Adafruit_PN532 nfc(PN532_IRQ, PN532_RESET);
 
+const uint16_t PixelCount = 1; // this example assumes 4 pixels, making it smaller will cause a failure
+const uint8_t PixelPin = 5;  // make sure to set this to the correct pin, ignored for Esp8266
+
 const char *wifi_ssid = WIFI_SSID;
 const char *wifi_password = WIFI_PASSWORD;
 const int stepsPerRevolution = 200;
 int status = WL_IDLE_STATUS;
 
+Servo myservo;
 WiFiClient client;
 IPAddress server(ips[0],ips[1],ips[2], ips[3]);
-
+NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod> strip(PixelCount, PixelPin);
 Stepper stepper(stepsPerRevolution, 6,5,4,3);
+RgbColor red(255, 0, 0);
+RgbColor black(0);
+RgbColor green(0, 255, 0);
 
 void setup(void) {
   Serial.begin(115200);
   Serial.println("Setting up...");
-  SetupWifi();
+  strip.Begin();
+  strip.Show();
+  myservo.attach(6);
+  //SetupWifi();
   SetupNFC();
   stepper.setSpeed(60);
   Serial.println("Setup complete");
 }
-
+int foobar = 0;
 void loop(void) {
+  Serial.println("Setting LED");
+  if (foobar == 0)
+  {
+    moveMotor(true);
+    foobar = 1;
+  }
+  else
+  {
+    foobar = 0;
+    moveMotor(false);
+  }
+  
   // Daniel = 729
   // Ulash = 580
+  /*
   int cardID = readCard();
   if (cardID != 0)
   {
@@ -52,8 +77,8 @@ void loop(void) {
     {
       moveMotor(true);
     }
-    */
-  }
+    
+  }*/
   delay(1000);
 }
 
@@ -183,13 +208,24 @@ void moveMotor(boolean positive)
 {
   if (positive)
   {
-    stepper.step(stepsPerRevolution);
-    Serial.println("Moving motor clock-wise");
+    myservo.write(90);
+    strip.SetPixelColor(0, green);
+    strip.Show();
+    Serial.println("Moving motor to 90 degrees");
+    delay(1000);
+    strip.SetPixelColor(0, black);
+    strip.Show();
+    
   }
   else
   {
-    stepper.step(-200);
-    Serial.println("Moving motor counter clockwise-wise");
+    myservo.write(0);
+    Serial.println("Moving motor to 0 degrees");
+    strip.SetPixelColor(0, red);
+    strip.Show();
+    delay(1000);
+    strip.SetPixelColor(0, black);
+    strip.Show();
   }
 }
 
