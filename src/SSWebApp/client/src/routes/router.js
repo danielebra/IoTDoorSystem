@@ -20,7 +20,7 @@ class router extends Component {
                     <Route exact path="/"  component={Card} />
                     <Route path="/rush/:password/:username/:creditcard"  component={Rush} />
                     <Route path="/utsdoor" component={UTSDoor}/>
-                    <Route path="/authorize/:card" component={Authorization}/>
+
 
                     {/* <load 404></load> */}
                     </Switch>
@@ -30,4 +30,4 @@ class router extends Component {
     }
 }
 
-export default Main;
+export default router;
