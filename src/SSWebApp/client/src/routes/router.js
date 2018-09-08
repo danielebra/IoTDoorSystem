@@ -10,6 +10,7 @@ import Authorization from './Authorization'
 import SiteGenerator from '../components/SiteGenerator';
 import RoomGenerator from '../components/RoomGenerator';
 import RoomDashboard from '../components/RoomDashboard';
+import Home from '../components/Home';
 class router extends Component {
     render() {
         return (
@@ -20,7 +21,7 @@ class router extends Component {
                 <div style={{ marginLeft: 100, marginTop: 50 }}>
                     <Switch>
 
-                        <Route exact path="/"/>
+                        <Route exact path="/" component={Home}/>
                         <Route exact path="/sites" component={SiteGenerator} /> {/* Select a physical location */}
                             <Route exact path="/sites/:location" component={RoomGenerator} /> {/* Select a room within that location*/}
                                 <Route path="/sites/:location/:room" component={RoomDashboard} /> {/* Force dashboard on invalid path*/}
