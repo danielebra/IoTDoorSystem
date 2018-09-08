@@ -17,7 +17,7 @@ class SideNavigationBar extends Component {
                             {/* <NavText>Dashboard</NavText>   */}
                         </Nav>
                     </Link>
-                    <Link to={'/rush'}>
+                    <Link to={'/sites'}>
                         <Nav id='sites'>
                             <NavIcon><SvgIcon size={20} icon={ic_business} /></NavIcon>
                             {/* <NavText>Sites</NavText> */}

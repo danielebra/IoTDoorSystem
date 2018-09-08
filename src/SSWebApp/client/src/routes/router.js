@@ -7,6 +7,7 @@ import { Switch } from "react-router";
 import Rush from './Rush'
 import UTSDoor from './UTSDoor'
 import Authorization from './Authorization'
+import SiteGenerator from '../components/SiteGenerator';
 class router extends Component {
     render() {
         return (
@@ -17,10 +18,10 @@ class router extends Component {
                 <div style={{ marginLeft: 100, marginTop: 50 }}>
                     {/* <Card /> */}
                     <Switch>
-                    <Route exact path="/"  component={Card} />
-                    <Route path="/rush/:password/:username/:creditcard"  component={Rush} />
-                    <Route path="/utsdoor" component={UTSDoor}/>
 
+                        <Route exact path="/"/>
+                        <Route exact path="/sites" component={SiteGenerator} />
+                        <Route path="/utsdoor" component={UTSDoor}/>
 
                     {/* <load 404></load> */}
                     </Switch>
