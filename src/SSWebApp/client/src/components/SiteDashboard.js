@@ -1,25 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import Card from './Card';
-const utsImage = require("./images/utsDoor.jpg")
-
-const cards = [
-    {
-        name: "UTS",
-        image: utsImage
-    },
-    {
-        name: "UNSW",
-        image: utsImage
-    }
-]
 
 
-class SiteGenerator extends Component {
+class SiteDashboard extends Component {
     constructor(props)
     {
         super(props)
-        this.state = {locations: []}
     }
     componentDidMount()
     {
@@ -32,8 +18,9 @@ class SiteGenerator extends Component {
     }
     render() {
         return (
-            <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
+            <div>
                 {this.state.locations.map((item, index) => {
+                    
                     return <Card key={index} name={item.name} image={item.image} />
                     })
                 }
@@ -42,4 +29,4 @@ class SiteGenerator extends Component {
     }
 }
 
-export default SiteGenerator;
+export default SiteDashboard;
