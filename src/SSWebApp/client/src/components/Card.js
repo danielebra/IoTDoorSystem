@@ -6,7 +6,7 @@ class Card extends Component {
     render() {
         return (
             
-            <div className="card" style={{width: "18rem", textAlign:"center"}}>
+            <div className="card" style={{width: "18rem", marginTop: 10, marginBottom: 10, textAlign:"center"}}>
                 <Link to={`/sites/${this.props.name}`}>
                     <img width="100" className="card-img-top" src={this.props.image} alt={this.props.name}/>
                     <div className="card-body">

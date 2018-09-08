@@ -32,7 +32,7 @@ class SiteGenerator extends Component {
     }
     render() {
         return (
-            <div>
+            <div style={{display: "flex", "justify-content":"space-around", flexWrap: "wrap"}}>
                 {this.state.locations.map((item) => {
                     
                     return <Card name={item.name} image={item.image} />
