@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 
 const doorHistories = require('./routes/api/DoorHistories')
 const authorizeDoor = require('./routes/api/AuthorizeDoor')
+const users = require('./routes/api/Users')
+const cards = require('./routes/api/Cards')
 const app = express();
 
 //Body Parser
@@ -20,6 +22,8 @@ mongoose
 // Use Routes
 app.use('/api/doorHistories', doorHistories);
 app.use('/api/authorizeDoor', authorizeDoor);
+app.use('/api/users', users);
+app.use('/api/cards', cards);
 
 app.use(express.static(__dirname));
 

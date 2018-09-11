@@ -1,4 +1,4 @@
-const mongoose = request('mongoose');
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var Card = require('./Card')
 
@@ -13,25 +13,25 @@ const UserSchema = new Schema({
         required: true
     },
 
-    phoneNumber: {
-        type: String,
-        required: true
-    },
+    // phoneNumber: {
+    //     type: String,
+    //     required: true
+    // },
 
-    emailAddress: {
-        type: String,
-        required: true
-    },
+    // emailAddress: {
+    //     type: String,
+    //     required: true
+    // },
 
-    role: {
-        type: Boolean,
-        required: true
-    },
+    // role: {
+    //     type: Boolean,
+    //     required: true
+    // },
 
-    cardId: {
-        type: mongoose.Schema.Types.ObjectId,
+    _cardId: [{ type: mongoose.Schema.Types.ObjectId,
         ref:'Card'
-    }
+
+    }]
 
 })
 

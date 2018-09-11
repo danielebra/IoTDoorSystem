@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 //Item Model
-const User = require('../../models/User');
+const Card = require('../../models/Card');
 
 //@route GET api/items
 //Get all the items
 //Access public
 
 router.get('/', (req,res) => {
-    User.find()
-        .then(user => res.json(user))
+    Card.find()
+        .then(card => res.json(card))
 });
 
 //@route POST api/items
@@ -18,13 +18,17 @@ router.get('/', (req,res) => {
 //Access public
 
 router.post('/', (req,res) => {
-    const newUser = new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName
+    const newCard = new Card({
+        cardNumber: req.body.cardNumber,
+        status: req.body.status
     });
 
-    newUser.save().then(user => res.json(user));
+    newCard.save().then(card => res.json(card));
 });
+
+//TODO: Use Card.findOne() and populate the data
+//
+
 
 
 

@@ -9,18 +9,14 @@ const CardSchema = new Schema ({
     },
     status: {
         type: Boolean,
+        default:false,
         required: true
     },
     
-    cardId: {
+    _userId: [{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'Card'
-    }
-
-    
-
-
-
+        ref:'User'
+    }]
 })
 
-module.exports = Card = mongoose.model('Card', CardSchema)
+var Card = mongoose.model('Card', CardSchema)
