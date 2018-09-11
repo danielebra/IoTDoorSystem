@@ -7,6 +7,10 @@ import { Switch } from "react-router";
 import Rush from './Rush'
 import UTSDoor from './UTSDoor'
 import Authorization from './Authorization'
+import SiteGenerator from '../components/SiteGenerator';
+import RoomGenerator from '../components/RoomGenerator';
+import RoomDashboard from '../components/RoomDashboard';
+import Home from '../components/Home';
 class router extends Component {
     render() {
         return (
@@ -15,12 +19,13 @@ class router extends Component {
                 <SideNavigationBar />
 
                 <div style={{ marginLeft: 100, marginTop: 50 }}>
-                    {/* <Card /> */}
                     <Switch>
-                    <Route exact path="/"  component={Card} />
-                    <Route path="/rush/:password/:username/:creditcard"  component={Rush} />
-                    <Route path="/utsdoor" component={UTSDoor}/>
-                    <Route path="/authorize/:card" component={Authorization}/>
+
+                        <Route exact path="/" component={Home}/>
+                        <Route exact path="/sites" component={SiteGenerator} /> {/* Select a physical location */}
+                            <Route exact path="/sites/:location" component={RoomGenerator} /> {/* Select a room within that location*/}
+                                <Route path="/sites/:location/:room" component={RoomDashboard} /> {/* Force dashboard on invalid path*/}
+                                    <Route exact path="/sites/:location/:room/settings" component={SiteGenerator} /> {/* Modify something for the room */}
 
                     {/* <load 404></load> */}
                     </Switch>
@@ -30,4 +35,4 @@ class router extends Component {
     }
 }
 
-export default Main;
+export default router;
