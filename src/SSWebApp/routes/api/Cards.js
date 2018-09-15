@@ -43,7 +43,7 @@ router.get('/:cardId',(req,res,next) => {
     const id = req.params.cardId;
     Card.findById(id, (err,Card) => {
         if (err) {
-            res.status(200).json({message:'Card cannot be found'})
+            res.status(404).json({message:'Card cannot be found'})
         }
     }).then(card => res.json(card))
 })
@@ -52,21 +52,35 @@ router.get('/:cardId',(req,res,next) => {
 //Get each card by Id
 router.get('/:cardId',(req,res,next) => {
     const id = req.params.cardId;
-    Card.findById(id, (err,Card) => {
-        if (err) {
-            res.status(200).json({message:'Card cannot be found'})
-        }
-    }).then(card => res.json(card))
+    Card.findById(id)
+        .exec()
+        .then(card => {
+            if(card) {
+                res.status(200).json(card);
+            } else {
+                res.status(404).json({message:'No id found'})
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error:err})
+        });
 })
 
 //Delete Card by Id
 router.delete('/:cardId',(req,res,next) => {
     const id = req.params.cardId;
-    User.findByIdAndRemove(id, (err,card) => {
-        if (err) {
-            res.status(200).json({message:'Card cannot be found'})
-        }
-    }).then(card => res.json({message: 'Card ' + id +' has been deleted'}))
+    Card.findByIdAndRemove(id)
+        .exec()
+        .then(card => {
+            if(card) {
+                res.status(200).json({message: 'Card ' + id +' has been deleted'})
+            } else {
+                res.status(404).json({message:'No id found'})
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error:err})
+        });
 })
 
 

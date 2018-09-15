@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const morgan = require('morgan')
 
 const doorHistories = require('./routes/api/DoorHistories')
 const authorizeDoor = require('./routes/api/AuthorizeDoor')
@@ -10,6 +11,9 @@ const app = express();
 
 //Body Parser
 app.use(bodyParser.json());
+
+//Morgan, to show http request in console
+app.use(morgan('dev'));
 
 //Database Configuration, get MongoURI
 const db = require('./config/keys').mongoURI;

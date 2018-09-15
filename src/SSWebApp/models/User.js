@@ -32,7 +32,6 @@ const UserSchema = new Schema({
 
     _cardId: [{ type: mongoose.Schema.Types.ObjectId,
         ref:'Card'
-
     }]
 
 })

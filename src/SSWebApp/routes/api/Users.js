@@ -28,24 +28,41 @@ router.post('/', (req,res) => {
     newUser.save().then(user => res.json(user));
 });
 
+//TODO: Fix CastError when trying to find wrong object Id
+
 //Get each user by Id
 router.get('/:userId',(req,res,next) => {
     const id = req.params.userId;
-    User.findById(id, (err,User) => {
-        if (err) {
-            res.status(200).json({message:'User cannot be found'})
-        }
-    }).then(user => res.json(user))
+    User.findById(id)
+        .exec()
+        .then(user => {
+            if(user) {
+                res.status(200).json(user);
+            } else {
+                res.status(404).json({message:'No id found'})
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error:err})
+        });
 })
+
 
 //Delete each user by Id
 router.delete('/:userId',(req,res,next) => {
     const id = req.params.userId;
-    User.findByIdAndRemove(id, (err,User) => {
-        if (err) {
-            res.status(200).json({message:'User cannot be found'})
-        }
-    }).then(user => res.json({message: 'User ' + id +' has been deleted'}))
+    User.findByIdAndRemove(id)
+        .exec()
+        .then(user => {
+            if(user) {
+                res.status(200).json({message: 'User ' + id +' has been deleted'})
+            } else {
+                res.status(404).json({message:'No id found'})
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error:err})
+        });
 })
 
 
