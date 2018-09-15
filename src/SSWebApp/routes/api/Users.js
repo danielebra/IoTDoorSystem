@@ -31,14 +31,21 @@ router.post('/', (req,res) => {
 //Get each user by Id
 router.get('/:userId',(req,res,next) => {
     const id = req.params.userId;
-    User.findById(id, (err,User).then(user => res.json(user)))
+    User.findById(id, (err,User) => {
+        if (err) {
+            res.status(200).json({message:'User cannot be found'})
+        }
+    }).then(user => res.json(user))
 })
 
 //Delete each user by Id
 router.delete('/:userId',(req,res,next) => {
     const id = req.params.userId;
-    User.findByIdAndRemove(id, (err,User)
-        .then(user => res.json({message: 'User ' + id +' has been deleted'})))
+    User.findByIdAndRemove(id, (err,User) => {
+        if (err) {
+            res.status(200).json({message:'User cannot be found'})
+        }
+    }).then(user => res.json({message: 'User ' + id +' has been deleted'}))
 })
 
 

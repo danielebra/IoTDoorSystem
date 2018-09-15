@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
 
 const doorHistories = require('./routes/api/DoorHistories')
 const authorizeDoor = require('./routes/api/AuthorizeDoor')
@@ -12,29 +11,9 @@ const app = express();
 //Body Parser
 app.use(bodyParser.json());
 
-//Morgan, to show the process of post,get or delete request
-app.use(morgan('dev'));
-
 //Database Configuration, get MongoURI
 const db = require('./config/keys').mongoURI;
 
-//Error handling of requests
-app.use((req,res,next)=> {
-    const error = new Error('Not found');
-    error.status(404);
-    next(error);
-})
-
-app.use((error,req,res,next)=> {
-    res.status(error.status || 500);
-    res.json({
-        error: {
-            message: error.message
-        }
-    })
-});
-
-//Database connection
 mongoose
     .connect(db, {useNewUrlParser: true})
     .then(() => console.log('database is connected to mongodb'))
