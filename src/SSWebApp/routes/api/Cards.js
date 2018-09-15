@@ -52,21 +52,15 @@ router.get('/:cardId',(req,res,next) => {
 //Get each card by Id
 router.get('/:cardId',(req,res,next) => {
     const id = req.params.cardId;
-    Card.findById(id, (err,Card) => {
-        if (err) {
-            res.status(200).json({message:'Card cannot be found'})
-        }
-    }).then(card => res.json(card))
+    Card.findById(id, (err,Card)
+        .then(card => res.json(card)))
 })
 
 //Delete Card by Id
 router.delete('/:cardId',(req,res,next) => {
     const id = req.params.cardId;
-    User.findByIdAndRemove(id, (err,card) => {
-        if (err) {
-            res.status(200).json({message:'Card cannot be found'})
-        }
-    }).then(card => res.json({message: 'Card ' + id +' has been deleted'}))
+    User.findByIdAndRemove(id, (err,card)
+        .then(card => res.json({message: 'Card ' + id +' has been deleted'})))
 })
 
 
