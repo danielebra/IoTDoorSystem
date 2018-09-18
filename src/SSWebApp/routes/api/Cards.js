@@ -23,7 +23,7 @@ router.post('/', (req,res) => {
         _id: mongoose.Types.ObjectId(),
         cardNumber: req.body.cardNumber,
         isActive: req.body.status,
-        user: req.body.userId,
+        userId: req.body.userId,
     });
     
     newCard

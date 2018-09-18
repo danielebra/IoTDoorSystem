@@ -1,12 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const morgan = require('morgan')
+const morgan = require('morgan');
 
-const doorHistories = require('./routes/api/DoorHistories')
-const authorizeDoor = require('./routes/api/AuthorizeDoor')
-const users = require('./routes/api/Users')
-const cards = require('./routes/api/Cards')
+const doorHistories = require('./routes/api/DoorHistories');
+const authorizeDoor = require('./routes/api/AuthorizeDoor');
+const users = require('./routes/api/Users');
+const cards = require('./routes/api/Cards');
 const app = express();
 
 //Body Parser

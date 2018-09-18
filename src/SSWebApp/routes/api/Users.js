@@ -9,7 +9,7 @@ const User = require('../../models/User');
 //Get all the items
 //Access public
 
-router.get('/', (req,res) => {
+router.get('/', (req,res,next) => {
     User.find()
         .then(user => res.json(user))
 });
@@ -18,15 +18,16 @@ router.get('/', (req,res) => {
 //Create all the items
 //Access public
 
-router.post('/', (req,res,next) => {
+router.post('/', (req,res) => {
     const newUser = new User({
         _id: new mongoose.Types.ObjectId(),
         firstName: req.body.firstName,
         lastName: req.body.lastName,
+        phoneNumber: req.body.phoneNumber,
+        emailAddress: req.body.emailAddress,
         isAdmin: req.body.isAdmin,
-        card:req.body.cardId,
+        cardId: req.body.cardId,
     });
-
     newUser.save().then(user => res.json(user));
 });
 
@@ -49,6 +50,38 @@ router.get('/:userId',(req,res,next) => {
         });
 })
 
+//Change the information of the user
+// router.patch(':/userId',(req,res,next) => {
+//     var update = JSON.parse(req.body.User);
+//     const id = req.params.userId;
+//     User.findByIdAndUpdate(id, update, function(err, user) {
+//         if(err) {
+//             res.status(500).send(user);
+//         }
+//         res.status(200).send(user);
+//     })      
+// });
+
+router.patch('/:userId', function (req, res) {
+    const id = req.params.userId;
+    const input = req.body;
+
+    const updateOps = {};
+    for (const key of Object.keys(input)) {
+        updateOps[key] = req.body[key];
+    }
+    User.findOneAndUpdate({ _id: id }, { $set: updateOps })
+        .exec()
+        .then(user => {
+        res.status(200).json({message: 'User ' + id +' has been updated'})
+        })
+        .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    });
+});
 
 //Delete each user by Id
 router.delete('/:userId',(req,res,next) => {
@@ -66,6 +99,5 @@ router.delete('/:userId',(req,res,next) => {
             res.status(500).json({error:err})
         });
 })
-
 
 module.exports = router;
