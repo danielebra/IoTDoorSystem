@@ -1,7 +1,7 @@
+//Seems redundant
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//Create Schema
 const DoorHistorySchema = new Schema ({
     outcome: {
         type: String,

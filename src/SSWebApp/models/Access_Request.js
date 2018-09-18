@@ -1,3 +1,4 @@
+//Need edit: missing ID
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -16,7 +17,9 @@ const Access_RequestSchema = new Schema ({
         ref: 'Card'
     },
     RoomID:{
-        required: true
+        type: mongoose.Types.ObjectId,
+        required: true,
+        ref: 'Room'
     }
 })
 
