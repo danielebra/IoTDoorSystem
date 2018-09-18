@@ -20,12 +20,22 @@ router.get('/', (req,res) => {
 
 router.post('/', (req,res) => {
     const newCard = new Card({
-        // _id: new mongoose.Type.ObjectId(),
+        _id: mongoose.Types.ObjectId(),
         cardNumber: req.body.cardNumber,
-        status: req.body.status
+        isActive: req.body.status,
+        user: req.body.userId,
     });
     
-    newCard.save().then(card => res.json(card));
+    newCard
+        .save()
+        .then(card => {
+            res.json(card)
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: err
+            });
+        })
 });
 
 // TODO: Use Card.findOne() and populate the data
@@ -83,5 +93,7 @@ router.delete('/:cardId',(req,res,next) => {
         });
 })
 
+//TODO: Use router.patch
+//When we wanted to change the card status to false
 
 module.exports = router;

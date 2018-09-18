@@ -18,11 +18,13 @@ router.get('/', (req,res) => {
 //Create all the items
 //Access public
 
-router.post('/', (req,res) => {
+router.post('/', (req,res,next) => {
     const newUser = new User({
         _id: new mongoose.Types.ObjectId(),
         firstName: req.body.firstName,
-        lastName: req.body.lastName
+        lastName: req.body.lastName,
+        isAdmin: req.body.isAdmin,
+        card:req.body.cardId,
     });
 
     newUser.save().then(user => res.json(user));
