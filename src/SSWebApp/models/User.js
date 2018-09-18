@@ -13,4 +13,11 @@ const UserSchema = new Schema({
     cardId: {type:mongoose.Schema.Types.ObjectId, ref:'Card'},
 })
 
-module.exports = User = mongoose.model('User', UserSchema)
+module.exports = User = mongoose.model('User', UserSchema);
+
+//Get the user ID from the generated mongodb database
+module.exports.getUserByID = (id, callback) => {
+    User.findById(id,callback);
+};
+
+

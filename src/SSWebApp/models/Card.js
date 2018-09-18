@@ -1,4 +1,3 @@
-//Needs confirmation
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var User = require('./User')
@@ -10,4 +9,5 @@ const CardSchema = new Schema ({
     userId: {type:mongoose.Schema.Types.ObjectId, ref:'User'},
 })
 
-module.exports = Card = mongoose.model('Card', CardSchema)
+module.exports = Card = mongoose.model('Card', CardSchema);
+
