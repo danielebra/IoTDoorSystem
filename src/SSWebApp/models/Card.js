@@ -1,3 +1,4 @@
+//Needs confirmation
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var User = require('./User')

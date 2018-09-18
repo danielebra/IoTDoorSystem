@@ -1,3 +1,4 @@
+//Needs role or isAdmin satisfactory? Also cardId should be uncommented
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var Card = require('./Card')

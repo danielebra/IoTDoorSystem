@@ -1,3 +1,4 @@
+//Need edit: missing card array
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -12,4 +13,4 @@ const Access_ManagerSchema = new Schema ({
     }
 })
 
-module.exports = DoorHistory = mongoose.model('Access_Manager', Access_ManagerSchema)
+module.exports = Access_Manager = mongoose.model('Access_Manager', Access_ManagerSchema)
