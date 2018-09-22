@@ -32,13 +32,15 @@ class Users extends Component {
         // const data = this.state.userList.Data;
 
         return (
-            <div>
-               {/* {Object.keys(data).map((key) => (
-                     return(<div>
-                         </div>)
+            <table style="border: 3px solid black;">
+               {Object.keys(userList).map((item) => (
+                     <tr key={item.id}>
+                        <td>{item.name}</td>
+                        <td>{item.age}</td>
+                    </tr>
                  ))} 
-                 value = {this.state.userList}*/}
-        </div>
+                 {/* value = {this.state.userList}*/} */}
+        </table>
         )
     }
 }
