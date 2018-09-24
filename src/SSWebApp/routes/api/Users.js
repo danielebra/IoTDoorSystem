@@ -10,8 +10,13 @@ const User = require('../../models/User');
 //Access public
 
 router.get('/', (req,res,next) => {
+    console.time();
     User.find()
-        .then(user => res.json(user))
+        .exec(function(err,user) {
+            console.timeEnd();
+            res.send(user)
+        })
+        // .then(user => res.json(user))
 });
 
 //@route POST api/items
@@ -21,6 +26,7 @@ router.get('/', (req,res,next) => {
 router.post('/', (req,res) => {
     const newUser = new User({
         _id: new mongoose.Types.ObjectId(),
+        userNumber: req.body.userNumber,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         phoneNumber: req.body.phoneNumber,
@@ -37,6 +43,7 @@ router.post('/', (req,res) => {
 router.get('/:userId',(req,res,next) => {
     const id = req.params.userId;
     User.findById(id)
+        .lean()
         .exec()
         .then(user => {
             if(user) {
@@ -50,22 +57,10 @@ router.get('/:userId',(req,res,next) => {
         });
 })
 
-//Change the information of the user
-// router.patch(':/userId',(req,res,next) => {
-//     var update = JSON.parse(req.body.User);
-//     const id = req.params.userId;
-//     User.findByIdAndUpdate(id, update, function(err, user) {
-//         if(err) {
-//             res.status(500).send(user);
-//         }
-//         res.status(200).send(user);
-//     })      
-// });
-
+//Take the user id and edit
 router.patch('/:userId', function (req, res) {
     const id = req.params.userId;
     const input = req.body;
-
     const updateOps = {};
     for (const key of Object.keys(input)) {
         updateOps[key] = req.body[key];
