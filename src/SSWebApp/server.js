@@ -7,6 +7,7 @@ const authorizeDoor = require('./routes/api/AuthorizeDoor');
 const users = require('./routes/api/Users');
 const cards = require('./routes/api/Cards');
 const assignCardToUser = require('./routes/api/AssignCardToUser');
+const access_Manager = require('./routes/api/Access_Manager');
 const app = express();
 
 //Body Parser
@@ -28,6 +29,7 @@ app.use('/api/authorizeDoor', authorizeDoor);
 app.use('/api/users', users);
 app.use('/api/cards', cards);
 app.use('/api/addOwnership', assignCardToUser);
+app.use('/api/accessManager', access_Manager);
 
 app.use(express.static(__dirname));
 

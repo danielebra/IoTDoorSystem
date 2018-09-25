@@ -10,10 +10,8 @@ const User = require('../../models/User');
 //Access public
 
 router.get('/', (req,res,next) => {
-    console.time();
     User.find()
         .exec(function(err,user) {
-            console.timeEnd();
             res.send(user)
         })
         // .then(user => res.json(user))
