@@ -1,7 +1,6 @@
 #include <Wire.h>
 #include <SPI.h>
 #include <WiFi.h>
-#include <Stepper.h>
 #include <NeoPixelBus.h>
 #include <Adafruit_PN532.h>
 #include "secrets.h"
@@ -14,6 +13,10 @@
 
 #define PN532_IRQ   (2)
 #define PN532_RESET (3)
+
+const int GRANTED = 1;
+const int DENIED = 0;
+const int FAILED = -1;
 
 Adafruit_PN532 nfc(PN532_IRQ, PN532_RESET);
 
@@ -29,10 +32,10 @@ Servo myservo;
 WiFiClient client;
 IPAddress server(ips[0],ips[1],ips[2], ips[3]);
 NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod> strip(PixelCount, PixelPin);
-Stepper stepper(stepsPerRevolution, 6,5,4,3);
 RgbColor red(255, 0, 0);
 RgbColor black(0);
 RgbColor green(0, 255, 0);
+RgbColor orange(255, 165, 0);
 
 void setup(void) {
   Serial.begin(115200);
@@ -42,88 +45,74 @@ void setup(void) {
   myservo.attach(6);
   //SetupWifi();
   //SetupNFC();
-  stepper.setSpeed(60);
   Serial.println("Setup complete");
 }
 int foobar = 0;
 void loop(void) {
   
   Serial.println("Setting LED");
-  if (foobar == 0)
-  {
-    moveMotor(true);
-    foobar = 1;
-  }
-  else
-  {
-    foobar = 0;
-    moveMotor(false);
-  }
-  
-  // Daniel = 729
-  // Ulash = 580
-  /*
+  strip.SetPixelColor(0, orange);
+  strip.Show(); 
   int cardID = readCard();
   if (cardID != 0)
   {
     String idAsString = String(cardID);
-    sendRequest(idAsString);
-    /*
-    if (cardID == 729)
-    {
-      //moveMotor(false);
-      sendRequest("729&movement=open");
-    }
-    else if (cardID == 580)
-    {
-      moveMotor(true);
-    }
-    
-  }*/
+    int resp = sendRequest(idAsString);
+    if (resp == GRANTED)
+      openDoor();
+    else if (resp == DENIED)
+      rejectCard();
+    else if (resp == FAILED)
+      Serial.println("Received fail status"); // Put some color and audio feedback here
+  }
   delay(1000);
 }
 
-void sendRequest(String msg)
+int sendRequest(String msg)
 {
+  // TODO: test that this returns a value appropriately
   if (client.connect(server, 5000))
+  {
+    Serial.println("Connected to server");
+    client.print("GET /api/authorizeDoor/");
+    client.print(msg);
+    client.print("/room");
+    client.print(" HTTP/1.0\n\n");
+    String response = String("");
+    while (client.connected())
     {
-      Serial.println("Connected to server");
-      client.print("GET /api/authorizeDoor/");
-      client.print(msg);
-      client.print("/room");
-      client.print(" HTTP/1.0\n\n");
-      String response = String("");
-      while (client.connected())
-      {
-        delay(50);
-        // block until responce, then disconnect
-        while (client.available()) {
-          char c = client.read();
-          response.concat(c);
-          //Serial.write(c);
-        }      
-      }
-      client.stop();
-      //Serial.println("Before");
-      //Serial.println(response);
-      response = response.substring(response.indexOf(String("\r\n\r\n")) + 4);
-      //Serial.println("After");
-      //Serial.println(response);
-      if (response.equals("1"))
-      {
-        Serial.println("Card accepted");
-        moveMotor(true);
-      }
-      else
-      {
-        Serial.println("Card declined");
-      }
-      
+      delay(50);
+      // block until responce, then disconnect
+      while (client.available()) {
+        char c = client.read();
+        response.concat(c);
+        //Serial.write(c);
+      }      
     }
+    client.stop();
+    //Serial.println("Before");
+    //Serial.println(response);
+    response = response.substring(response.indexOf(String("\r\n\r\n")) + 4);
+    //Serial.println("After");
+    //Serial.println(response);
+    if (response.equals("1"))
+    {
+      Serial.println("Card accepted");
+      return GRANTED;
+    }
+
     else
     {
-      Serial.println("Failed to connect to server");
+      Serial.println("Card declined");
+      return DENIED;
     }
+    
+  }
+  else
+  {
+    Serial.println("Failed to connect to server");
+    return FAILED;
+  }
 }
   
 void SetupWifi()
@@ -205,8 +194,30 @@ int readCard()
   }
   return val;
 }
+void openDoor()
+{
+  tone(3, 2000, 250);
+  strip.SetPixelColor(0, green);
+  strip.Show();
+  Serial.println("Moving motor to 90 degrees");
+  myservo.write(90);
+  delay(1000);
+  Serial.println("Moving motor to 0 degrees");
+  myservo.write(0);  
+  strip.SetPixelColor(0, black);
+  strip.Show();
+}
+void rejectCard()
+{
+  strip.SetPixelColor(0, red);
+  strip.Show();
+  tone(3, 1000, 200);
+  delay(250);
+  tone(3, 1000, 500);
+}
 void moveMotor(boolean positive)
 {
+  // Probably will deprecate this method in the future...
   if (positive)
   {
     myservo.write(90);
