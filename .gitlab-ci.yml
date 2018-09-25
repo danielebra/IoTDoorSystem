@@ -26,7 +26,8 @@ python:
     - pip install nose
     - cd src/SSWebApp/
     - npm install
-    - npm run server &
+    - node server.js &
+    - sleep 3
     - cd ../python
     - nosetests api_tests.py
     
