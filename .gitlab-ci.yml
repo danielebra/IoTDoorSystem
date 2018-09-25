@@ -7,7 +7,7 @@ before_script:
 stages:
   - test
   - python
-  
+
 test:
   stage: test
   only:
@@ -21,6 +21,8 @@ python:
   only:
     - master
   script:
+    - apt update
+    - apt install python-pip
     - pip install nose
     - cd src/SSWebApp/
     - npm install
