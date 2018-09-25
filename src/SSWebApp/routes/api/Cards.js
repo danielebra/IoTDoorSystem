@@ -48,15 +48,15 @@ router.get('/', (req,res) => {
     });
 })
 
-//Get each card by Id
-router.get('/:cardId',(req,res,next) => {
-    const id = req.params.cardId;
-    Card.findById(id, (err,Card) => {
-        if (err) {
-            res.status(404).json({message:'Card cannot be found'})
-        }
-    }).then(card => res.json(card))
-})
+// //Get each card by Id
+// router.get('/:cardId',(req,res,next) => {
+//     const id = req.params.cardId;
+//     Card.findById(id, (err,Card) => {
+//         if (err) {
+//             res.status(404).json({message:'Card cannot be found'})
+//         }
+//     }).then(card => res.json(card))
+// })
 
 
 //Get each card by Id
@@ -74,6 +74,18 @@ router.get('/:cardId',(req,res,next) => {
         .catch(err => {
             res.status(500).json({error:err})
         });
+})
+
+//TODO: show card infomation
+router.get('/cardNumber/:cardNumber', (req,res,next) => {
+    const cardNumber = req.param.cardNumber;
+    Card.getCardByNumber(cardNumber, (err) => {
+        if(err) {
+            res.status(500).json({message: 'No card found'});
+        } else {
+            res.status(200).json(cardNumber);
+        }
+    })
 })
 
 //Delete Card by Id
