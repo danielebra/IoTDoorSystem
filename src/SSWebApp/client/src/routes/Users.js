@@ -1,30 +1,52 @@
 import React, { Component } from 'react';
-const axios = require('axios');
+import BootstrapTable from 'react-bootstrap-table-next';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
+
+
+const axios = require('axios');
 
 class Users extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userList: []
+        data: []
+        // {userId:'hadsfdasdsa',firstName:'asdf',lastName:'asdffa'}
         }
+        this.columns = [{
+            dataField: '_id',
+            text: 'User ID',
+            sort: true
+        }, {
+            dataField: 'firstName',
+            text: 'First Name',
+            sort: true
+        }, {
+            dataField: 'lastName',
+            text: 'Last Name',
+            sort: true
+        }];
     }
+
+    
+
 
     componentDidMount() {
         console.log("Making API request");
         axios.get('/api/users')
-            .then(function (response) {
+            .then(
                 // const users = response.data.map(obj => obj.data);
-                const users = response.data;
-                this.setState({ userList: users });
-                console.log(response);
-                console.log(users);
-            })
+                // const users = response.data;
+                response => response.data,
+                // console.log(response)
+            )
+            .then(data => this.setState({ data }))
             .catch((err) => {
                 console.log(err);
             })
     }
 
+    
 
     render() {
         //TODO: Get this .map thing working, then the json data could be shown in a table foraat
@@ -32,15 +54,11 @@ class Users extends Component {
         // const data = this.state.userList.Data;
 
         return (
-            <div>
-               {/* {Object.keys(data).map((key) => (
-                     return(<div>
-                         </div>)
-                 ))} 
-                 value = {this.state.userList}*/}
-        </div>
+            // <div>asdfasdfd</div>
+            <BootstrapTable keyField='_id' data={ this.state.data } columns={ this.columns } />
         )
     }
+
 }
 
 export default Users;

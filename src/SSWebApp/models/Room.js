@@ -8,7 +8,7 @@ const RoomSchema = new Schema({
     name: { type: String, required: true },
     location:{type: String,required: true },
     isHardlocked: { type: String,required: true },
-    accessManagerId: [{ type: mongoose.Schema.Types.ObjectId, ref:'Access_Manager'}]
+    accessManagerId: { type:mongoose.Schema.Types.ObjectId, ref:'Access_Manager'}
 })
 
 module.exports = Room = mongoose.model('Room', RoomSchema)

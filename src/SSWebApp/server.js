@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-const doorHistories = require('./routes/api/DoorHistories');
 const authorizeDoor = require('./routes/api/AuthorizeDoor');
 const users = require('./routes/api/Users');
 const cards = require('./routes/api/Cards');
+const assignCardToUser = require('./routes/api/AssignCardToUser');
 const app = express();
 
 //Body Parser
@@ -24,10 +24,10 @@ mongoose
     .catch(err => console.log(err));
 
 // Use Routes
-app.use('/api/doorHistories', doorHistories);
 app.use('/api/authorizeDoor', authorizeDoor);
 app.use('/api/users', users);
 app.use('/api/cards', cards);
+app.use('/api/addOwnership', assignCardToUser);
 
 app.use(express.static(__dirname));
 
