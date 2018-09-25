@@ -22,7 +22,7 @@ python:
     - master
   script:
     - apt update
-    - apt install python-pip
+    - apt install python-pip -y
     - pip install nose
     - cd src/SSWebApp/
     - npm install
