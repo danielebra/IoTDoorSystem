@@ -15,12 +15,6 @@ CardSchema.statics.findByName = function(name, cb) {
     return this.find({ name: new RegExp(name, 'i') }, cb);
   };
 
-// module.exports.addUser = (card, callback) => {
-//     let myquery = { _id : card._id }
-//     let newvalues = { $set: { user: user.userId}}
-//     User.updateOne(myquery, newvalues, callback);
-// }
-
 module.exports.addUser = function(userId, cb){
     this.update({userId: userId}, cb)
 }

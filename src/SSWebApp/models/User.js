@@ -26,13 +26,6 @@ module.exports.getUserByNumber = (userNumber,callback) => {
     User.findOne(query,callback);
 }
 
-// module.exports.addCardToUser = (user, callback) => {
-//     let myquery = { _id : user._id }
-//     let newvalues = { $set: { card: card.cardId}}
-//     User.updateOne(myquery, newvalues, callback);
-
-// }
-
 module.exports.addCard = function(cardId, cb){
     this.update({cardId: cardId}, cb)
 }
