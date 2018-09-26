@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import CircularProgressbar from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import BootstrapTable from 'react-bootstrap-table-next';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+
+const axios = require('axios');
 
 const localMetrics = [
     {
@@ -21,12 +25,37 @@ class RoomDashboard extends Component {
     constructor(props)
     {
         super(props)
-        this.state = { metrics: [] }
+        this.state = { 
+            metrics: [],
+            entries: []
+        }
+        // This defines the columns in the table
+        this.columns = [{
+            dataField: '_id',
+            text: 'User ID',
+            sort: true
+        }, {
+            dataField: 'firstName',
+            text: 'First Name',
+            sort: true
+        }, {
+            dataField: 'lastName',
+            text: 'Last Name',
+            sort: true
+        }];
     }
     componentDidMount()
     {
         this.setState({
             metrics: localMetrics
+        })
+
+        // This is getting the users... not the entries
+        // Will change soon
+        axios.get('/api/users').then(
+            resp => resp.data
+        ).then(data => this.setState({entries: data})).catch((err) => {
+            console.log(err);
         })
     }
     render() {
@@ -48,6 +77,7 @@ class RoomDashboard extends Component {
                     }
                 
                 </div>
+                <BootstrapTable keyField='_id' data={ this.state.entries } columns={ this.columns } />
                 {this.props.match.params.room}
             </div>
             )
