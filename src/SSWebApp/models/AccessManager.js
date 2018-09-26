@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const card = require('../models/Card');
 
-const Access_ManagerSchema = new Schema ({
+const AccessManagerSchema = new Schema ({
     _id: mongoose.Schema.Types.ObjectId,
     // allowedCards: [{ cardId: {type:mongoose.Schema.Types.ObjectId, ref:'Card' }}],
-    allowedCards: [{cardId: {type:mongoose.Schema.Types.ObjectId, ref:'Card'}}],
-    // roomId: { type:mongoose.Schema.Types.ObjectId, ref:'Room'}
-    roomId: {type: String}
+    allowedCards:[{ type: mongoose.Schema.Types.ObjectId, ref:'Card' }],
+    // roomNumber: { type:mongoose.Schema.Types.String, ref:'Room'},
+    roomId: { type:String, ref:'Room'},
 })
 
-module.exports = Access_Manager = mongoose.model('Access_Manager', Access_ManagerSchema);
+module.exports = AccessManager = mongoose.model('Access_Manager', AccessManagerSchema);
 
 // module.exports.addCard = function(cardId, cb){
 //     this.update({cardId: cardId}, cb)

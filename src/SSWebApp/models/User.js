@@ -16,22 +16,22 @@ const UserSchema = new Schema({
 
 module.exports = User = mongoose.model('User', UserSchema)
 
-module.exports.getUserByEmailAddress = (email,callback) => {
+UserSchema.statics.getUserByEmailAddress = (email,callback) => {
     const query = {email: email}
     User.findOne(query,callback);
 }
 
-module.exports.getUserByNumber = (userNumber,callback) => {
+UserSchema.statics.getUserByNumber = (userNumber,callback) => {
     const query = {userNumber: userNumber}
     User.findOne(query,callback);
 }
 
-module.exports.addCard = function(cardId, cb){
+UserSchema.methods.addCard = function(cardId, cb){
     this.update({cardId: cardId}, cb)
 }
 
-module.exports.updateUser = (cardId, callback) => {
+UserSchema.methods.updateUser = (cardId, callback) => {
     let query = {_id : card._id};
     let newValue = { $set: { cardId: card.cardId, cardId: card.cardId}};
-    Card.updateOne(query,newValue,callback);
+    this.updateOne(query,newValue,callback);
 }
