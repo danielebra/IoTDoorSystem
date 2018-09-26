@@ -2,7 +2,9 @@ image:
   name: "danielebra/sep-ss:1.0"
 
 before_script:
-  - mkdir -p ~/upload
+  - echo $PWD
+  - echo /$CI_PROJECT_DIR/
+  - mkdir -p /$CI_PROJECT_DIR/upload
   
 stages:
   - test
@@ -12,14 +14,13 @@ api_endpoints:
   script:
     - cd src/SSWebApp/
     - npm install
-    - node server.js >> ~/upload/server.log &
+    - node server.js >> /$CI_PROJECT_DIR/upload/server.log &
     - sleep 3
     - cd ../python
-    - nosetests api_tests.py | tee >> ~/upload/api_endpoints_test.results
+    - nosetests api_tests.py | tee >> /$CI_PROJECT_DIR/upload/api_endpoints_test.results
   artifacts:
     paths:
-      - ~/upload/server.log
-      - ~/upload/api_endpoints_test.results
+      - /$CI_PROJECT_DIR/upload
     expire_in: 30 days
 node:
   stage: test
