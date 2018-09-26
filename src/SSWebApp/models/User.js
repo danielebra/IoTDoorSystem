@@ -14,7 +14,7 @@ const UserSchema = new Schema({
 
 })
 
-module.exports = User = mongoose.model('User', UserSchema)
+module.exports = User = mongoose.model('Users', UserSchema, "users")
 
 module.exports.getUserByEmailAddress = (email,callback) => {
     const query = {email: email}

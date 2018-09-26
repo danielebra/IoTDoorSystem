@@ -30,19 +30,28 @@ class RoomDashboard extends Component {
             entries: []
         }
         // This defines the columns in the table
-        this.columns = [{
-            dataField: '_id',
-            text: 'User ID',
-            sort: true
-        }, {
-            dataField: 'firstName',
-            text: 'First Name',
-            sort: true
-        }, {
-            dataField: 'lastName',
-            text: 'Last Name',
-            sort: true
-        }];
+        this.columns = [
+            {
+                dataField: 'cardNumber',
+                text: 'Card Number',
+                sort: true
+            }, 
+            {
+                dataField: 'roomNumber',
+                text: 'Room Number',
+                sort: true
+            }, 
+            {
+                dataField: 'outcome',
+                text: 'Outcome',
+                sort: true
+            },
+            {
+                dataField: 'timestamp',
+                text: 'Time',
+                sort: true
+            }
+        ];
     }
     componentDidMount()
     {
@@ -52,7 +61,7 @@ class RoomDashboard extends Component {
 
         // This is getting the users... not the entries
         // Will change soon
-        axios.get('/api/users').then(
+        axios.get('/api/get/accessRequests').then(
             resp => resp.data
         ).then(data => this.setState({entries: data})).catch((err) => {
             console.log(err);
