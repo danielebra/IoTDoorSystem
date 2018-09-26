@@ -18,7 +18,8 @@ api_endpoints:
     - nosetests api_tests.py | tee >> ~/upload/api_endpoints_test.results
   artifacts:
     paths:
-      - ~/upload/
+      - ~/upload/server.log
+      - ~/upload/api_endpoints_test.results
     expire_in: 30 days
 node:
   stage: test
