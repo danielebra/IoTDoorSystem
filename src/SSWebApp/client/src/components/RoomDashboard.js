@@ -59,13 +59,21 @@ class RoomDashboard extends Component {
             metrics: localMetrics
         })
 
-        // This is getting the users... not the entries
-        // Will change soon
-        axios.get('/api/get/accessRequests').then(
+        let todaysEntries;
+        axios.get('/api/get/accessRequests/72/today').then(
             resp => resp.data
-        ).then(data => this.setState({entries: data})).catch((err) => {
+        ).then(data => {
+            todaysEntries = data.length
+            // TODO: This needs to properly make a deep copy
+            // Data of timestamp needs to be normalized to a human readable format
+            let newArray = [...this.state.metrics]
+            newArray[1].value = todaysEntries
+            this.setState({entries:data, metrics: newArray})
+        }).catch((err) => {
             console.log(err);
         })
+        // TODO: gather yesterday metrics
+
     }
     render() {
         return (
