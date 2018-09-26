@@ -17,7 +17,7 @@ api_endpoints:
     - node server.js >> $CI_PROJECT_DIR/upload/server.log &
     - sleep 3
     - cd ../python
-    - nosetests api_tests.py 2> $CI_PROJECT_DIR/upload/api_endpoints_test.results
+    - nosetests api_tests.py 2> &1 | tee $CI_PROJECT_DIR/upload/api_endpoints_test.results
   artifacts:
     paths:
       - $CI_PROJECT_DIR/upload
