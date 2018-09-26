@@ -3,8 +3,8 @@ image:
 
 before_script:
   - echo $PWD
-  - echo /$CI_PROJECT_DIR/
-  - mkdir -p /$CI_PROJECT_DIR/upload
+  - echo $CI_PROJECT_DIR/
+  - mkdir -p $CI_PROJECT_DIR/upload
   
 stages:
   - test
@@ -14,13 +14,13 @@ api_endpoints:
   script:
     - cd src/SSWebApp/
     - npm install
-    - node server.js >> /$CI_PROJECT_DIR/upload/server.log &
+    - node server.js >> $CI_PROJECT_DIR/upload/server.log &
     - sleep 3
     - cd ../python
-    - nosetests api_tests.py | tee >> /$CI_PROJECT_DIR/upload/api_endpoints_test.results
+    - nosetests api_tests.py 2> $CI_PROJECT_DIR/upload/api_endpoints_test.results
   artifacts:
     paths:
-      - /$CI_PROJECT_DIR/upload
+      - $CI_PROJECT_DIR/upload
     expire_in: 30 days
 node:
   stage: test
