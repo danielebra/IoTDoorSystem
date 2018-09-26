@@ -6,9 +6,20 @@ before_script:
   
 stages:
   - test
-  - python
 
-test:
+api_endpoints:
+  stage: test
+  script:
+    - cd src/SSWebApp/
+    - node server.js >> ~/upload/server.log &
+    - sleep 3
+    - cd ../python
+    - nosetests api_tests.py | tee >> ~/upload/api_endpoints_test.results
+  artifacts:
+    paths:
+      - ~/upload
+    expire_in: 30 days
+node:
   stage: test
   only:
     - master
@@ -16,18 +27,3 @@ test:
     - cd src/SSWebApp/
     - node test.js
     - echo "Done node unit testing"
-python:
-  stage: python
-  only:
-    - master
-  script:
-    - cd src/SSWebApp/
-    - node server.js >> ~/upload/server.log &
-    - sleep 3
-    - cd ../python
-    - nosetests api_tests.py | tee >> ~/upload/test.results
-  artifacts:
-    paths:
-      - ~/upload
-    expire_in: 30 days
-    
