@@ -7,7 +7,7 @@ const authorizeDoor = require('./routes/api/AuthorizeDoor');
 const users = require('./routes/api/Users');
 const cards = require('./routes/api/Cards');
 const assignCardToUser = require('./routes/api/AssignCardToUser');
-const access_Manager = require('./routes/api/AccessManager');
+const accessManager = require('./routes/api/AccessManager');
 const accessRequest = require('./routes/api/AccessRequest')
 const app = express();
 
@@ -30,7 +30,7 @@ app.use('/api/authorizeDoor', authorizeDoor);
 app.use('/api/users', users);
 app.use('/api/cards', cards);
 app.use('/api/addOwnership', assignCardToUser);
-app.use('/api/accessManager', access_Manager);
+app.use('/api/accessManager', accessManager);
 app.use('/api/get/accessRequests', accessRequest); // This URL may change in the future
 app.use(express.static(__dirname));
 
