@@ -71,7 +71,7 @@ class RoomDashboard extends Component {
             let metricsCopy = [...this.state.metrics]
             let isolatedEntries = []
             for (const ent of data) {
-                ent.timestamp = new Date(ent.timestamp).toString()//.toLocaleString()
+                ent.timestamp = new Date(ent.timestamp).toLocaleTimeString('en-AU')
                 isolatedEntries.push(ent['cardNumber'])
             }
             let uniques = [...new Set(isolatedEntries)]
