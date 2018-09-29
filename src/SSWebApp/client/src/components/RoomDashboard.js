@@ -83,7 +83,7 @@ class RoomDashboard extends Component {
             // Data of timestamp needs to be normalized to a human readable format
             let newArray = [...this.state.metrics]
             newArray[2].value =yesterdaysEntries 
-            this.setState({entries:data, metrics: newArray})
+            this.setState({metrics: newArray})
         }).catch((err) => {
             console.log(err);
         })
