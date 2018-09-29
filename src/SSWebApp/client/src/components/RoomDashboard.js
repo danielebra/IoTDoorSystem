@@ -4,6 +4,7 @@ import CircularProgressbar from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import { set } from 'mongoose';
 
 const axios = require('axios');
 
@@ -68,8 +69,18 @@ class RoomDashboard extends Component {
             // TODO: This needs to properly make a deep copy
             // Data of timestamp needs to be normalized to a human readable format
             let newArray = [...this.state.metrics]
+            let isolatedEntries = []
+            for (const ent of data) {
+                isolatedEntries.push(ent['cardNumber'])
+            }
+            let foo = [...new Set(isolatedEntries)]
             newArray[1].value = todaysEntries
+            newArray[0].value = foo.length
             this.setState({entries:data, metrics: newArray})
+            console.log(this.state.entries)
+            
+            console.log(foo)
+
         }).catch((err) => {
             console.log(err);
         })
@@ -87,6 +98,7 @@ class RoomDashboard extends Component {
         }).catch((err) => {
             console.log(err);
         })
+        
 
     }
     render() {
