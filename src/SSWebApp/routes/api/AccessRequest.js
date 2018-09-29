@@ -20,11 +20,15 @@ router.get('/:roomNumber/today', (req,res,next) => {
     accessRequestModel.find({"roomNumber": roomNumber}).lean()
         .exec(function(err,entry) {
             let output = entry.filter(e => {
-
-                let comparison = new Date(Date(e.timestamp).toLocaleString("en-US", {timeZone: "Australia/Sydney"}))
+                console.log("----------Start----------")
+                console.log("Incoming timestamp: ", e.timestamp)
+                let comparison = new Date(e.timestamp)
+                console.log("Comparison: ", comparison)
+                
                 // Something weird might be going on here... requires investigation
                 console.log(e.timestamp)
                 console.log("Todays date: " + today.toDateString() + " being checked against: " + comparison.toDateString())
+                console.log("-----------------End-------------")
                 return comparison.toDateString() == today.toDateString()
             })
             res.send(output)
@@ -41,7 +45,7 @@ router.get('/:roomNumber/yesterday', (req,res,next) => {
         .exec(function(err,entry) {
             let output = entry.filter(e => {
 
-                let comparison = new Date(Date(e.timestamp).toLocaleString("en-US", {timeZone: "Australia/Sydney"}))
+                let comparison = new Date(e.timestamp)
                 return comparison.toDateString() == yesterday.toDateString()
             })
             res.send(output)
