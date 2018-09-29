@@ -15,11 +15,11 @@ CardSchema.statics.findByName = function(name, cb) {
     return this.find({ name: new RegExp(name, 'i') }, cb);
   };
 
-module.exports.addUser = function(userId, cb){
-    this.update({userId: userId}, cb)
+module.exports.addUser = function(userId, callback){
+    this.update({userId: userId}, callback)
 }
 
-module.exports.getCardByNumber = (cardNumber, callack) => {
+module.exports.getCardByNumber = (cardNumber, callback) => {
     const query = {cardNumber:cardNumber};
-    user.findOne(query,callack);
+    Card.findOne(query,callback);
 }

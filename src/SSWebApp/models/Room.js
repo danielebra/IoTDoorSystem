@@ -1,10 +1,11 @@
 //Need confirmation
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-var Access_Manager = require('./Access_Manager')
+var Access_Manager = require('./AccessManager')
 
 const RoomSchema = new Schema({
     _id: mongoose.Schema.Types.ObjectId,
+    roomNumber: {type: String, required: true},
     name: { type: String, required: true },
     location:{type: String,required: true },
     isHardlocked: { type: String,required: true },
@@ -12,3 +13,4 @@ const RoomSchema = new Schema({
 })
 
 module.exports = Room = mongoose.model('Room', RoomSchema)
+
