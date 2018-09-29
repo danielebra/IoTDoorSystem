@@ -67,7 +67,6 @@ class RoomDashboard extends Component {
         ).then(data => {
             todaysEntries = data.length
             // TODO: This needs to properly make a deep copy
-            // Data of timestamp needs to be normalized to a human readable format
             let metricsCopy = [...this.state.metrics]
             let isolatedEntries = []
             for (const ent of data) {
@@ -99,6 +98,24 @@ class RoomDashboard extends Component {
         
 
     }
+    generateStyle(item, index) {
+        console.log(item)
+        // Check that we are on the Todays Entries
+        if (item.name == this.state.metrics[1].name)
+        {
+            // Check that todays stats are better than yesterdays
+            if (item.value > this.state.metrics[2].value)
+            {
+
+                return {path: {stroke: "rgba(0, 200, 0, 150)" }}
+            }
+            else
+            {
+                return {path: {stroke: "rgba(200, 0, 0, 150)" }}
+            }
+        }
+        return {}
+    }
     render() {
         return (
             <div>
@@ -106,7 +123,9 @@ class RoomDashboard extends Component {
                         this.state.metrics.map((item, index) => {
                             return (
                                 <div>
-                                    <CircularProgressbar percentage={100} text={item.value}/>
+                                    <div style={{maxHeight:200, maxWidth: 200}}>
+                                        <CircularProgressbar percentage={100} text={item.value} styles={this.generateStyle(item, index)}/>
+                                    </div>
                                     <center>
                                         <p style={{marginTop: 10}}>
                                             {item.name}
@@ -118,7 +137,11 @@ class RoomDashboard extends Component {
                     }
                 
                 </div>
+                {/* MarginRight is set to 50 because the persistant left side navigation bar is 50px and has a 100px margin
+                    Therefore, 100 - 50 = 50  */}
+                <div style={{marginRight: 50}}>
                 <BootstrapTable keyField='_id' data={ this.state.entries } columns={ this.columns } />
+                </div>
                 {this.props.match.params.room}
             </div>
             )
