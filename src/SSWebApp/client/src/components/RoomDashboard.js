@@ -68,18 +68,16 @@ class RoomDashboard extends Component {
             todaysEntries = data.length
             // TODO: This needs to properly make a deep copy
             // Data of timestamp needs to be normalized to a human readable format
-            let newArray = [...this.state.metrics]
+            let metricsCopy = [...this.state.metrics]
             let isolatedEntries = []
             for (const ent of data) {
+                ent.timestamp = new Date(ent.timestamp).toString()//.toLocaleString()
                 isolatedEntries.push(ent['cardNumber'])
             }
-            let foo = [...new Set(isolatedEntries)]
-            newArray[1].value = todaysEntries
-            newArray[0].value = foo.length
-            this.setState({entries:data, metrics: newArray})
-            console.log(this.state.entries)
-            
-            console.log(foo)
+            let uniques = [...new Set(isolatedEntries)]
+            metricsCopy[1].value = todaysEntries
+            metricsCopy[0].value = uniques.length
+            this.setState({entries:data, metrics: metricsCopy})
 
         }).catch((err) => {
             console.log(err);
@@ -92,9 +90,9 @@ class RoomDashboard extends Component {
             yesterdaysEntries = data.length
             // TODO: This needs to properly make a deep copy
             // Data of timestamp needs to be normalized to a human readable format
-            let newArray = [...this.state.metrics]
-            newArray[2].value =yesterdaysEntries 
-            this.setState({metrics: newArray})
+            let metricsCopy = [...this.state.metrics]
+            metricsCopy[2].value =yesterdaysEntries 
+            this.setState({metrics: metricsCopy})
         }).catch((err) => {
             console.log(err);
         })

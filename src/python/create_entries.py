@@ -37,7 +37,11 @@ client = MongoClient('mongodb://admin:admin1234@ds018258.mlab.com:18258/savage-s
 db = client['savage-security']
 ar = db.accessRequest
 
-for x in range(50):
-    my_access = AccessRequest(random.randint(100,999), random.randint(1,100), "granted" if x % 2 == 0 else "denied", datetime.datetime.now())
+for x in range(10):
+    my_access = AccessRequest(
+                            random.randint(1,999),
+                            72, 
+                            "granted" if x % 2 == 0 else "denied", 
+                            datetime.datetime.utcnow())# - datetime.timedelta(days=1))
     ar.insert(encode(my_access))
 

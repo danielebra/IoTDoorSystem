@@ -15,14 +15,18 @@ router.get('/', (req,res,next) => {
 router.get('/:roomNumber/today', (req,res,next) => {
     const roomNumber = req.params.roomNumber
     // Force everything to Sydney time because the server is in America...
-    let today = new Date(Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"}))
-
-    accessRequestModel.find({"roomNumber": roomNumber}).lean()
+    let today = new Date()//.setUTCHours(10)//new Date(Date().toLocaleString("en-AU", {timeZone: "Australia/Sydney"}))//"Etc/UTC"}))
+    //today.setUTCHours(-10)
+    accessRequestModel.find({"roomNumber": roomNumber})
         .exec(function(err,entry) {
             let output = entry.filter(e => {
+                if (e.cardNumber === 101)
+                    console.log("HERERERRERERERERERRRRRRRRRRRRRRRRRRR")
                 console.log("----------Start----------")
+                console.log("Current timestamp: ", today)
                 console.log("Incoming timestamp: ", e.timestamp)
-                let comparison = new Date(e.timestamp)
+                let comparison = e.timestamp//new Date(Date(e.timestamp).toLocaleString("en-AU", {timeZone: "Etc/UTC"}))
+                //comparison.setUTCHours(-10)
                 console.log("Comparison: ", comparison)
                 
                 // Something weird might be going on here... requires investigation
@@ -31,7 +35,9 @@ router.get('/:roomNumber/today', (req,res,next) => {
                 console.log("-----------------End-------------")
                 return comparison.toDateString() == today.toDateString()
             })
+            //console.log(output)
             res.send(output)
+            
         })
 });
 
