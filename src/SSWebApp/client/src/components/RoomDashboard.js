@@ -58,7 +58,8 @@ class RoomDashboard extends Component {
         this.setState({
             metrics: localMetrics
         })
-
+        // TODO: This needs to be done in a more optimized way
+        // Get todaysEntries
         let todaysEntries;
         axios.get('/api/get/accessRequests/72/today').then(
             resp => resp.data
@@ -72,7 +73,20 @@ class RoomDashboard extends Component {
         }).catch((err) => {
             console.log(err);
         })
-        // TODO: gather yesterday metrics
+        // Get yesterdays statse
+        let yesterdaysEntries;
+        axios.get('/api/get/accessRequests/72/yesterday').then(
+            resp => resp.data
+        ).then(data => {
+            yesterdaysEntries = data.length
+            // TODO: This needs to properly make a deep copy
+            // Data of timestamp needs to be normalized to a human readable format
+            let newArray = [...this.state.metrics]
+            newArray[2].value =yesterdaysEntries 
+            this.setState({entries:data, metrics: newArray})
+        }).catch((err) => {
+            console.log(err);
+        })
 
     }
     render() {
