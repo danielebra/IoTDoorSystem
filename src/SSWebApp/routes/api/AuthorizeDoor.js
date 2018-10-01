@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const AccessManager = require('../../models/AccessManager');
+const AccessRequest = require('../../models/AccessRequest');
 const Room = require('../../models/Room');
 
 // router.get('/:card/:room', (req,res) => {
@@ -24,9 +25,16 @@ const Room = require('../../models/Room');
 // 	}
 // });
 
-router.get('/:roomNumber/:cardNumber', (req,res) => {
+router.post('/:roomNumber/:cardNumber', (req,res) => {
 	const cardNumber = req.params.cardNumber;
-	const roomNumber = req.params.roomNumber; // Currently find room by Id
+    const roomNumber = req.params.roomNumber; // Currently find room by Id\
+
+    const newAccessRequest = new AccessRequest({
+        timestamp: Date.now(),
+        outcome: 'asdf',
+        roomNumber: req.params.cardNumber,
+        cardNumber: req.params.roomNumber
+    })
 
 	AccessManager.findOne( {availableRooms:roomNumber} , function(err,result) {
         if (err) {
@@ -44,13 +52,28 @@ router.get('/:roomNumber/:cardNumber', (req,res) => {
                     return card.cardNumber == cardNumber
                 })
 
-                if (outcome == false) {
-                    res.json('not found')
-                } else {
-                    res.json(outcome)
+                if (outcome == true) {
+                    res.json('"\t\tAccess granted')
+                    AccessRequest.outcome = 'Access Granted'
+                    console.log('access granted');
+                    // newAccessRequest.save();
+                    res.send(1);
+                    
+                }
+                
+                else {
+                    // res.json("\t\tAccess denied")
+                    newAccessRequest.save().then(request => res.json(request));
+                    AccessRequest.outcome = 'Access denided'
+                    console.log('access denided');
+                    // newAccessRequest.save();
+                    res.send(0);
+                    
+
                 }
             })
+        newAccessRequest.save().then(request => res.json(request));
 })
 
 
-module.exports = router;
+module.exports = router;    

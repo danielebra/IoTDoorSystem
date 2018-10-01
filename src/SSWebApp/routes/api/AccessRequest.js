@@ -37,4 +37,6 @@ router.get('/:roomNumber/yesterday', (req,res,next) => {
             res.send(output)
         })
 });
+
+
 module.exports = router;
