@@ -26,9 +26,9 @@ const Room = require('../../models/Room');
 
 router.get('/:roomNumber/:cardNumber', (req,res) => {
 	const cardNumber = req.params.cardNumber;
-	const roomNumber = req.params.roomNumber;
+	const roomNumber = req.params.roomNumber; // Currently find room by Id
 
-	AccessManager.findOne({"roomId": roomNumber }, function(err,result) {
+	AccessManager.findOne( {availableRooms:roomNumber} , function(err,result) {
         if (err) {
             res.json(err)
         } 
@@ -36,14 +36,21 @@ router.get('/:roomNumber/:cardNumber', (req,res) => {
         else {
             res.json('not found');
         }
+        
     })
     .populate("allowedCards")
-    .then(r => {
-                let outcome = r.allowedCards.filter(card => {
+    .then(result => {
+                let outcome = result.allowedCards.filter(card => {
                     return card.cardNumber == cardNumber
                 })
-                res.json(outcome)
+
+                if (outcome == false) {
+                    res.json('not found')
+                } else {
+                    res.json(outcome)
+                }
             })
 })
+
 
 module.exports = router;
