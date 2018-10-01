@@ -18,21 +18,43 @@ router.post('/', (req,res) => {
     newAccessManager.save().then(accessManager => res.json(accessManager));
 });
 
-router.put('/:id',(req,res) => {
-        // const accessManagerId = req.body.accessManagerId;
-        const allowedCards = req.body.cardId;
+router.post('/addAllowCard', (req, res) => {
+    const _id = "5bab2627454b992ce4aca399";
+    const cardId = req.body.cardId;
 
-        AccessManager.findById(req.params.body, (err, accessManager) => {
-            AccessManager.push(allowedCards, function(err) {
-                if(err) {
-                    return res.status(500).json({ success:true, msg: 'Fail to add user to card'})
-                } else {
-                    return res.status(200).json({ success:true, msg: 'New Allowed card is added'})
-                }
-            })
-            
-        })
+
+    //TODO: fix this updating cards to the allow cards array
+    AccessManager.findByIdAndUpdate(_id,
+        { $push: { allowedCards: {$each: [cardId]} } },
+        { safe: true, upsert: false },
+        function (err, doc) {
+            if (err) {
+                res.status(500).json({ message: 'Fail to update' })
+            } else {
+                res.status(200).json({ message: 'update complete' })
+            }
+        }
+    );
+});
+
+router.post('/addAvailableRoom',(req,res) => {
+    const _id = "5bab2627454b992ce4aca399";
+    const roomId = req.body.roomId;
+
+    AccessManager.findByIdAndUpdate(_id,
+        { $addToSet: { availableRooms: {$each: [roomId]} } },
+        { safe: true, upsert: false },
+        function (err, doc) {
+            if (err) {
+                res.status(500).json({ message: 'Fail to update' })
+            } else {
+                res.status(200).json({ message: 'update complete' })
+            }
+        }
+    );
 })
+
+
 
 module.exports = router;
 

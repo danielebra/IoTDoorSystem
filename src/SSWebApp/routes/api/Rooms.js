@@ -54,3 +54,5 @@ router.get('/:roomNumber', (req,res,next) => {
     Room.findOne({roomNumber})
         .then(res.status(200).json(room))
 })
+
+module.exports = router;

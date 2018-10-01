@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const accessManageSchema = new Schema ({
     _id: mongoose.Schema.Types.ObjectId,
     allowedCards: [{ type:mongoose.Schema.Types.ObjectId, ref:'Card'}],
-    roomId: { type:mongoose.Schema.Types.ObjectId, ref:'Room'}
+    availableRooms: [{ type:mongoose.Schema.Types.ObjectId, ref:'Room'}],
+
 })
 
 module.exports = Access_Manager = mongoose.model('AccessManager', accessManageSchema, "access_managers");

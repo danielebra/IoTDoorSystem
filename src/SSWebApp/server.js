@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const authorizeDoor = require('./routes/api/AuthorizeDoor');
 const users = require('./routes/api/Users');
 const cards = require('./routes/api/Cards');
+const rooms = require('./routes/api/Rooms');
 const assignCardToUser = require('./routes/api/AssignCardToUser');
 const accessManager = require('./routes/api/AccessManager');
 const accessRequest = require('./routes/api/AccessRequest')
@@ -31,6 +32,7 @@ app.use('/api/users', users);
 app.use('/api/cards', cards);
 app.use('/api/addOwnership', assignCardToUser);
 app.use('/api/accessManager', accessManager);
+app.use('/api/rooms', rooms);
 app.use('/api/get/accessRequests', accessRequest); // This URL may change in the future
 app.use(express.static(__dirname));
 
