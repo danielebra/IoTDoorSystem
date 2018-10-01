@@ -19,7 +19,7 @@ router.post('/', (req,res) => {
 });
 
 router.post('/addAllowCard', (req, res) => {
-    const _id = "5bab2627454b992ce4aca399";
+    const _id = "5bb1e5c76fb65398b0936dc5";
     const cardId = req.body.cardId;
 
 
@@ -38,7 +38,7 @@ router.post('/addAllowCard', (req, res) => {
 });
 
 router.post('/addAvailableRoom',(req,res) => {
-    const _id = "5bab2627454b992ce4aca399";
+    const _id = "5bb1e5c76fb65398b0936dc5";
     const roomId = req.body.roomId;
 
     AccessManager.findByIdAndUpdate(_id,
