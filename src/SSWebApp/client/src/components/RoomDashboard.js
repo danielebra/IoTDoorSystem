@@ -62,7 +62,7 @@ class RoomDashboard extends Component {
         // TODO: This needs to be done in a more optimized way
         // Get todaysEntries
         let todaysEntries;
-        axios.get('/api/get/accessRequests/72/today').then(
+        axios.get('/api/get/accessRequests/s11/today').then(
             resp => resp.data
         ).then(data => {
             todaysEntries = data.length
@@ -82,8 +82,8 @@ class RoomDashboard extends Component {
             console.log(err);
         })
         // Get yesterdays statse
-        let yesterdaysEntries;
-        axios.get('/api/get/accessRequests/72/yesterday').then(
+        let yesterdaysEntries = 0;
+        axios.get('/api/get/accessRequests/s11/yesterday').then(
             resp => resp.data
         ).then(data => {
             yesterdaysEntries = data.length
