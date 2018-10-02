@@ -29,6 +29,10 @@ router.post('/', (req, res) => {
     newRoom.save().then(room => res.json(room));
 });
 
+router.get('/allRoomsByLocation/:location', (req, res, next) => {
+    const location = req.params.location
+    Room.find({"location": location}).then(results => res.json(results))
+});
 //TODO: Fix CastError when trying to find wrong object Id
 
 //Get each room by Id
