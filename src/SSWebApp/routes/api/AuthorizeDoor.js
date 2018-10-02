@@ -29,11 +29,12 @@ router.post('/:roomNumber/:cardNumber', (req,res) => {
 	const cardNumber = req.params.cardNumber;
     const roomNumber = req.params.roomNumber; // Currently find room by Id\
 
-    const newAccessRequest = new AccessRequest({
+    let newAccessRequest = new AccessRequest({
         timestamp: Date.now(),
-        outcome: 'asdf',
-        roomNumber: req.params.cardNumber,
-        cardNumber: req.params.roomNumber
+        outcome: 'Access Denied',
+        cardNumber: req.params.cardNumber,
+        roomNumber: req.params.roomNumber
+        
     })
 
 	AccessManager.findOne( {availableRooms:roomNumber} , function(err,result) {
@@ -48,31 +49,36 @@ router.post('/:roomNumber/:cardNumber', (req,res) => {
     })
     .populate("allowedCards")
     .then(result => {
-                let outcome = result.allowedCards.filter(card => {
-                    return card.cardNumber == cardNumber
-                })
-
-                if (outcome == true) {
-                    res.json('"\t\tAccess granted')
-                    AccessRequest.outcome = 'Access Granted'
-                    console.log('access granted');
-                    // newAccessRequest.save();
-                    res.send(1);
-                    
-                }
+        let status = +result.allowedCards.some(card => {
+            if(card.cardNumber == cardNumber) {
+                newAccessRequest.outcome = 'Access Granted'
                 
-                else {
-                    // res.json("\t\tAccess denied")
-                    newAccessRequest.save().then(request => res.json(request));
-                    AccessRequest.outcome = 'Access denided'
-                    console.log('access denided');
-                    // newAccessRequest.save();
-                    res.send(0);
-                    
-
-                }
-            })
-        newAccessRequest.save().then(request => res.json(request));
+                return true
+            }
+        })
+        
+        newAccessRequest.save((err)=>{
+                //Only need to handle error here. Unless you need the AccessRequest _id for some reason.
+            if(err) console.log(err)
+            console.log('helo')
+            res.send(String(status));
+        })
+    })
+        //         let outcome = result.allowedCards.filter(card => {
+        //             if(card.cardNumber == cardNumber) {
+        //                 newAccessRequest.outcome = 'Access Granted'
+        //                 console.log(JSON.stringify(newAccessRequest));
+        //                 console.log('access granted');
+        //                 res.send(1);
+        //             } else {
+        //                 newAccessRequest.outcome = 'Access denided'
+        //                 console.log('access denided');
+        //                 res.send(0);
+        //             }
+        //         })
+        //     })
+        // .then(newAccessRequest.save().then(request => res.json(request)))
+        
 })
 
 
