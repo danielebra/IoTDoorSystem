@@ -10,6 +10,7 @@ const rooms = require('./routes/api/Rooms');
 const assignCardToUser = require('./routes/api/AssignCardToUser');
 const accessManager = require('./routes/api/AccessManager');
 const accessRequest = require('./routes/api/AccessRequest')
+const filterRequest = require('./routes/api/FilteredRequest.js')
 const app = express();
 
 //Body Parser
@@ -34,6 +35,7 @@ app.use('/api/addOwnership', assignCardToUser);
 app.use('/api/accessManager', accessManager);
 app.use('/api/rooms', rooms);
 app.use('/api/get/accessRequests', accessRequest); // This URL may change in the future
+app.use('/api/filter/', filterRequest);
 app.use(express.static(__dirname));
 
 var server = app.listen(5000, () => {

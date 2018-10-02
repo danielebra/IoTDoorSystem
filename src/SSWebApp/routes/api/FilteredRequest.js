@@ -23,9 +23,8 @@ http://localhost/articles?year=2016&month=1&day=19
 router.get('/', (req,res,next) => {
     const roomNumber = req.query.roomNumber
     const cardNumber = req.query.cardNumber
-    //TODO make functions to get dates
-    const startDate = new Date(req.query.startDate)
-    const endDate = new Date(req.query.endDate)
+    const startDate = req.query.startDate ? new Date(req.query.startDate) : undefined
+    const endDate = req.query.endDate ? new Date(req.query.endDate) : undefined
     const outcome = req.query.outcome
     accessRequestModel.find()
         .exec(function(err,entry) {
@@ -39,6 +38,7 @@ router.get('/', (req,res,next) => {
                     return e.roomNumber == roomNumber
                 })
             }
+            
             if (startDate != undefined){
                 entry = entry.filter(e =>{
                     return e.timestamp >= startDate
@@ -51,10 +51,10 @@ router.get('/', (req,res,next) => {
             }
             if (outcome != undefined){
                 entry = entry.filter(e =>{
-                    return e.outcome <= outcome
+                    return e.outcome == outcome
                 })
             }
-            res.send(entry)
+            res.json(entry)
         })
 });
 
