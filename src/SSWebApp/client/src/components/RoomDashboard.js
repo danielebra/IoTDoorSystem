@@ -74,8 +74,8 @@ class RoomDashboard extends Component {
                 isolatedEntries.push(ent['cardNumber'])
             }
             let uniques = [...new Set(isolatedEntries)]
-            metricsCopy[1].value = todaysEntries
-            metricsCopy[0].value = uniques.length
+            metricsCopy[1].value = String(todaysEntries)
+            metricsCopy[0].value = String(uniques.length)
             this.setState({entries:data, metrics: metricsCopy})
 
         }).catch((err) => {
@@ -90,7 +90,7 @@ class RoomDashboard extends Component {
             // TODO: This needs to properly make a deep copy
             // Data of timestamp needs to be normalized to a human readable format
             let metricsCopy = [...this.state.metrics]
-            metricsCopy[2].value =yesterdaysEntries 
+            metricsCopy[2].value = String(yesterdaysEntries)
             this.setState({metrics: metricsCopy})
         }).catch((err) => {
             console.log(err);
