@@ -49,10 +49,10 @@ router.get('/:roomId', (req, res, next) => {
         });
 })
 
-router.get('/:roomNumber', (req,res,next) => {
+router.get('/findRoomByNumber/:roomNumber', (req,res,next) => {
     const roomNumber = req.params.roomNumber;
     Room.findOne({roomNumber})
-        .then(res.status(200).json(room))
+        .then(room => res.status(200).json(room))
 })
 
 module.exports = router;

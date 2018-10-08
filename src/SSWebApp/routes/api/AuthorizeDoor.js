@@ -37,7 +37,7 @@ router.post('/:roomNumber/:cardNumber', (req,res) => {
         
     })
 
-	AccessManager.findOne( {availableRooms:roomNumber} , function(err,result) {
+	AccessManager.findOne( roomNumber , function(err,result) {
         if (err) {
             res.json(err)
         } 
@@ -52,7 +52,6 @@ router.post('/:roomNumber/:cardNumber', (req,res) => {
         let status = +result.allowedCards.some(card => {
             if(card.cardNumber == cardNumber) {
                 newAccessRequest.outcome = 'Access Granted'
-                
                 return true
             }
         })
