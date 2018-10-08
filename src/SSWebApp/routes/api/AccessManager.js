@@ -28,7 +28,7 @@ router.post('/', (req,res) => {
     const newAccessManager = new AccessManager({
         _id: new mongoose.Types.ObjectId(),
         allowedCards: req.body.cardId,
-        roomId: req.body.roomId
+        roomNumber: req.body.roomNumber
     });
     newAccessManager.save().then(accessManager => res.json(accessManager));
 });
@@ -40,8 +40,8 @@ router.post('/addAllowCard/:accessManagerId', (req, res) => {
 
     //TODO: fix this updating cards to the allow cards array
     AccessManager.findByIdAndUpdate(accessManagerId,
-        { $push: { allowedCards: {$each: [cardId]} } },
-        { safe: true, upsert: false },
+        { $addToSet: { allowedCards: { $each: [ cardId ] } } },
+        // { safe: true, upsert: false },
         function (err, doc) {
             if (err) {
                 res.status(500).json({ message: 'Fail to update' })

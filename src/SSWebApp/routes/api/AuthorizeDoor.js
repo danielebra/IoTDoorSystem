@@ -25,19 +25,22 @@ const Room = require('../../models/Room');
 // 	}
 // });
 
+
 router.post('/:roomNumber/:cardNumber', (req,res) => {
-	const cardNumber = req.params.cardNumber;
     const roomNumber = req.params.roomNumber; // Currently find room by Id\
+	const cardNumber = req.params.cardNumber;
+    
 
     let newAccessRequest = new AccessRequest({
         timestamp: Date.now(),
         outcome: 'Access Denied',
-        cardNumber: req.params.cardNumber,
-        roomNumber: req.params.roomNumber
+        roomNumber: req.params.roomNumber,
+        cardNumber: req.params.cardNumber
+        
         
     })
 
-	AccessManager.findOne( roomNumber , function(err,result) {
+	AccessManager.findOne( {roomNumber: roomNumber} , function(err,result) {
         if (err) {
             res.json(err)
         } 
