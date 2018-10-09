@@ -18,12 +18,13 @@ router.get('/', (req,res) => {
 //Create all the items
 //Access public
 
-router.post('/', (req,res) => {
+router.post('/create/:cardNumber', (req,res) => {
+    const cardNumberParam = req.params.cardNumber
     const newCard = new Card({
         _id: mongoose.Types.ObjectId(),
-        cardNumber: req.body.cardNumber,
-        isActive: req.body.status,
-        userId: req.body.userId,
+        cardNumber: cardNumberParam, //req.body.cardNumber,
+        isActive: false//req.body.status,
+        //userId: //req.body.userId,
     });
     
     newCard
