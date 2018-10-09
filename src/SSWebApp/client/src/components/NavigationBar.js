@@ -43,19 +43,10 @@ class NavigationBar extends Component {
 
             // </Navbar>
             // </div>
-            <nav className="navbar navbar-expand-sm navbar-dark dark" style={{background:"#2c3e50"}}>
+            <nav className="navbar navbar-expand-sm navbar-dark dark" style={{background:"#212F3C"}}>
                 <ul className="navbar-nav">
                     <li className="nav-item active">
-                        <a className="nav-link" href="#">Active</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Link</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Link</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link disabled" href="#">Disabled</a>
+                        <a className="nav-link" href='/'>Savage Security</a>
                     </li>
                 </ul>
             </nav>
