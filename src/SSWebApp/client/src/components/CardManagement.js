@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import  BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import { Dirent } from 'fs';
+import Button from 'react-bootstrap/lib/Button';
 const axios = require('axios');
 
 
@@ -49,8 +50,13 @@ class CardManagement extends Component {
             <div style={{marginRight: 50}}>
             <center><div><h1>Card Management</h1></div></center>
             <BootstrapTable keyField='_id' data={ this.state.cards } columns={ this.columns } />
-            <p>hello</p>
-
+            <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
+            <button onclick="/CardManagement/AddCard">Add Card</button>
+            <Button bsStyle="primary">Primary</Button>
+            <button>Block Card</button>
+            <button>Unblock Card</button>
+            <button>Delete Card</button>
+            </div>
             </div>
             )
     }

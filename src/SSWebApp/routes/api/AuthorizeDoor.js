@@ -53,7 +53,7 @@ router.post('/:roomNumber/:cardNumber', (req,res) => {
     .populate("allowedCards")
     .then(result => {
         let status = +result.allowedCards.some(card => {
-            if(card.cardNumber == cardNumber) {
+            if(card.cardNumber == cardNumber && card.isActive == true) {
                 newAccessRequest.outcome = 'Access Granted'
                 return true
             }
