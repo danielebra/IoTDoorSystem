@@ -52,7 +52,7 @@ class CardManagement extends Component {
             <BootstrapTable keyField='_id' data={ this.state.cards } columns={ this.columns } />
             <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
             <Button href="CardManagement/AddCard" bsStyle="primary">Add Card</Button>
-            <Button bsStyle="primary">Block Card</Button>
+            <Button href="CardManagement/BlockCard" bsStyle="primary">Block Card</Button>
             <Button bsStyle="primary">Unblock Card</Button>
             <Button bsStyle="primary">Delete Card</Button>
             </div>
