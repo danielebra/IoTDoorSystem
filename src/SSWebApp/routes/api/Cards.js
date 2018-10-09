@@ -76,6 +76,31 @@ router.get('/:cardId',(req,res,next) => {
         });
 })
 
+router.get('/blockCard/:cardNumber', (req,res,next) => {
+    const cardNumber = req.params.cardNumber;
+    Card.findOneAndUpdate({"cardNumber": cardNumber}, {isActive: false}, (err,result) => {
+        if(err) {
+            res.status(500).json(err)
+        } 
+        else {
+            res.status(200).json("Card Number " + cardNumber + " has been blocked")
+        }
+    })
+})
+
+router.get('/unblockCard/:cardNumber', (req,res,next) => {
+    const cardNumber = req.params.cardNumber;
+    Card.findOneAndUpdate({"cardNumber": cardNumber}, {isActive: true}, {upsert:true}, (err,result) => {
+        if(err) {
+            res.status(500).json('Error Found')
+        } 
+        else {
+            res.status(200).json("Card Number " + cardNumber + " is now active")
+            
+        }
+    })
+})
+
 //TODO: show card infomation
 router.get('/cardNumber/:cardNumber', (req,res,next) => {
     const cardNumber = req.param.cardNumber;
