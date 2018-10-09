@@ -11,6 +11,7 @@ import SiteGenerator from '../components/SiteGenerator';
 import RoomGenerator from '../components/RoomGenerator';
 import RoomDashboard from '../components/RoomDashboard';
 import CardManagement from '../components/CardManagement';
+import AddCard from '../components/AddCard';
 import Home from '../components/Home';
 import Users from './Users';
 
@@ -26,6 +27,7 @@ class router extends Component {
 
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/CardManagement" component={CardManagement} />
+                            <Route exact path="/CardManagement/AddCard" component={AddCard} />
                         <Route exact path="/sites" component={SiteGenerator} /> {/* Select a physical location */}
                             <Route exact path="/sites/:location" component={RoomGenerator} /> {/* Select a room within that location*/}
                                 <Route path="/sites/:location/:room" component={RoomDashboard} /> {/* Force dashboard on invalid path*/}
