@@ -51,11 +51,10 @@ class CardManagement extends Component {
             <center><div><h1>Card Management</h1></div></center>
             <BootstrapTable keyField='_id' data={ this.state.cards } columns={ this.columns } />
             <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
-            <button onclick="/CardManagement/AddCard">Add Card</button>
-            <Button bsStyle="primary">Primary</Button>
-            <button>Block Card</button>
-            <button>Unblock Card</button>
-            <button>Delete Card</button>
+            <Button href="CardManagement/AddCard" bsStyle="primary">Add Card</Button>
+            <Button bsStyle="primary">Block Card</Button>
+            <Button bsStyle="primary">Unblock Card</Button>
+            <Button bsStyle="primary">Delete Card</Button>
             </div>
             </div>
             )
