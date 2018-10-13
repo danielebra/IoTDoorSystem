@@ -115,7 +115,7 @@ router.get('/cardNumber/:cardNumber', (req,res,next) => {
 })
 
 //Delete Card by Id
-router.delete('/:cardId',(req,res,next) => {
+router.get('/deleteCard/:cardId',(req,res,next) => {
     const id = req.params.cardId;
     Card.findByIdAndRemove(id)
         .exec()
