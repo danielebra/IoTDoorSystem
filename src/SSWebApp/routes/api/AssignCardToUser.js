@@ -45,32 +45,32 @@ const Card = require('../../models/Card');
 
 // });
 
-// router.put('/', (req, res) => {
-//     const cardNumber = req.body.cardNumber;
-//     const userNumber = req.body.userNumber;
+router.put('/', (req, res) => {
+    const cardNumber = req.body.cardNumber;
+    const userNumber = req.body.userNumber;
 
-//     Card.findOne(cardNumber, (err, card) => {
-//         User.findOne(userNumber, (err, user) => {
-//             Card.addUser(userNumber.userId, function (err) {
-//                 if (err) {
-//                     return res.status(500).json({ success: true, msg: 'Fail to add user to card' })
-//                 } else {
-//                     console.log(User.userId)
-//                     return res.status(200).json({ success: true, msg: 'User is added to the card' })
-//                 }
-//             })
-//         })
-//     })
+    Card.findOne(cardNumber, (err, card) => {
+        User.findOne(userNumber, (err, user) => {
+            Card.addUser(userNumber.userId, function (err) {
+                if (err) {
+                    return res.status(500).json({ success: true, msg: 'Fail to add user to card' })
+                } else {
+                    console.log(User.userId)
+                    return res.status(200).json({ success: true, msg: 'User is added to the card' })
+                }
+            })
+        })
+    })
 
-    // User.findById(userId, (err, card) => {
-    //     User.addCard(cardId, function (err) {
-    //         if (err) {
-    //             return res.status(500).json({ success: true, msg: 'Fail to add card to user' })
-    //         } else {
-    //             return res.status(200).json({ success: true, msg: 'Card is added to the user' })
-    //         }
-    //     })
-    // })
+    User.findById(userId, (err, card) => {
+        User.addCard(cardId, function (err) {
+            if (err) {
+                return res.status(500).json({ success: true, msg: 'Fail to add card to user' })
+            } else {
+                return res.status(200).json({ success: true, msg: 'Card is added to the user' })
+            }
+        })
+    })
 });
 
 // router.put('/', (req, res) => {
