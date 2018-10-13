@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const accessRequestSchema = new Schema ({
     outcome: { type: String},
     timestamp: { type: Date, required: true },
-    roomNumber: { type: String, required: true},//type:mongoose.Schema.Types.ObjectId, ref:'Room' }
+    roomName: { type: String, required: true},//type:mongoose.Schema.Types.ObjectId, ref:'Room' }
     cardNumber: { type: String, required: true}//type:mongoose.Schema.Types.ObjectId, ref:'Card' },
 })
 

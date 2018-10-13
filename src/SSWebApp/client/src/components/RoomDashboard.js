@@ -38,8 +38,8 @@ class RoomDashboard extends Component {
                 sort: true
             }, 
             {
-                dataField: 'roomNumber',
-                text: 'Room Number',
+                dataField: 'roomName',
+                text: 'Room Name',
                 sort: true
             }, 
             {
@@ -62,7 +62,7 @@ class RoomDashboard extends Component {
         // TODO: This needs to be done in a more optimized way
         // Get todaysEntries
         let todaysEntries;
-        axios.get('/api/get/accessRequests/s11/today').then(
+        axios.get('/api/get/accessRequests/' + this.props.match.params.room + '/today').then(
             resp => resp.data
         ).then(data => {
             todaysEntries = data.length
@@ -83,7 +83,7 @@ class RoomDashboard extends Component {
         })
         // Get yesterdays statse
         let yesterdaysEntries = 0;
-        axios.get('/api/get/accessRequests/s11/yesterday').then(
+        axios.get('/api/get/accessRequests/' + this.props.match.params.room + '/yesterday').then(
             resp => resp.data
         ).then(data => {
             yesterdaysEntries = data.length

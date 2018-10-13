@@ -15,7 +15,7 @@ router.get('/', (req,res,next) => {
 router.get('/:roomNumber/today', (req,res,next) => {
     const roomNumber = req.params.roomNumber
     let today = new Date()
-    accessRequestModel.find({"roomNumber": roomNumber})
+    accessRequestModel.find({"roomName": roomNumber})
         .exec(function(err,entry) {
             let output = entry.filter(e => {
                 return e.timestamp.toDateString() == today.toDateString()
@@ -29,7 +29,7 @@ router.get('/:roomNumber/yesterday', (req,res,next) => {
     let today = new Date()
     let yesterday = new Date(today.setDate(today.getDate() - 1))
 
-    accessRequestModel.find({"roomNumber": roomNumber})
+    accessRequestModel.find({"roomName": roomNumber})
         .exec(function(err,entry) {
             let output = entry.filter(e => {
                 return e.timestamp.toDateString() == yesterday.toDateString()

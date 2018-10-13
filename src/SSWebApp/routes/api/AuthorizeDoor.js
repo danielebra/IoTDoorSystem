@@ -26,21 +26,21 @@ const Room = require('../../models/Room');
 // });
 
 
-router.get('/:roomNumber/:cardNumber', (req,res) => {
-    const roomNumber = req.params.roomNumber; // Currently find room by Id\
+router.get('/:roomName/:cardNumber', (req,res) => {
+    const roomName = req.params.roomName; // Currently find room by Id\
 	const cardNumber = req.params.cardNumber;
     
 
     let newAccessRequest = new AccessRequest({
         timestamp: Date.now(),
         outcome: 'Access Denied',
-        roomNumber: req.params.roomNumber,
+        roomName: req.params.roomName,
         cardNumber: req.params.cardNumber
         
         
     })
 
-	AccessManager.findOne( {roomNumber: roomNumber} , function(err,result) {
+	AccessManager.findOne( {roomName: roomName} , function(err,result) {
         if (err) {
             console.log('hit the error statement')
             res.json(err)
