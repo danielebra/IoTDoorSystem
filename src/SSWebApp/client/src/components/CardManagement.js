@@ -130,7 +130,7 @@ class CardManagement extends Component {
             <Button onClick={this.openCardActionModal.bind(this, 'Add Card')}  bsStyle="primary">Add Card</Button>
             <Button onClick={this.openCardActionModal.bind(this, 'Block Card')} bsStyle="primary">Block Card</Button>
             <Button onClick={this.openCardActionModal.bind(this, 'Unblock Card')} bsStyle="primary">Unblock Card</Button>
-            <Button onClick={this.openCardActionModal.bind(this, 'Delete Card')} bsStyle="primary">Delete Card</Button>
+            <Button onClick={this.openCardActionModal.bind(this, 'Delete Card')} bsStyle="danger">Delete Card</Button>
             <Modal
                 isOpen={this.state.modalIsOpen}
                 contentLabel="Example"
