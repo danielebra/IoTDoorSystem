@@ -18,12 +18,13 @@ router.get('/', (req,res) => {
 //Create all the items
 //Access public
 
-router.post('/', (req,res) => {
+router.post('/create/:cardNumber', (req,res) => {
+    const cardNumberParam = req.params.cardNumber
     const newCard = new Card({
         _id: mongoose.Types.ObjectId(),
-        cardNumber: req.body.cardNumber,
-        isActive: req.body.status,
-        userId: req.body.userId,
+        cardNumber: cardNumberParam, //req.body.cardNumber,
+        isActive: false//req.body.status,
+        //userId: //req.body.userId,
     });
     
     newCard
@@ -74,6 +75,31 @@ router.get('/:cardId',(req,res,next) => {
         .catch(err => {
             res.status(500).json({error:err})
         });
+})
+
+router.get('/blockCard/:cardNumber', (req,res,next) => {
+    const cardNumber = req.params.cardNumber;
+    Card.findOneAndUpdate({"cardNumber": cardNumber}, {isActive: false}, (err,result) => {
+        if(err) {
+            res.status(500).json(err)
+        } 
+        else {
+            res.status(200).json("Card Number " + cardNumber + " has been blocked")
+        }
+    })
+})
+
+router.get('/unblockCard/:cardNumber', (req,res,next) => {
+    const cardNumber = req.params.cardNumber;
+    Card.findOneAndUpdate({"cardNumber": cardNumber}, {isActive: true}, {upsert:true}, (err,result) => {
+        if(err) {
+            res.status(500).json('Error Found')
+        } 
+        else {
+            res.status(200).json("Card Number " + cardNumber + " is now active")
+            
+        }
+    })
 })
 
 //TODO: show card infomation

@@ -9,30 +9,66 @@ router.get('/', (req,res) => {
         .then(accessManager => res.json(accessManager))
 });
 
+router.get('/:accessManagerId',(req,res,next) => {
+    const id = req.params.accessManagerId;
+    AccessManager.findById(id)
+        .then(accessManager => {
+            if(accessManager) {
+                res.status(200).json(accessManager);
+            } else {
+                res.status(404).json({message:'No id found'})
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error:err})
+        });
+})
+
 router.post('/', (req,res) => {
     const newAccessManager = new AccessManager({
         _id: new mongoose.Types.ObjectId(),
         allowedCards: req.body.cardId,
-        roomId: req.body.roomId
+        roomNumber: req.body.roomNumber
     });
     newAccessManager.save().then(accessManager => res.json(accessManager));
 });
 
-router.put('/:id',(req,res) => {
-        // const accessManagerId = req.body.accessManagerId;
-        const allowedCards = req.body.cardId;
+router.post('/addAllowCard/:accessManagerId', (req, res) => {
+    const accessManagerId = req.params.accessManagerId;
+    const cardId = req.body.cardId;
 
-        AccessManager.findById(req.params.body, (err, accessManager) => {
-            AccessManager.push(allowedCards, function(err) {
-                if(err) {
-                    return res.status(500).json({ success:true, msg: 'Fail to add user to card'})
-                } else {
-                    return res.status(200).json({ success:true, msg: 'New Allowed card is added'})
-                }
-            })
-            
-        })
+
+    //TODO: fix this updating cards to the allow cards array
+    AccessManager.findByIdAndUpdate(accessManagerId,
+        { $addToSet: { allowedCards: { $each: [ cardId ] } } },
+        // { safe: true, upsert: false },
+        function (err, doc) {
+            if (err) {
+                res.status(500).json({ message: 'Fail to update' })
+            } else {
+                res.status(200).json({ message: 'update complete' })
+            }
+        }
+    );
+});
+
+router.post('/addAvailableRoom/:accessMangerId',(req,res) => {
+    const accessManager = req.params.id;
+    const roomId = req.body.roomId;
+
+    AccessManager.findOneAndUpdate(accessManager,{$set:{roomId: roomId}},
+
+        function (err, doc) {
+            if (err) {
+                res.status(500).json({ message: 'Fail to update' })
+            } else {
+                res.status(200).json({ message: 'update complete' })
+            }
+        }
+    );
 })
+
+
 
 module.exports = router;
 

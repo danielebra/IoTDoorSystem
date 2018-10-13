@@ -8,7 +8,7 @@ const RoomSchema = new Schema({
     roomNumber: {type: String, required: true},
     name: { type: String, required: true },
     location:{type: String,required: true },
-    isHardlocked: { type: String,required: true },
+    isHardlocked: { type: String},
     accessManagerId: { type:mongoose.Schema.Types.ObjectId, ref:'Access_Manager'}
 })
 

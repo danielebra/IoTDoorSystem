@@ -2,13 +2,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const accessManageSchema = new Schema ({
+const accessManagerSchema = new Schema ({
     _id: mongoose.Schema.Types.ObjectId,
     allowedCards: [{ type:mongoose.Schema.Types.ObjectId, ref:'Card'}],
-    roomId: { type:mongoose.Schema.Types.ObjectId, ref:'Room'}
+    roomNumber: {type:mongoose.Schema.Types.String, ref:'Room'}
+
 })
 
-module.exports = Access_Manager = mongoose.model('AccessManager', accessManageSchema, "access_managers");
+module.exports = Access_Manager = mongoose.model('AccessManager', accessManagerSchema, "access_managers");
 
 module.exports.addCard = function(cardId, cb){
     this.update({cardId: cardId}, cb)

@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const accessRequestSchema = new Schema ({
-    outcome: { type: String, required: true },
+    outcome: { type: String},
     timestamp: { type: Date, required: true },
-    cardNumber: { type: Number, required: true},//type:mongoose.Schema.Types.ObjectId, ref:'Card' },
-    roomNumber: { type: Number, required: true}//type:mongoose.Schema.Types.ObjectId, ref:'Room' }
+    roomNumber: { type: String, required: true},//type:mongoose.Schema.Types.ObjectId, ref:'Room' }
+    cardNumber: { type: String, required: true}//type:mongoose.Schema.Types.ObjectId, ref:'Card' },
 })
 
 module.exports = AccessRequest = mongoose.model('accessRequest', accessRequestSchema, "accessRequest")
