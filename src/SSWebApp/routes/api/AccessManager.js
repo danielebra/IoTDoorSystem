@@ -35,7 +35,7 @@ router.post('/', (req,res) => {
 
 router.get('addAllowCard/:accessManagerId', (req, res) => {
     const accessManagerId = req.params.accessManagerId;
-    const cardId = req.bdy.cardId;
+    const cardId = req.body.cardId;
 
 
     //TODO: fix this updating cards to the allow cards array
