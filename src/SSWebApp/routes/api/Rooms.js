@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
+const AccessManager = require('../../models/AccessManager');
 //Item Model
 const Room = require('../../models/Room');
 
@@ -57,6 +58,32 @@ router.get('/findRoomByNumber/:roomNumber', (req,res,next) => {
     const roomNumber = req.params.roomNumber;
     Room.findOne({roomNumber})
         .then(room => res.status(200).json(room))
+})
+
+router.get('/findAccessMangerByRoomName/:location', (req,res,next) => {
+    const location = req.params.location;
+
+    Room.findOne({"location":location}, (err,result) => {
+        if(result) {
+            res.json(result)
+        } else {
+            res.status(404).json({ message: 'No id found' })
+        }
+    })
+})
+
+router.post('/addAccessManager/:roomNumber/:accessManagerId',(req,res,next) => {
+    const roomNumber = req.params.roomNumber;
+    const accessManagerId = req.params.accessManagerId;
+
+    Room.findOneAndUpdate({"roomNumber":roomNumber},{$set:{accessManagerId: accessManagerId}} ,(err,result) => {
+        if (err) {
+            res.status(500).json({ message: 'Fail to update' })
+        } else {
+            res.status(200).json({ message: 'update complete' })
+        }
+    })
+
 })
 
 module.exports = router;
