@@ -11,7 +11,7 @@ const Card = require('../../models/Card')
 
 router.get('/', (req,res) => {
     Card.find()
-    .populate("userId")
+        .populate("userId")
         .then(result => res.json(result))
 });
 
