@@ -113,7 +113,7 @@ class CardManagement extends Component {
         }
         this.closeModal()
         // TODO: Update interface 
-        //setTimeout(this.updateTableData, 3000);
+        setTimeout(this.updateTableData.bind(this), 1000);
         
     }
     setCardNumberState(val)
