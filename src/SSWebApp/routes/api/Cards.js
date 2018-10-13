@@ -77,6 +77,20 @@ router.get('/:cardId',(req,res,next) => {
         });
 })
 
+router.get('/findCardByNumber/:cardNumber',(req,res,next) => {
+    const cardNumber = req.params.cardNumber;
+
+    Card.findOne({"cardNumber":cardNumber}, (err,result) => {
+        if(err) {
+            res.status(500).json(err)
+        } if (result) {
+            res.status(200).json(result)
+        } else {
+            res.status(404).json(message,"not found")
+        }
+    })
+})
+
 router.get('/blockCard/:cardNumber', (req,res,next) => {
     const cardNumber = req.params.cardNumber;
     Card.findOneAndUpdate({"cardNumber": cardNumber}, {isActive: false}, (err,result) => {
@@ -115,15 +129,15 @@ router.get('/cardNumber/:cardNumber', (req,res,next) => {
 })
 
 //Delete Card by Id
-router.get('/deleteCard/:cardId',(req,res,next) => {
-    const id = req.params.cardId;
-    Card.findByIdAndRemove(id)
+router.get('/deleteCard/:cardNumber',(req,res,next) => {
+    const cardNumber = req.params.cardNumber;
+    Card.findOneAndRemove({"cardNumber":cardNumber})
         .exec()
         .then(card => {
             if(card) {
-                res.status(200).json({message: 'Card ' + id +' has been deleted'})
+                res.status(200).json({message: 'Card ' + cardNumber +' has been deleted'})
             } else {
-                res.status(404).json({message:'No id found'})
+                res.status(404).json({message:'No card found'})
             }
         })
         .catch(err => {
