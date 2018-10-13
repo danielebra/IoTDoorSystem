@@ -44,6 +44,7 @@ void setup(void) {
   strip.Begin();
   strip.Show();
   myservo.attach(6);
+  myservo.write(0);
   SetupWifi();
   SetupNFC();
   Serial.println("Setup complete");
@@ -197,12 +198,12 @@ int readCard()
 }
 void openDoor()
 {
-  tone(3, 2000, 250);
+  tone(4, 2000, 250);
   strip.SetPixelColor(0, green);
   strip.Show();
   Serial.println("Moving motor to 90 degrees");
   myservo.write(90);
-  delay(1000);
+  delay(3000);
   Serial.println("Moving motor to 0 degrees");
   myservo.write(0);  
   strip.SetPixelColor(0, black);
@@ -212,39 +213,13 @@ void rejectCard()
 {
   strip.SetPixelColor(0, red);
   strip.Show();
-  tone(3, 1000, 200);
+  Serial.println("Making tone");
+  tone(4, 1000, 200);
   delay(250);
-  tone(3, 1000, 500);
+  tone(4, 1000, 500);
+  Serial.println("Ending tone");
+  delay(2750);
 }
-void moveMotor(boolean positive)
-{
-  // Probably will deprecate this method in the future...
-  if (positive)
-  {
-    myservo.write(90);
-    strip.SetPixelColor(0, green);
-    strip.Show();
-    
-    Serial.println("Moving motor to 90 degrees");
-    delay(1000);
-    strip.SetPixelColor(0, black);
-    strip.Show();
-    
-  }
-  else
-  {
-    myservo.write(0);
-    Serial.println("Moving motor to 0 degrees");
-    strip.SetPixelColor(0, red);
-    strip.Show();
-    tone(4, 500, 500);
-    delay(500);
-    delay(1000);
-    strip.SetPixelColor(0, black);
-    strip.Show();
-  }
-}
-
 
 // WiFi Methods:
 
