@@ -21,7 +21,7 @@ router.get('/', (req,res,next) => {
 //Create all the items
 //Access public
 
-router.post('/', (req,res) => {
+router.post('/addUser/', (req,res) => {
     const newUser = new User({
         _id: new mongoose.Types.ObjectId(),
         userNumber: req.body.userNumber,

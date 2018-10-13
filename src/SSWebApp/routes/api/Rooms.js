@@ -60,7 +60,7 @@ router.get('/findRoomByNumber/:roomNumber', (req,res,next) => {
         .then(room => res.status(200).json(room))
 })
 
-router.get('/findAccessMangerByRoomName/:location', (req,res,next) => {
+router.get('/findAccessManagerByRoomName/:location', (req,res,next) => {
     const location = req.params.location;
 
     Room.findOne({"location":location}, (err,result) => {
@@ -83,7 +83,8 @@ router.post('/addAccessManager/:roomNumber/:accessManagerId',(req,res,next) => {
             res.status(200).json({ message: 'update complete' })
         }
     })
-
 })
+
+
 
 module.exports = router;
