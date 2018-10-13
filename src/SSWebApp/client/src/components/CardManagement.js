@@ -135,7 +135,9 @@ class CardManagement extends Component {
                             onChange={this.setCardNumberState}
                             
                             />
-                        <Button onClick={this.performCardAction} bsStyle="primary">{this.state.cardAction}</Button>
+                        <center style={{marginTop:10}}>
+                            <Button onClick={this.performCardAction} bsStyle="primary">{this.state.cardAction}</Button>
+                        </center>
                         </div>
                 </Form>
                 </Modal>
