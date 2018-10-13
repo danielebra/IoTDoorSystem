@@ -11,7 +11,8 @@ const Card = require('../../models/Card')
 
 router.get('/', (req,res) => {
     Card.find()
-        .then(card => res.json(card))
+    .populate("userId")
+        .then(result => res.json(result))
 });
 
 //@route POST api/items

@@ -11,8 +11,9 @@ const User = require('../../models/User');
 
 router.get('/', (req,res,next) => {
     User.find()
-        .exec(function(err,user) {
-            res.send(user)
+        .populate("cardId")
+        .then(result => {
+            res.send(result)
         })
         // .then(user => res.json(user))
 });
