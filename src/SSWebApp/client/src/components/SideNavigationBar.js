@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import SideNav, { Nav, NavIcon, NavText } from 'react-sidenav';
 import SvgIcon from 'react-icons-kit';
 
+import {addressCardO} from 'react-icons-kit/fa/addressCardO'
+import {users} from 'react-icons-kit/icomoon/users'
 import { ic_aspect_ratio } from 'react-icons-kit/md/ic_aspect_ratio';
 import { ic_business } from 'react-icons-kit/md/ic_business';
 import { Link } from "react-router-dom";
@@ -21,6 +23,20 @@ class SideNavigationBar extends Component {
                         <Nav id='sites'>
                             <NavIcon><SvgIcon size={20} icon={ic_business} /></NavIcon>
                             {/* <NavText>Sites</NavText> */}
+                        </Nav>
+                    </Link>
+                    <Link to={'/CardManagement'}>
+                        <Nav id='CardManagement'>
+                            <NavIcon>
+                                <SvgIcon size={20} icon={addressCardO} />
+                            </NavIcon>
+                        </Nav>
+                    </Link>
+                    <Link to={'/UserManagement'}>
+                        <Nav id='UserManagement'>
+                            <NavIcon>
+                                <SvgIcon size={20} icon={users} />
+                            </NavIcon>
                         </Nav>
                     </Link>
                 </SideNav>

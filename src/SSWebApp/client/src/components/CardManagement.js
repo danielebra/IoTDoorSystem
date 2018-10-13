@@ -61,6 +61,17 @@ class CardManagement extends Component {
     }
     componentDidMount()
     {
+        this.updateTableData()
+    }
+    openCardActionModal(action) {
+        this.setState({
+                            modalIsOpen: true,
+                            cardAction: action
+                        });
+    }
+    updateTableData()
+    {
+        console.log("Updating table data")
         axios.get('/api/cards/')
         .then(resp => 
             {
@@ -70,13 +81,6 @@ class CardManagement extends Component {
                 })
             })
     }
-    openCardActionModal(action) {
-        this.setState({
-                            modalIsOpen: true,
-                            cardAction: action
-                        });
-    }
-
     performCardAction() {
         switch (this.state.cardAction)
         {
@@ -92,15 +96,24 @@ class CardManagement extends Component {
                     })
                 break;
             case "Unblock Card":
-                    
+                axios.get('/api/cards/unblockCard/' + this.state.cardNumber).then(res => {
+                        console.log("Card unblocked")
+                    })
                 break;
             case "Delete Card":
+                    // TODO: The api doesnt support cardNumber.. ffs dalley
+                axios.get('/api/cards/deleteCard/' + this.state.cardNumber).then(res => {
+                        console.log("Card deleted")
+                    })
                     break;
             default:
                 console.log("Unknown action")
+                break;
+            //setTimeout(f => function({ this.updateTableData(); console.log("Updating table data") }), 1500);
         }
         this.closeModal()
-
+        // TODO: Update interface 
+        //setTimeout(this.updateTableData, 3000);
         
     }
     setCardNumberState(val)
@@ -135,7 +148,9 @@ class CardManagement extends Component {
                             onChange={this.setCardNumberState}
                             
                             />
-                        <Button onClick={this.performCardAction} bsStyle="primary">{this.state.cardAction}</Button>
+                        <center style={{marginTop:10}}>
+                            <Button onClick={this.performCardAction} bsStyle="primary">{this.state.cardAction}</Button>
+                        </center>
                         </div>
                 </Form>
                 </Modal>
