@@ -25,6 +25,7 @@ const uint8_t PixelPin = 5;  // make sure to set this to the correct pin, ignore
 
 const char *wifi_ssid = WIFI_SSID;
 const char *wifi_password = WIFI_PASSWORD;
+const char *room_name = ROOM_NAME;
 const int stepsPerRevolution = 200;
 int status = WL_IDLE_STATUS;
 
@@ -43,8 +44,8 @@ void setup(void) {
   strip.Begin();
   strip.Show();
   myservo.attach(6);
-  //SetupWifi();
-  //SetupNFC();
+  SetupWifi();
+  SetupNFC();
   Serial.println("Setup complete");
 }
 int foobar = 0;
@@ -75,8 +76,8 @@ int sendRequest(String msg)
   {
     Serial.println("Connected to server");
     client.print("GET /api/authorizeDoor/");
+    client.print("/CB06.01.01/");
     client.print(msg);
-    client.print("/room");
     client.print(" HTTP/1.0\n\n");
     String response = String("");
     while (client.connected())
