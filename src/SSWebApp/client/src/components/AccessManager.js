@@ -16,8 +16,18 @@ class AccessManager extends Component {
         this.state = {allowedCards: []}//{allowedCards:["faooo"]}} 
         this.columns = [
             {
-                dataField: 'Card',
-                text: "Card ID",
+                dataField: 'cardNumber',
+                text: "Card Number",
+                sort: true
+            },
+            {
+                dataField: 'isActive',
+                text: "isActive",
+                sort: true
+            },
+            {
+                dataField: 'userID',
+                text: 'User ID',
                 sort: true
             }
         ]
@@ -25,17 +35,17 @@ class AccessManager extends Component {
     }
     componentDidMount()
     {
-        axios.get('/api/accessManager/5bbb566ea8f3830ced11d02c')// + this.props.match.params.location)
+        axios.get('/api/accessManager/findAccessManagerByRoomName/' + this.props.match.params.room)
         .then(resp => 
             {
-                console.log(resp.data.allowedCards)
-                var pair = []
-                for (const x of resp.data.allowedCards)
-                {
-                    pair.push({"Card": x })
-                }
+                console.log(resp)
+                // var pair = []
+                // for (const x of resp.data.accessManagerId.allowedCards)
+                // {
+                //     pair.push({"Card": x })
+                // }
                 this.setState({
-                allowedCards: pair
+                allowedCards: resp.data.accessManagerId.allowedCards
                 })
                 console.log(this.state.allowedCards);
             })
@@ -46,7 +56,7 @@ class AccessManager extends Component {
                 <center><div><h1>Room Management for {this.props.match.params.room}</h1></div></center>
                 <div style={{marginRight: 50}}>
 
-                <BootstrapTable keyField='Card' data={ this.state.allowedCards} columns={ this.columns } />
+                <BootstrapTable keyField='_id' data={ this.state.allowedCards} columns={ this.columns } />
                 </div>
                 <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}/>
             </div>

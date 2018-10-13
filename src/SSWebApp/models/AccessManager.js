@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const accessManagerSchema = new Schema ({
     _id: mongoose.Schema.Types.ObjectId,
     allowedCards: [{ type:mongoose.Schema.Types.ObjectId, ref:'Card'}],
-    roomNumber: {type:mongoose.Schema.Types.String, ref:'Room'}
+    roomName: {type:mongoose.Schema.Types.String, ref:'Room'}
 
 })
 

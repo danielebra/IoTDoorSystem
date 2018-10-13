@@ -60,10 +60,10 @@ router.get('/findRoomByNumber/:roomNumber', (req,res,next) => {
         .then(room => res.status(200).json(room))
 })
 
-router.get('/findAccessManagerByRoomName/:location', (req,res,next) => {
-    const location = req.params.location;
+router.get('/findAccessManagerByRoomName/:roomName', (req,res,next) => {
+    const roomName = req.params.roomName;
 
-    Room.findOne({"location":location}, (err,result) => {
+    Room.findOne({"name":roomName}, (err,result) => {
         if(result) {
             res.json(result)
         } else {

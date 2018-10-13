@@ -33,7 +33,7 @@ router.post('/', (req,res) => {
     newAccessManager.save().then(accessManager => res.json(accessManager));
 });
 
-router.post('/addAllowCard/:accessManagerId', (req, res) => {
+router.get('addAllowCard/:accessManagerId', (req, res) => {
     const accessManagerId = req.params.accessManagerId;
     const cardId = req.body.cardId;
 
@@ -51,6 +51,24 @@ router.post('/addAllowCard/:accessManagerId', (req, res) => {
         }
     );
 });
+
+router.get('/findAccessManagerByRoomName/:roomName', (req,res,next) => {
+    const roomName = req.params.roomName;
+
+    Room.findOne({"name":roomName}).populate({path: 'accessManagerId', populate :{path: 'allowedCards' }}).exec((err,result) => {
+        if(result) {
+        //     result.accessManagerId.populate("cardId").exec((err, result) =>
+        // {
+        //     console.log(result)
+        //     res.json(result)
+        // })
+            res.json(result)
+        } 
+        else {
+            res.status(404).json({ message: 'No id found' })
+        }
+    })
+})
 
 router.post('/addAvailableRoom/:accessMangerId',(req,res) => {
     const accessManager = req.params.id;
