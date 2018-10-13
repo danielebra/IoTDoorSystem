@@ -6,7 +6,7 @@ const CardSchema = new Schema ({
     _id: mongoose.Schema.Types.ObjectId,
     cardNumber: {type: String,required: true},
     isActive: {type: Boolean,default:false, required: true},
-    userId: {type:mongoose.Schema.Types.ObjectId, ref:'User'},
+    userId: { type:mongoose.Schema.Types.ObjectId, ref:'User'},
 })
 
 module.exports = Card = mongoose.model('Card', CardSchema);

@@ -49,9 +49,10 @@ class UserManagement extends Component {
         this.closeModal = this.closeModal.bind(this)
 
         this.columns = [
+            { dataField: 'userNumber', text: 'User Number', sort: true },
             { dataField: 'firstName', text: 'First Name', sort: true },
             { dataField: 'emailAddress', text: 'Email Address', sort: true },
-            { dataField: 'cardId', text: 'Card Id', sort: true }
+            { dataField: 'cardId.cardNumber', text: 'Card Number', sort: true }
         ]
     }
 

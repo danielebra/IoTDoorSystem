@@ -49,8 +49,8 @@ class CardManagement extends Component {
                 sort: true
             },
             {
-                dataField: 'userId',
-                text: 'User ID',
+                dataField: 'userId.userNumber',
+                text: 'User Number',
                 sort: true
             }
         ];
