@@ -19,6 +19,10 @@ module.exports.addUser = function(userId, callback){
     this.update({userId: userId}, callback)
 }
 
+module.exports.addUserByNumber = function(userNumber, cb){
+    this.update({userNumber: userNumber}, cb)
+}
+
 module.exports.getCardByNumber = (cardNumber, callback) => {
     const query = {cardNumber:cardNumber};
     Card.findOne(query,callback);

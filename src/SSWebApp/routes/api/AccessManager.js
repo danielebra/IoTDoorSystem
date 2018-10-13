@@ -33,7 +33,7 @@ router.post('/', (req,res) => {
     newAccessManager.save().then(accessManager => res.json(accessManager));
 });
 
-router.get('addAllowCard/:accessManagerId', (req, res) => {
+router.post('/addAllowCard/:accessManagerId', (req, res) => {
     const accessManagerId = req.params.accessManagerId;
     const cardId = req.body.cardId;
 
