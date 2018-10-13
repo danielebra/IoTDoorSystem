@@ -29,6 +29,9 @@ UserSchema.statics.getUserByNumber = (userNumber,callback) => {
 UserSchema.methods.addCard = function(cardId, cb){
     this.update({cardId: cardId}, cb)
 }
+UserSchema.methods.addCardByNumber = function(cardId, cb){
+    this.update({cardNumber: cardNumber}, cb)
+}
 
 UserSchema.methods.updateUser = (cardId, callback) => {
     let query = {_id : card._id};
