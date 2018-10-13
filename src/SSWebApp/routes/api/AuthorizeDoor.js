@@ -41,31 +41,33 @@ router.get('/:roomNumber/:cardNumber', (req,res) => {
     })
 
 	AccessManager.findOne( {roomNumber: roomNumber} , function(err,result) {
-        console.log(result)
         if (err) {
-            
+            console.log('hit the error statement')
             res.json(err)
         } 
         if (result) {}
         else {
-            res.json('not found');
+            console.log('hit the else statement')
+            res.send('0')
         }
         
     })
     .populate("allowedCards")
     .then(result => {
-        let status = +result.allowedCards.some(card => {
+        let status = result.allowedCards.some(card => {
             if(card.cardNumber == cardNumber && card.isActive == true) {
                 newAccessRequest.outcome = 'Access Granted'
                 return true
             }
         })
-        
         newAccessRequest.save((err)=>{
                 //Only need to handle error here. Unless you need the AccessRequest _id for some reason.
             if(err) console.log(err)
-            console.log('helo')
-            res.send(String(status));
+            console.log(status)
+            if (status)
+                res.send('1')
+            else
+                res.send('0')
         })
     })
         //         let outcome = result.allowedCards.filter(card => {
