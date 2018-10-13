@@ -118,6 +118,8 @@ class RoomDashboard extends Component {
     render() {
         return (
             <div>
+
+            <center><div><h3>Day Summary for {this.props.match.params.room}</h3></div></center>
                 <div style={{display: "flex", justifyContent: "space-around"}}> {
                         this.state.metrics.map((item, index) => {
                             return (
@@ -141,7 +143,6 @@ class RoomDashboard extends Component {
                 <div style={{marginRight: 50}}>
                 <BootstrapTable keyField='cardNumber' data={ this.state.entries } columns={ this.columns } />
                 </div>
-                {this.props.match.params.room}
             </div>
             )
     }
