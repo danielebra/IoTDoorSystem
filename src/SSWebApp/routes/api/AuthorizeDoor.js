@@ -26,7 +26,7 @@ const Room = require('../../models/Room');
 // });
 
 
-router.post('/:roomNumber/:cardNumber', (req,res) => {
+router.get('/:roomNumber/:cardNumber', (req,res) => {
     const roomNumber = req.params.roomNumber; // Currently find room by Id\
 	const cardNumber = req.params.cardNumber;
     
@@ -41,7 +41,9 @@ router.post('/:roomNumber/:cardNumber', (req,res) => {
     })
 
 	AccessManager.findOne( {roomNumber: roomNumber} , function(err,result) {
+        console.log(result)
         if (err) {
+            
             res.json(err)
         } 
         if (result) {}
