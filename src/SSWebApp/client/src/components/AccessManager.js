@@ -49,7 +49,7 @@ class AccessManager extends Component {
                 sort: true
             },
             {
-                dataField: 'userID',
+                dataField: 'userId',
                 text: 'User ID',
                 sort: true
             }
@@ -103,6 +103,7 @@ class AccessManager extends Component {
                 this.setState({
                 allowedCards: resp.data.accessManagerId.allowedCards
                 })
+
             })
     }
     setCardNumberState(val)
