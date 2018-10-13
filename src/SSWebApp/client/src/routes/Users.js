@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
+import paginationFactory from 'react-bootstrap-table2-paginator';
 
 
 const axios = require('axios');
@@ -55,7 +56,7 @@ class Users extends Component {
 
         return (
             // <div>asdfasdfd</div>
-            <BootstrapTable keyField='_id' data={ this.state.data } columns={ this.columns } />
+            <BootstrapTable keyField='_id' data={ this.state.data } columns={ this.columns } pagination={ paginationFactory() }/>
         )
     }
 

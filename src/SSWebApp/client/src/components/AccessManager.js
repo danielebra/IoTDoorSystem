@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
 import Card from './Card';
+
+import paginationFactory from 'react-bootstrap-table2-paginator';
 const room1 = require("../resources/images/rooms/room1.jpg")
 const room2 = require("../resources/images/rooms/room2.jpg")
 const room3 = require("../resources/images/rooms/room3.jpg")
@@ -56,7 +58,7 @@ class AccessManager extends Component {
                 <center><div><h1>Room Management for {this.props.match.params.room}</h1></div></center>
                 <div style={{marginRight: 50}}>
 
-                <BootstrapTable keyField='_id' data={ this.state.allowedCards} columns={ this.columns } />
+                <BootstrapTable keyField='_id' data={ this.state.allowedCards} columns={ this.columns } pagination={ paginationFactory() }/>
                 </div>
                 <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}/>
             </div>

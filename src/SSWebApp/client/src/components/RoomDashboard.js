@@ -5,20 +5,20 @@ import 'react-circular-progressbar/dist/styles.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import { set } from 'mongoose';
-
+import paginationFactory from 'react-bootstrap-table2-paginator';
 const axios = require('axios');
 
 const localMetrics = [
     {
-        name: "Today's Unique Entries",
+        name: "Today's Unique Requests",
         value: 0
     },
     {
-        name: "Today's Entries",
+        name: "Today's Requests",
         value: 0
     },
     {
-        name: "Yesterday's Entries",
+        name: "Yesterday's Requests",
         value: 0
     }
 ]
@@ -125,7 +125,7 @@ class RoomDashboard extends Component {
                             return (
                                 <div key={index}>
                                     <div style={{maxHeight:200, maxWidth: 200}}>
-                                        <CircularProgressbar percentage={100} text={item.value} styles={this.generateStyle(item, index)}/>
+                                        <CircularProgressbar percentage={100} text={item.value}  styles={this.generateStyle(item, index)}/>
                                     </div>
                                     <center>
                                         <p style={{marginTop: 10}}>
@@ -141,7 +141,7 @@ class RoomDashboard extends Component {
                 {/* MarginRight is set to 50 because the persistant left side navigation bar is 50px and has a 100px margin
                     Therefore, 100 - 50 = 50  */}
                 <div style={{marginRight: 50}}>
-                <BootstrapTable keyField='cardNumber' data={ this.state.entries } columns={ this.columns } />
+                <BootstrapTable keyField='cardNumber' data={ this.state.entries } columns={ this.columns } pagination={ paginationFactory() }/>
                 </div>
             </div>
             )

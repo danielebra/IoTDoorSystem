@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import Modal from 'react-modal';
 
+import paginationFactory from 'react-bootstrap-table2-paginator';
 import { Button } from 'react-bootstrap';
 
 const axios = require('axios');
@@ -130,7 +131,7 @@ class UserManagement extends Component {
         return (
             <div style={{ marginRight: 50 }}>
                 <center><div><h1>User Management</h1></div></center>
-                <BootstrapTable keyField='_id' data={this.state.users} columns={this.columns} />
+                <BootstrapTable keyField='_id' data={this.state.users} columns={this.columns} pagination={ paginationFactory() }/>
 
                 <Button onClick={this.openCardActionModal.bind(this, 'Add User')} bsStyle="primary">Add User</Button>
                 <Modal

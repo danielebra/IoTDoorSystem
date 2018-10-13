@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-modal';
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 const axios = require('axios');
 
 const customStyles = {
@@ -124,7 +125,7 @@ class CardManagement extends Component {
             
             <div style={{marginRight: 50}}>
             <center><div><h1>Card Management</h1></div></center>
-            <BootstrapTable keyField='_id' data={ this.state.cards } columns={ this.columns } />
+            <BootstrapTable keyField='_id' data={ this.state.cards } columns={ this.columns } pagination={ paginationFactory() }/>
             <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
             <Button onClick={this.openCardActionModal.bind(this, 'Add Card')}  bsStyle="primary">Add Card</Button>
             <Button onClick={this.openCardActionModal.bind(this, 'Block Card')} bsStyle="primary">Block Card</Button>
