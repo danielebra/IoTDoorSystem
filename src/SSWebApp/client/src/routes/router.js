@@ -15,6 +15,8 @@ import CardManagement from '../components/CardManagement';
 import AddNewUser from '../components/AddNewUser';
 import Home from '../components/Home';
 import Users from './Users';
+import RoomManagement from '../components/RoomManagement';
+import AccessManager from '../components/AccessManager';
 
 class router extends Component {
     render() {
@@ -35,6 +37,8 @@ class router extends Component {
                         <Route exact path="/users" component={Users} />
                         <Route exact path="/UserManagement" component= {UserManagement}/>
                             <Route exact path="/UserManagement/AddNewUser" component= {AddNewUser}/>
+                        <Route exact path="/RoomManagement" component={RoomManagement} />
+                            <Route path="/RoomManagement/:room" component={AccessManager} />
                     {/* <load 404></load> */}
                     </Switch>
                 </div>
