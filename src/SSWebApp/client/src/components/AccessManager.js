@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -14,7 +13,7 @@ class AccessManager extends Component {
     constructor(props)
     {
         super(props)
-        this.state = {allowedCards: [{"foo":"bar"}]}//{allowedCards:["faooo"]}} 
+        this.state = {allowedCards: []}//{allowedCards:["faooo"]}} 
         this.columns = [
             {
                 dataField: 'Card',
@@ -47,7 +46,7 @@ class AccessManager extends Component {
                 <center><div><h1>Room Management for {this.props.match.params.room}</h1></div></center>
                 <div style={{marginRight: 50}}>
 
-                <BootstrapTable keyField='allowedCards' data={ this.state.allowedCards} columns={ this.columns } />
+                <BootstrapTable keyField='Card' data={ this.state.allowedCards} columns={ this.columns } />
                 </div>
                 <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}/>
             </div>

@@ -11,15 +11,15 @@ const axios = require('axios');
 const localMetrics = [
     {
         name: "Today's Unique Entries",
-        value: 20
+        value: 0
     },
     {
         name: "Today's Entries",
-        value: 200
+        value: 0
     },
     {
         name: "Yesterday's Entries",
-        value: 325
+        value: 0
     }
 ]
 class RoomDashboard extends Component {
@@ -99,7 +99,6 @@ class RoomDashboard extends Component {
 
     }
     generateStyle(item, index) {
-        console.log(item)
         // Check that we are on the Todays Entries
         if (item.name == this.state.metrics[1].name)
         {
@@ -122,7 +121,7 @@ class RoomDashboard extends Component {
                 <div style={{display: "flex", justifyContent: "space-around"}}> {
                         this.state.metrics.map((item, index) => {
                             return (
-                                <div>
+                                <div key={index}>
                                     <div style={{maxHeight:200, maxWidth: 200}}>
                                         <CircularProgressbar percentage={100} text={item.value} styles={this.generateStyle(item, index)}/>
                                     </div>
@@ -140,7 +139,7 @@ class RoomDashboard extends Component {
                 {/* MarginRight is set to 50 because the persistant left side navigation bar is 50px and has a 100px margin
                     Therefore, 100 - 50 = 50  */}
                 <div style={{marginRight: 50}}>
-                <BootstrapTable keyField='_id' data={ this.state.entries } columns={ this.columns } />
+                <BootstrapTable keyField='cardNumber' data={ this.state.entries } columns={ this.columns } />
                 </div>
                 {this.props.match.params.room}
             </div>
