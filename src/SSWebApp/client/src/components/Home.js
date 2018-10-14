@@ -66,7 +66,7 @@ export default class Home extends Component {
             let isolatedEntries = []
             for (const ent of data) {
                 let date = new Date(ent.timestamp)
-                ent.timestamp = new Date(ent.timestamp).toUTCString('en-AU')
+                ent.timestamp = date.toLocaleDateString("en-AU") + " " + date.toLocaleTimeString("en-AU")//new Date(ent.timestamp).toUTCString('en-AU')
                 isolatedEntries.push(ent['cardNumber'])
             }
             let uniques = [...new Set(isolatedEntries)]
