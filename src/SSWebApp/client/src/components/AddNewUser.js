@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import { FormControl, FormGroup, ControlLabel, FieldGroup, Button } from 'react-bootstrap'
 
 const axios = require('axios');
-
 
 class AddNewUser extends Component {
     constructor(props) {
         super(props)
-
         this.setState = {firstName:"First Name"}
-        
     }
 
     handleFirstNameChange (e) {
@@ -31,9 +27,6 @@ class AddNewUser extends Component {
             })
     };
 
-    
-
-
     render() {
         return (
             <div>
@@ -44,7 +37,6 @@ class AddNewUser extends Component {
             </div>
         )
     };
-
 }
 
 export default AddNewUser;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SideNav, { Nav, NavIcon, NavText } from 'react-sidenav';
+import SideNav, { Nav, NavIcon } from 'react-sidenav';
 import SvgIcon from 'react-icons-kit';
 import {userPlus} from 'react-icons-kit/icomoon/userPlus'
 import {addressCardO} from 'react-icons-kit/fa/addressCardO'

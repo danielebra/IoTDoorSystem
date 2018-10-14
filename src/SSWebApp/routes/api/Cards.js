@@ -54,17 +54,6 @@ router.get('/', (req,res) => {
     });
 })
 
-// //Get each card by Id
-// router.get('/:cardId',(req,res,next) => {
-//     const id = req.params.cardId;
-//     Card.findById(id, (err,Card) => {
-//         if (err) {
-//             res.status(404).json({message:'Card cannot be found'})
-//         }
-//     }).then(card => res.json(card))
-// })
-
-
 //Get each card by Id
 router.get('/:cardId',(req,res,next) => {
     const id = req.params.cardId;
@@ -149,9 +138,6 @@ router.get('/deleteCard/:cardNumber',(req,res,next) => {
             res.status(500).json({error:err})
         });
 })
-
-
-
 //TODO: Use router.patch
 //When we wanted to change the card status to false
 

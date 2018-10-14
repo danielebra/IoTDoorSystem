@@ -141,7 +141,5 @@ router.post('/addAvailableRoom/:accessMangerId/:roomName', (req, res) => {
     );
 })
 
-
-
 module.exports = router;
 

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 import CircularProgressbar from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import { set } from 'mongoose';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-const axios = require('axios');
 
+const axios = require('axios');
 const localMetrics = [
     {
         name: "Today's Unique Requests",
@@ -59,14 +57,11 @@ class RoomDashboard extends Component {
         this.setState({
             metrics: localMetrics
         })
-        // TODO: This needs to be done in a more optimized way
-        // Get todaysEntries
         let todaysEntries;
         axios.get('/api/get/accessRequests/' + this.props.match.params.room + '/today').then(
             resp => resp.data
         ).then(data => {
             todaysEntries = data.length
-            // TODO: This needs to properly make a deep copy
             let metricsCopy = [...this.state.metrics]
             let isolatedEntries = []
             for (const ent of data) {
@@ -81,22 +76,18 @@ class RoomDashboard extends Component {
         }).catch((err) => {
             console.log(err);
         })
-        // Get yesterdays statse
+        // Get yesterdays stats
         let yesterdaysEntries = 0;
         axios.get('/api/get/accessRequests/' + this.props.match.params.room + '/yesterday').then(
             resp => resp.data
         ).then(data => {
             yesterdaysEntries = data.length
-            // TODO: This needs to properly make a deep copy
-            // Data of timestamp needs to be normalized to a human readable format
             let metricsCopy = [...this.state.metrics]
             metricsCopy[2].value = String(yesterdaysEntries)
             this.setState({metrics: metricsCopy})
         }).catch((err) => {
             console.log(err);
         })
-        
-
     }
     generateStyle(item, index) {
         // Check that we are on the Todays Entries

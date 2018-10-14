@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 
 const accessRequestModel = require('../../models/AccessRequest');
 
-
 router.get('/', (req,res,next) => {
     accessRequestModel.find()
         .exec(function(err,entry) {
@@ -37,6 +36,5 @@ router.get('/:roomNumber/yesterday', (req,res,next) => {
             res.send(output)
         })
 });
-
 
 module.exports = router;

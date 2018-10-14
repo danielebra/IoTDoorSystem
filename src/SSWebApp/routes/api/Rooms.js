@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-const AccessManager = require('../../models/AccessManager');
 //Item Model
 const Room = require('../../models/Room');
 
@@ -84,7 +83,5 @@ router.post('/addAccessManager/:roomNumber/:accessManagerId',(req,res,next) => {
         }
     })
 })
-
-
 
 module.exports = router;

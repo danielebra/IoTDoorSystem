@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 import BootstrapTable from 'react-bootstrap-table-next';
-import Card from './Card';
 import Modal from 'react-modal';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import Button from 'react-bootstrap/lib/Button';
 
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
-const room1 = require("../resources/images/rooms/room1.jpg")
-const room2 = require("../resources/images/rooms/room2.jpg")
-const room3 = require("../resources/images/rooms/room3.jpg")
-const room4 = require("../resources/images/rooms/room4.jpg")
-const room5 = require("../resources/images/rooms/room5.jpg")
 const axios = require('axios');
 
 const customStyles = {
