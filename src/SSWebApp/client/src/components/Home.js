@@ -151,6 +151,7 @@ export default class Home extends Component {
     render() {
         return (
             <div>
+                <p>Amount of Entries: {this.state.entries.length}</p>
                 <Button onClick={this.openFilterModal.bind(this, 'Filter')} bsStyle="primary">Filter</Button>
                 <div style={{ marginRight: 50 }}>
                     <BootstrapTable keyField='cardNumber' data={this.state.entries} columns={this.columns} pagination={paginationFactory()} />
