@@ -35,7 +35,8 @@ class UserManagement extends Component {
             emailAddress: '',
             phoneNumber: '',
             message: '',
-            alertIsOpen: false
+            alertIsOpen: false,
+            alertStyle: 'alert alert-success'
         }
         this.performCardAction = this.performCardAction.bind(this)
         this.setUserNumberState = this.setUserNumberState.bind(this)
@@ -58,11 +59,12 @@ class UserManagement extends Component {
             { dataField: 'cardId.cardNumber', text: 'Card Number', sort: true }
         ]
     }
-    showAlert(msg)
+    showAlert(msg, isSuccess)
     {
         this.setState({
             alertIsOpen: true,
-            message: msg
+            message: msg,
+            alertStyle: isSuccess ? 'alert alert-success' : 'alert alert-warning'
         })
         setTimeout(this.closeAlert.bind(this), 2000);
 
@@ -102,14 +104,22 @@ class UserManagement extends Component {
                 console.log("Add Card action was chosen")
                 axios.post('/api/users/addUser/', { userNumber: this.state.userNumber, firstName: this.state.firstName, lastName: this.state.lastName, emailAddress: this.state.emailAddress, phoneNumber: this.state.phoneNumber })
                     .then((res, err) => {
+                        console.log(res)
                         if (err) {
                             console(err)
                             this.showAlert(err)
                         } if (res) {
-                            console.log('New Card is Added')
-                            this.showAlert("New Card Added")
+                            if (res.data.success == undefined)
+                            {
+                                console.log('New Card is Added')
+                                this.showAlert("New Card Added", true)
+                            }
+                            else
+                            {
+                                this.showAlert("Card Not Added", false)
+                            }
                         } else {
-                            this.showAlert("Card not added")
+                            this.showAlert("Card not added", false)
                             console.log('New Card is Added')
                         }
                     })
@@ -192,7 +202,7 @@ class UserManagement extends Component {
             <div style={{ marginRight: 50 }}>
                 {this.state.alertIsOpen &&
                 <FlashMassage persistOnHover={true} >
-                <div class="alert alert-success" role="alert">{this.state.message}</div>
+                <div class={this.state.alertStyle} role="alert">{this.state.message}</div>
                 </FlashMassage>}
 
                 <center><div><h1>User Management</h1></div></center>
