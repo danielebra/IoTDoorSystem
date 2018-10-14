@@ -136,6 +136,7 @@ class RoomDashboard extends Component {
                 {/* MarginRight is set to 50 because the persistant left side navigation bar is 50px and has a 100px margin
                     Therefore, 100 - 50 = 50  */}
                 <div style={{marginRight: 50}}>
+                <p>Amount of Cards: {this.state.entries.length}</p>
                 <BootstrapTable keyField='cardNumber' data={ this.state.entries } columns={ this.columns } pagination={ paginationFactory() }/>
                 </div>
             </div>

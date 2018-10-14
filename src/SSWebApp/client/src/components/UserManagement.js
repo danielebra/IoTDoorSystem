@@ -136,6 +136,7 @@ class UserManagement extends Component {
         return (
             <div style={{ marginRight: 50 }}>
                 <center><div><h1>User Management</h1></div></center>
+                <p>Amount of Users: {this.state.users.length}</p>
                 <BootstrapTable keyField='_id' data={this.state.users} columns={this.columns} />
                 <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
                 <Button onClick={this.openCardActionModal.bind(this, 'Add User')} bsStyle="primary">Add User</Button>
