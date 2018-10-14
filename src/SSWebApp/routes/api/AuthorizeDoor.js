@@ -21,13 +21,23 @@ router.get('/:roomName/:cardNumber', (req,res) => {
         if (err) {
             res.json(err)
         } 
-        if (result) {}
+        if (result) {
+        }
         else {
             res.send('0')
+            
         }
         
+        
+    }).populate("allowedCards", (err,doc) => {
+        if(err) {
+            res.send(err)
+        } 
+        if(doc) {}
+        else {
+            res.send('not found')
+        }
     })
-    .populate("allowedCards")
     .then(result => {
         let status = result.allowedCards.some(card => {
             if(card.cardNumber == cardNumber && card.isActive == true) {
@@ -45,6 +55,7 @@ router.get('/:roomName/:cardNumber', (req,res) => {
                 res.send('0')
         })
     })
+    
 })
 
 module.exports = router;    
