@@ -44,12 +44,12 @@ class AccessManager extends Component {
             },
             {
                 dataField: 'isActive',
-                text: "isActive",
+                text: "Enabled",
                 sort: true
             },
             {
-                dataField: 'userId',
-                text: 'User ID',
+                dataField: 'userId.userNumber',
+                text: 'User Number',
                 sort: true
             }
         ]
@@ -69,7 +69,7 @@ class AccessManager extends Component {
     }
 
     performCardAction() {
-        switch (this.state.cardAction) {
+        switch (this.state.modalAction) {
             case "Add Card":
                 // TODO: Add card to AccessManager
                 break;
@@ -93,9 +93,11 @@ class AccessManager extends Component {
         axios.get('/api/accessManager/findAccessManagerByRoomName/' + this.props.match.params.room)
             .then((resp) => {
                 if (resp.data.accessManagerId != undefined)
+                {
                     this.setState({
                         allowedCards: resp.data.accessManagerId.allowedCards
                     })
+                }
             })
     }
     setCardNumberState(val) {

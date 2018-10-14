@@ -44,12 +44,14 @@ The Web Application is broken down into two parts. The `server` and the `client`
 
 	The server lives in the `/src/SSWebApp/` folder and can be executed with 
 		
+		cd src/SSWebApp/
 		npm run server
 
 2. Client
 
 	The client lives in the `/src/SSWebApp/client/` folder and can be executed with 
 	
+		cd src/SSWebApp/client/
 		npm run start
 	
 ## Install dependencies
