@@ -43,7 +43,7 @@ class NavigationBar extends Component {
 
             // </Navbar>
             // </div>
-            <nav className="navbar navbar-expand-sm navbar-dark dark" style={{background:"#2c3e50" , justifyContent:"center"}}>
+            <nav className="navbar navbar-expand-sm navbar-dark dark" style={{background:"#212F3C" , justifyContent:"center"}}>
                 <ul className="navbar-nav">
                     <li className="nav-item active">
                         <a className="nav-link" href='/'>Savage Security</a>
