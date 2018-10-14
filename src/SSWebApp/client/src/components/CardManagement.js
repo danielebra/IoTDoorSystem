@@ -121,6 +121,7 @@ class CardManagement extends Component {
             
             <div style={{marginRight: 50}}>
             <center><div><h1>Card Management</h1></div></center>
+            <p>Amount of Cards: {this.state.cards.length}</p>
             <BootstrapTable keyField='_id' data={ this.state.cards } columns={ this.columns } pagination={ paginationFactory() }/>
             <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
             <Button onClick={this.openCardActionModal.bind(this, 'Add Card')}  bsStyle="primary">Add Card</Button>

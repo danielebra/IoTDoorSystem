@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 import Card from './Card';
 const room1 = require("../resources/images/rooms/room1.jpg")
-const room2 = require("../resources/images/rooms/room2.jpg")
-const room3 = require("../resources/images/rooms/room3.jpg")
-const room4 = require("../resources/images/rooms/room4.jpg")
-const room5 = require("../resources/images/rooms/room5.jpg")
 const axios = require('axios');
 
 class RoomGenerator extends Component {

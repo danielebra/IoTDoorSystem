@@ -134,6 +134,7 @@ class UserManagement extends Component {
                         console.log('Fail')
                     }
                 })
+                break;
 
             default:
                 console.log("Unknown action")
@@ -164,16 +165,6 @@ class UserManagement extends Component {
     setCardNumberState(val) {
         this.setState({ cardNumber: val.target.value })
     }
-
-    componentDidMount() {
-        axios.get('/api/users')
-            .then(res => {
-                console.log(res.data)
-                this.setState({
-                    users: res.data
-                })
-            })
-    }
     render() {
         return (
             <div style={{ marginRight: 50 }}>
@@ -182,6 +173,7 @@ class UserManagement extends Component {
                 </FlashMassage>
 
                 <center><div><h1>User Management</h1></div></center>
+                <p>Amount of Users: {this.state.users.length}</p>
                 <BootstrapTable keyField='_id' data={this.state.users} columns={this.columns} />
                 <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap" }}>
                     <Button onClick={this.openCardActionModal.bind(this, 'Add User')} bsStyle="primary">Add User</Button>
@@ -287,11 +279,11 @@ class UserManagement extends Component {
                     </Form>
 
                 </Modal>
-                <Modal
-                    isOpen={this.state.modalIsOpen && this.state.cardAction == "Delete User"}
-                    style={customStyles}
-                    onRequestClose={this.closeModal}
-                    shouldCloseOnOverlayClick={true}
+            <Modal
+                isOpen={this.state.modalIsOpen && this.state.cardAction === "Delete User"}
+                style={customStyles}
+                onRequestClose={this.closeModal}
+                shouldCloseOnOverlayClick={true}
                 >
                     <Form>
                         <p>Delete User</p>

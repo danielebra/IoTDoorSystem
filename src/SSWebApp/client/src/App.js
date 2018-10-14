@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <Router>
       	<Switch>
-	        <Route exact path="/authorization/:card/:room" component={Authorization} />
+	        <Route exact path="/authorization/:room/:card" component={Authorization} />
 	        <Route path="/" component={router} />
       	</Switch>
       </Router>

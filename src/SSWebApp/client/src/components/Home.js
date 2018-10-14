@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import CircularProgressbar from 'react-circular-progressbar';
 import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-modal';
 import Form from 'react-bootstrap/lib/Form';
@@ -106,17 +105,17 @@ export default class Home extends Component {
     queryBuilder(){
         let query=''
         let qlist=[]
-        if (this.state.queryCard!=''){
+        if (this.state.queryCard!==''){
             qlist.push("cardNumber="+this.state.queryCard)  
         }
-        if (this.state.queryRoom!=''){
+        if (this.state.queryRoom!==''){
             qlist.push("roomName="+this.state.queryRoom)  
         }
-        if (this.state.queryOutcome!=''){
+        if (this.state.queryOutcome!==''){
             qlist.push("outcome="+this.state.queryOutcome)  
         }
         query=qlist.join("&")
-        if (query !=''){
+        if (query !==''){
             query="?"+query
         }
         return query
@@ -152,6 +151,7 @@ export default class Home extends Component {
     render() {
         return (
             <div>
+                <p>Amount of Entries: {this.state.entries.length}</p>
                 <Button onClick={this.openFilterModal.bind(this, 'Filter')} bsStyle="primary">Filter</Button>
                 <div style={{ marginRight: 50 }}>
                     <BootstrapTable keyField='cardNumber' data={this.state.entries} columns={this.columns} pagination={paginationFactory()} />

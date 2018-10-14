@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import NavigationBar from '../components/NavigationBar'
 import SideNavigationBar from '../components/SideNavigationBar'
-import Card from '../components/Card'
 import { Route } from "react-router-dom";
 import { Switch } from "react-router";
-import Authorization from './Authorization'
 import SiteGenerator from '../components/SiteGenerator';
 import RoomGenerator from '../components/RoomGenerator';
 import RoomDashboard from '../components/RoomDashboard';

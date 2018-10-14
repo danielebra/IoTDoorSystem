@@ -91,7 +91,7 @@ class RoomDashboard extends Component {
     }
     generateStyle(item, index) {
         // Check that we are on the Todays Entries
-        if (item.name == this.state.metrics[1].name)
+        if (item.name === this.state.metrics[1].name)
         {
             // Check that todays stats are better than yesterdays
             if (item.value > this.state.metrics[2].value)
@@ -99,7 +99,7 @@ class RoomDashboard extends Component {
 
                 return {path: {stroke: "rgba(0, 200, 0, 150)" }}
             }
-            else if (item.value == this.state.metrics[2].value)
+            else if (item.value === this.state.metrics[2].value)
             {
                 return {}
             }
@@ -136,6 +136,7 @@ class RoomDashboard extends Component {
                 {/* MarginRight is set to 50 because the persistant left side navigation bar is 50px and has a 100px margin
                     Therefore, 100 - 50 = 50  */}
                 <div style={{marginRight: 50}}>
+                <p>Amount of Cards: {this.state.entries.length}</p>
                 <BootstrapTable keyField='cardNumber' data={ this.state.entries } columns={ this.columns } pagination={ paginationFactory() }/>
                 </div>
             </div>

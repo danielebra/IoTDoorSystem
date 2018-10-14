@@ -26,7 +26,9 @@ const uint8_t PixelPin = 5;  // make sure to set this to the correct pin, ignore
 const char *wifi_ssid = WIFI_SSID;
 const char *wifi_password = WIFI_PASSWORD;
 const char *room_name = ROOM_NAME;
+const char *api_path = API_PATH;
 const int stepsPerRevolution = 200;
+const int port = PORT;
 int status = WL_IDLE_STATUS;
 
 Servo myservo;
@@ -76,7 +78,8 @@ int sendRequest(String msg)
   if (client.connect(server, 5000))
   {
     Serial.println("Connected to server");
-    client.print("GET /api/authorizeDoor/");
+    client.print("GET ");
+    client.print(api_path);
     client.print("/CB06.01.01/");
     client.print(msg);
     client.print(" HTTP/1.0\n\n");

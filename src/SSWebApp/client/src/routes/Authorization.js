@@ -6,7 +6,7 @@ class Authorization extends Component {
 	{
 		//put axios.get here
 		console.log("Making API request");
-		axios.get('/api/authorizeDoor/' + this.props.match.params.card + '/' + this.props.match.params.room ).then((response) => {
+		axios.get('/api/authorizeDoor/' + this.props.match.params.room + '/' + this.props.match.params.card ).then((response) => {
 			console.log(response);
 			this.setState(
 			{
@@ -17,13 +17,6 @@ class Authorization extends Component {
 	constructor(props)
 	{
 		super(props);
-		/*let approve_value = "-1"
-		
-		if (this.props.match.params.card == 729)
-			approve_value = "1"
-		else
-			approve_value = "0"*/
-
 		this.state = {
             approve_value: ""
         };
