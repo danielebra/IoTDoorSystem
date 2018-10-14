@@ -22,6 +22,15 @@ router.get('/', (req,res,next) => {
 //Access public
 
 router.post('/addUser/', (req,res) => {
+    if (!req.body.userNumber) {
+        res.json({ success: false, message: 'userNumber is required' });
+    } else if (!req.body.firstName) {
+        res.json({ success: false, message: 'firstName is required' });
+    } else if (!req.body.lastName) {
+        res.json({ success: false, message: 'lastName is required' });
+    } else if (!req.body.emailAddress) {
+        res.json({ success: false, message: 'emailAddress is required' });
+    } else {
     const newUser = new User({
         _id: new mongoose.Types.ObjectId(),
         userNumber: req.body.userNumber,
@@ -33,6 +42,7 @@ router.post('/addUser/', (req,res) => {
         cardId: req.body.cardId,
     });
     newUser.save().then(user => res.json(user));
+}
 });
 
 //TODO: Fix CastError when trying to find wrong object Id

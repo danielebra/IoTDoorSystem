@@ -20,6 +20,9 @@ router.get('/', (req,res) => {
 //Access public
 
 router.post('/create/:cardNumber', (req,res) => {
+    if (!req.body.cardNumber) {
+        res.json({ success: false, message: 'cardNumber is required' });
+    } else {
     const cardNumberParam = req.params.cardNumber
     const newCard = new Card({
         _id: mongoose.Types.ObjectId(),
@@ -38,6 +41,7 @@ router.post('/create/:cardNumber', (req,res) => {
                 error: err
             });
         })
+    }
 });
 
 // TODO: Use Card.findOne() and populate the data

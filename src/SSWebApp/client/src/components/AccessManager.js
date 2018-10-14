@@ -66,7 +66,6 @@ class AccessManager extends Component {
         switch (this.state.modalAction) {
             case "Add Card":
                 // TODO: Add card to AccessManager
-                console.log('fuck you')
                 console.log(this.state.accessManager._id)
                 axios.post('/api/accessManager/addAllowCard/' + this.state.accessManager._id + '/' + this.state.cardNumber)
                     .then(res => {
@@ -75,6 +74,10 @@ class AccessManager extends Component {
                 break;
             case "Remove Card":
                 // TODO: Remove card from AccessManager
+                axios.post('/api/accessManager/deleteAccessManagerCard/' + this.state.accessManager._id + '/' + this.state.cardNumber)
+                    .then(res => {
+                        console.log('card deleted')
+                    })
                 
                 break;
 
