@@ -37,7 +37,6 @@ router.post('/addAllowCard/:accessManagerId', (req, res) => {
     const accessManagerId = req.params.accessManagerId;
     const cardId = req.body.cardId;
 
-
     //TODO: fix this updating cards to the allow cards array
     AccessManager.findByIdAndUpdate(accessManagerId,
         { $addToSet: { allowedCards: { $each: [ cardId ] } } },
@@ -62,11 +61,6 @@ router.get('/findAccessManagerByRoomName/:roomName', (req,res,next) => {
             console.log(err)
         }
         if(result) {
-        //     result.accessManagerId.populate("cardId").exec((err, result) =>
-        // {
-        //     console.log(result)
-        //     res.json(result)
-        // })
             res.json(result)
         } 
         
@@ -91,8 +85,6 @@ router.post('/addAvailableRoom/:accessMangerId',(req,res) => {
         }
     );
 })
-
-
 
 module.exports = router;
 

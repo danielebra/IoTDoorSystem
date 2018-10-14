@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 import Card from './Card';
 const utsImage = require("./images/uts.jpg")
 const unswImage = require("./images/unsw.jpg")
@@ -24,9 +23,6 @@ class SiteGenerator extends Component {
     }
     componentDidMount()
     {
-        // TODO:
-        // Populate card information from database
-
         this.setState({
             locations: cards
         })

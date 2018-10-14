@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 import  BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import { Dirent } from 'fs';
 import Button from 'react-bootstrap/lib/Button';
 import Modal from 'react-modal';
 import Form from 'react-bootstrap/lib/Form';
@@ -110,7 +108,6 @@ class CardManagement extends Component {
             default:
                 console.log("Unknown action")
                 break;
-            //setTimeout(f => function({ this.updateTableData(); console.log("Updating table data") }), 1500);
         }
         this.closeModal()
         setTimeout(this.updateTableData.bind(this), 1000);
@@ -146,7 +143,6 @@ class CardManagement extends Component {
                             placeholder="Card Number"
                             value={this.state.cardNumber}
                             onChange={this.setCardNumberState}
-                            
                             />
                         <center style={{marginTop:10}}>
                             <Button onClick={this.performCardAction} bsStyle="primary">{this.state.cardAction}</Button>

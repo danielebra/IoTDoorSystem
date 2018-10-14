@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 class Card extends Component {
     render() {
-
         let redirectTo = window.location.pathname + "/" + this.props.name
         return (
             

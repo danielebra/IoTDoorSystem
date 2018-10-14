@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import CircularProgressbar from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import { set } from 'mongoose';
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import Modal from 'react-modal';
@@ -100,7 +97,6 @@ class UserManagement extends Component {
             default:
                 console.log("Unknown action")
                 break;
-            //setTimeout(f => function({ this.updateTableData(); console.log("Updating table data") }), 1500);
         }
         this.closeModal()
         // TODO: Update interface 
@@ -242,8 +238,6 @@ class UserManagement extends Component {
                                 onChange={this.setCardNumberState} />
                         </div>
 
-                       
-
                         <div>
                             <center style={{ marginTop: 10 }}>
                                 <Button onClick={this.performCardAction} bsStyle="primary">{this.state.cardAction}</Button>
@@ -254,8 +248,6 @@ class UserManagement extends Component {
                 </Modal>
 
             </div>
-
-
         )
     }
 }
