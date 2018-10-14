@@ -75,15 +75,21 @@ router.post('/addAllowCard/:accessManagerId/:cardNumber', (req, res) => {
 router.get('/findAccessManagerByRoomName/:roomName', (req, res, next) => {
     const roomName = req.params.roomName;
 
-    Room.findOne({ "name": roomName }).populate({ path: 'accessManagerId', populate: { path: 'allowedCards' } }).exec((err, result) => {
-        if (result) {
-            //     result.accessManagerId.populate("cardId").exec((err, result) =>
-            // {
-            //     console.log(result)
-            //     res.json(result)
-            // })
-            res.json(result)
+    Room.findOne({"name":roomName}).populate({path: 'accessManagerId', 
+    populate :{path: 'allowedCards', populate: {path: 'userId'} }}).exec((err,result) => {
+        if (err)
+        {
+            console.log(err)
         }
+        if(result) {
+        //     result.accessManagerId.populate("cardId").exec((err, result) =>
+        // {
+        //     console.log(result)
+        //     res.json(result)
+        // })
+            res.json(result)
+        } 
+        
         else {
             res.status(404).json({ message: 'No id found' })
         }

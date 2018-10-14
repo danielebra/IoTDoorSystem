@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Card from './Card';
-const utsImage = require("./images/utsDoor.jpg")
+const utsImage = require("./images/uts.jpg")
+const unswImage = require("./images/unsw.jpg")
 
 const cards = [
     {
@@ -10,7 +11,7 @@ const cards = [
     },
     {
         name: "UNSW",
-        image: utsImage
+        image: unswImage
     }
 ]
 
