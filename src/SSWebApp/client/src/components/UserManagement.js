@@ -101,6 +101,7 @@ class UserManagement extends Component {
                 axios.post('/api/users/removeUser/' + this.state.userNumber).then( res => {
                     console.log("Deleted")
                 })
+                break;
 
             default:
                 console.log("Unknown action")
@@ -130,16 +131,6 @@ class UserManagement extends Component {
     }
     setCardNumberState(val) {
         this.setState({ cardNumber: val.target.value})
-    }
-
-    componentDidMount() {
-        axios.get('/api/users')
-            .then(res => {
-                console.log(res.data)
-                this.setState({
-                    users: res.data
-                })
-            })
     }
     render() {
         return (
@@ -252,7 +243,7 @@ class UserManagement extends Component {
 
                 </Modal>
             <Modal
-                isOpen={this.state.modalIsOpen && this.state.cardAction == "Delete User"}
+                isOpen={this.state.modalIsOpen && this.state.cardAction === "Delete User"}
                 style={customStyles}
                 onRequestClose={this.closeModal}
                 shouldCloseOnOverlayClick={true}

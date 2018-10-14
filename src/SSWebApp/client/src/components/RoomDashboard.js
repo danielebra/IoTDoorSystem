@@ -91,7 +91,7 @@ class RoomDashboard extends Component {
     }
     generateStyle(item, index) {
         // Check that we are on the Todays Entries
-        if (item.name == this.state.metrics[1].name)
+        if (item.name === this.state.metrics[1].name)
         {
             // Check that todays stats are better than yesterdays
             if (item.value > this.state.metrics[2].value)
@@ -99,7 +99,7 @@ class RoomDashboard extends Component {
 
                 return {path: {stroke: "rgba(0, 200, 0, 150)" }}
             }
-            else if (item.value == this.state.metrics[2].value)
+            else if (item.value === this.state.metrics[2].value)
             {
                 return {}
             }

@@ -93,7 +93,7 @@ class AccessManager extends Component {
 
         axios.get('/api/accessManager/findAccessManagerByRoomName/' + this.props.match.params.room)
             .then((resp) => {
-                if (resp.data.accessManagerId != undefined)
+                if (resp.data.accessManagerId !== undefined)
                 {
                     this.setState({
                         accessManager: resp.data.accessManagerId,
