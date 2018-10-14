@@ -92,6 +92,8 @@ router.get('/blockCard/:cardNumber', (req,res,next) => {
     Card.findOneAndUpdate({"cardNumber": cardNumber}, {$set: {isActive: false}},{$upsert:false}, (err,result) => {
         if(err) {
             res.status(500).json(err)
+        } if(result) {
+            res.json('Card ' + cardNumber +' is blocked')
         }
         else {
             res.status(404).json('No card found')
@@ -104,6 +106,8 @@ router.get('/unblockCard/:cardNumber', (req,res,next) => {
     Card.findOneAndUpdate({"cardNumber": cardNumber}, {$set:{isActive: true}},{$upsert:false}, (err,result) => {
         if(err) {
             res.status(500).json('Error Found')
+        } if(result) {
+            res.json('Card' + cardNumber +'is unblocked')
         }
         else {
             res.status(404).json('No card Found')
@@ -116,9 +120,14 @@ router.get('/cardNumber/:cardNumber', (req,res,next) => {
     const cardNumber = req.param.cardNumber;
     Card.getCardByNumber(cardNumber, (err) => {
         if(err) {
-            res.status(500).json({message: 'No card found'});
-        } else {
+            res.status(500).json({message: err});
+        } 
+        if(cardNumber) {
             res.status(200).json(cardNumber);
+        }
+        
+        else {
+            res.status(404).json('No card Found')
         }
     })
 })
@@ -128,10 +137,15 @@ router.get('/deleteCard/:cardNumber',(req,res,next) => {
     const cardNumber = req.params.cardNumber;
     Card.findOneAndRemove({"cardNumber":cardNumber})
         .exec()
-        .then(card => {
+        .then((card,err) => {
+            if(err) {
+                res.status(500).json({message: err});
+                
+            }
             if(card) {
                 res.status(200).json({message: 'Card ' + cardNumber +' has been deleted'})
-            } else {
+            } 
+            else {
                 res.status(404).json({message:'No card found'})
             }
         })
