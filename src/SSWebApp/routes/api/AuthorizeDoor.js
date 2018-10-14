@@ -19,13 +19,11 @@ router.get('/:roomName/:cardNumber', (req,res) => {
 
 	AccessManager.findOne( {roomName: roomName} , function(err,result) {
         if (err) {
-            console.log('hit the error statement')
             res.json(err)
         } 
         if (result) {
         }
         else {
-            console.log('hit the else statement')
             res.send('0')
             
         }

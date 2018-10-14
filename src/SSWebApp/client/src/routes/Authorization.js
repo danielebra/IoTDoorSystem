@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 const axios = require('axios');
-
+// THIS FILE CAN BE DELETED
 class Authorization extends Component {
 	componentDidMount()
 	{
