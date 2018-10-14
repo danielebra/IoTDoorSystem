@@ -93,6 +93,11 @@ class UserManagement extends Component {
                 axios.post('/api/addOwnership/'+ this.state.cardNumber + '/' + this.state.userNumber).then( res => {
                     console.log("Assigned")
                 })
+            case "Remove User":
+                console.log("Remove User was chosen")
+                axios.post('/api/users/removeUser/' + this.state.userNumber).then( res => {
+                    console.log("Deleted")
+                })
 
             default:
                 console.log("Unknown action")
@@ -145,6 +150,7 @@ class UserManagement extends Component {
 
                 <Button onClick={this.openCardActionModal.bind(this, 'Add User')} bsStyle="primary">Add User</Button>
                 <Button onClick={this.openCardActionModal.bind(this, 'Assign Card')} bsStyle="primary">Assign User</Button>
+                <Button onClick={this.openCardActionModal.bind(this, 'Remove User')} bsStyle="danger">Remove User</Button>
 
                 <Modal
                     isOpen={this.state.modalIsOpen && this.state.cardAction === 'Add User'}
@@ -247,6 +253,32 @@ class UserManagement extends Component {
 
                 </Modal>
 
+                <Modal
+                    isOpen={this.state.modalIsOpen && this.state.cardAction === 'Remove User'}
+                    contentLabel="Example"
+                    style={customStyles}
+                    onRequestClose={this.closeModal}
+                    shouldCloseOnOverlayClick={true}
+                >
+                    <p>Assign card</p>
+                    <Form>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">User Number</label>
+                            <FormControl
+                                type="text"
+                                placeholder="User Number"
+                                value={this.state.userNumber}
+                                onChange={this.setUserNumberState} />
+                        </div>
+
+                        <div>
+                            <center style={{ marginTop: 10 }}>
+                                <Button onClick={this.performCardAction} bsStyle="danger">{this.state.cardAction}</Button>
+                            </center>
+                        </div>
+                    </Form>
+
+                </Modal>
             </div>
         )
     }
