@@ -58,7 +58,21 @@ class UserManagement extends Component {
             { dataField: 'cardId.cardNumber', text: 'Card Number', sort: true }
         ]
     }
+    showAlert(msg)
+    {
+        this.setState({
+            alertIsOpen: true,
+            message: msg
+        })
+        setTimeout(this.closeAlert.bind(this), 2000);
 
+    }
+    closeAlert()
+    {
+        this.setState({
+            alertIsOpen: false
+        })
+    }
     closeModal() {
         this.setState({ modalIsOpen: false })
     }
@@ -68,7 +82,6 @@ class UserManagement extends Component {
     openCardActionModal(action) {
         this.setState({
             modalIsOpen: true,
-            alertIsOpen: true,
             cardAction: action
         });
     }
@@ -91,22 +104,13 @@ class UserManagement extends Component {
                     .then((res, err) => {
                         if (err) {
                             console(err)
-                            this.setState({
-                                alertIsOpen: true,
-                                message: err
-                            })
+                            this.showAlert(err)
                         } if (res) {
                             console.log('New Card is Added')
-                            this.setState({
-                                alertIsOpen: true,
-                                message: 'New Card is Added'
-                            })
+                            this.showAlert("New Card Added")
                         } else {
+                            this.showAlert("Card not added")
                             console.log('New Card is Added')
-                            this.setState({
-                                alertIsOpen: true,
-                                message: 'New Card is Added'
-                            })
                         }
                     })
                 break;
@@ -186,9 +190,10 @@ class UserManagement extends Component {
     render() {
         return (
             <div style={{ marginRight: 50 }}>
-                <FlashMassage duration={10000} persistOnHover={true} >
+                {this.state.alertIsOpen &&
+                <FlashMassage persistOnHover={true} >
                 <div class="alert alert-success" role="alert">{this.state.message}</div>
-                </FlashMassage>
+                </FlashMassage>}
 
                 <center><div><h1>User Management</h1></div></center>
                 <p>Amount of Users: {this.state.users.length}</p>
