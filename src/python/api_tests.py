@@ -10,9 +10,9 @@ def build_url(path):
     :returns str:
     """
     return base + path
-API_ENTRY_authorize_door = build_url("/api/authorizeDoor/{}/{}") # Card, Room
+API_ENTRY_authorize_door = build_url("/api/authorizeDoor/{}/{}") # Room, Card
 
-def ignore_server_is_alive():
+def test_server_is_alive():
     """Check to see if the port of the server can be reached"""
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     usable_server = base
@@ -33,7 +33,7 @@ def test_authorize_door_granted():
     result = requests.get(API_ENTRY_authorize_door.format("CB06.01.01", "729")).content
     assert result == "1"
 
-def ignore_authorize_door_denied():
+def test_authorize_door_denied():
     """
     Check the authorizeDoor api for a denied entry.
     Expected outcome: 0
