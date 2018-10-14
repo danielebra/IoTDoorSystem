@@ -5,8 +5,9 @@ import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import Modal from 'react-modal';
+import FlashMassage from 'react-flash-message'
 
-import { Button } from 'react-bootstrap';
+import { Button, Alert } from 'react-bootstrap';
 
 const axios = require('axios');
 
@@ -33,6 +34,8 @@ class UserManagement extends Component {
             lastName: '',
             emailAddress: '',
             phoneNumber: '',
+            message: '',
+            alertIsOpen: false
         }
         this.performCardAction = this.performCardAction.bind(this)
         this.setUserNumberState = this.setUserNumberState.bind(this)
@@ -43,7 +46,6 @@ class UserManagement extends Component {
 
         this.setCardNumberState = this.setCardNumberState.bind(this)
         this.setUserNumberState = this.setUserNumberState.bind(this)
-
 
         this.openCardActionModal = this.openCardActionModal.bind(this)
         this.closeModal = this.closeModal.bind(this)
@@ -66,6 +68,7 @@ class UserManagement extends Component {
     openCardActionModal(action) {
         this.setState({
             modalIsOpen: true,
+            alertIsOpen: true,
             cardAction: action
         });
     }
@@ -84,22 +87,52 @@ class UserManagement extends Component {
         switch (this.state.cardAction) {
             case "Add User":
                 console.log("Add Card action was chosen")
-                axios.post('/api/users/addUser/', { userNumber: this.state.userNumber, firstName: this.state.firstName, lastName: this.state.lastName, emailAddress: this.state.emailAddress, phoneNumber : this.state.phoneNumber })
-                .then(res => {
-                    console.log("Card created")
-                })
+                axios.post('/api/users/addUser/', { userNumber: this.state.userNumber, firstName: this.state.firstName, lastName: this.state.lastName, emailAddress: this.state.emailAddress, phoneNumber: this.state.phoneNumber })
+                    .then((res, err) => {
+                        if (err) {
+                            console(err)
+                            this.setState({
+                                alertIsOpen: true,
+                                message: err
+                            })
+                        } if (res) {
+                            console.log('Success')
+                            this.setState({
+                                alertIsOpen: true,
+                                message: 'Success'
+                            })
+                        } else {
+                            console.log('Fail')
+                            this.setState({
+                                alertIsOpen: true,
+                                message: 'Fail'
+                            })
+                        }
+                    })
                 break;
-            case "Assign Card To User": 
+            case "Assign Card To User":
                 console.log("Assign Card To User to User was Assigned")
-                axios.post('/api/addOwnership/'+ this.state.cardNumber + '/' + this.state.userNumber).then( res => {
-                    console.log("Assigned")
+                axios.post('/api/addOwnership/' + this.state.cardNumber + '/' + this.state.userNumber).then((res, err) => {
+                    if (err) {
+                        console.log(err)
+                    } if (res) {
+                        console.log('Success')
+                    } else {
+                        console.log('Fail')
+                    }
                 })
                 break;
             case "Delete User":
-            console.log(this.state.userNumber)
+                console.log(this.state.userNumber)
                 console.log("Remove User was chosen")
-                axios.post('/api/users/removeUser/' + this.state.userNumber).then( res => {
-                    console.log("Deleted")
+                axios.post('/api/users/removeUser/' + this.state.userNumber).then((res, err) => {
+                    if (err) {
+                        console.log(err)
+                    } if (res) {
+                        console.log('Success')
+                    } else {
+                        console.log('Fail')
+                    }
                 })
 
             default:
@@ -113,7 +146,7 @@ class UserManagement extends Component {
     }
 
     setUserNumberState(val) {
-        this.setState({userNumber: val.target.value})
+        this.setState({ userNumber: val.target.value })
     }
 
     setFirstNameState(val) {
@@ -129,7 +162,7 @@ class UserManagement extends Component {
         this.setState({ phoneNumber: val.target.value })
     }
     setCardNumberState(val) {
-        this.setState({ cardNumber: val.target.value})
+        this.setState({ cardNumber: val.target.value })
     }
 
     componentDidMount() {
@@ -144,20 +177,25 @@ class UserManagement extends Component {
     render() {
         return (
             <div style={{ marginRight: 50 }}>
+                <FlashMassage duration={5000} persistOnHover={true} isOpen={this.state.alertIsOpen} bsStyle="hiii">
+                    <p value = {this.state.message}></p>
+                </FlashMassage>
+
                 <center><div><h1>User Management</h1></div></center>
                 <BootstrapTable keyField='_id' data={this.state.users} columns={this.columns} />
-                <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
-                <Button onClick={this.openCardActionModal.bind(this, 'Add User')} bsStyle="primary">Add User</Button>
-                <Button onClick={this.openCardActionModal.bind(this, 'Assign Card To User')} bsStyle="primary">Assign Card To User</Button>
-                <Button onClick={this.openCardActionModal.bind(this, 'Delete User')} bsStyle="danger">Delete User</Button>
+                <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap" }}>
+                    <Button onClick={this.openCardActionModal.bind(this, 'Add User')} bsStyle="primary">Add User</Button>
+                    <Button onClick={this.openCardActionModal.bind(this, 'Assign Card To User')} bsStyle="primary">Assign Card To User</Button>
+                    <Button onClick={this.openCardActionModal.bind(this, 'Delete User')} bsStyle="danger">Delete User</Button>
                 </div>
+
                 <Modal
                     isOpen={this.state.modalIsOpen && this.state.cardAction === 'Add User'}
                     contentLabel="Example"
                     style={customStyles}
                     onRequestClose={this.closeModal}
                     shouldCloseOnOverlayClick={true}>
-                    
+
                     <p>Add user</p>
                     <Form>
                         <div class="form-group">
@@ -205,8 +243,6 @@ class UserManagement extends Component {
                                 onChange={this.setPhoneNumberState} />
                         </div>
 
-
-
                         <div>
                             <center style={{ marginTop: 10 }}>
                                 <Button onClick={this.performCardAction} bsStyle="primary">{this.state.cardAction}</Button>
@@ -216,7 +252,7 @@ class UserManagement extends Component {
 
                 </Modal>
 
-            <Modal
+                <Modal
                     isOpen={this.state.modalIsOpen && this.state.cardAction === 'Assign Card To User'}
                     contentLabel="Example"
                     style={customStyles}
@@ -251,14 +287,14 @@ class UserManagement extends Component {
                     </Form>
 
                 </Modal>
-            <Modal
-                isOpen={this.state.modalIsOpen && this.state.cardAction == "Delete User"}
-                style={customStyles}
-                onRequestClose={this.closeModal}
-                shouldCloseOnOverlayClick={true}
+                <Modal
+                    isOpen={this.state.modalIsOpen && this.state.cardAction == "Delete User"}
+                    style={customStyles}
+                    onRequestClose={this.closeModal}
+                    shouldCloseOnOverlayClick={true}
                 >
-                 <Form>
-                     <p>Delete User</p>
+                    <Form>
+                        <p>Delete User</p>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">User Number</label>
                             <FormControl
