@@ -27,12 +27,15 @@ class RoomManagement extends Component {
     }
     render() {
         return (
-            <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
-                {this.state.rooms.map((item, index) => {
-                    
-                    return <Card key={index} room={item.name} name={item.name} image={room} />
-                    })
-                }
+            <div>
+                <center><div><h1>Room Management</h1></div></center>
+                <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
+                    {this.state.rooms.map((item, index) => {
+                        
+                        return <Card key={index} room={item.name} name={item.name} image={room} />
+                        })
+                    }
+                </div>
             </div>
             )
     }

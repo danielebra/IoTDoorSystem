@@ -29,11 +29,14 @@ class SiteGenerator extends Component {
     }
     render() {
         return (
+            <div>
+            <center><div><h1>Sites</h1></div></center>
             <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
                 {this.state.locations.map((item, index) => {
                     return <Card key={index} name={item.name} image={item.image} />
                     })
                 }
+            </div>
             </div>
             )
     }
