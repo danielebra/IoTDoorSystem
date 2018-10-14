@@ -94,6 +94,8 @@ This file is used to pass information to the `arduino` that may change per deplo
 	#define WIFI_SSID "{$SSID}"
 	#define WIFI_PASSOWRD "{$PASSWORD}"
 	#define ROOM_NAME "{$ROOM_NAME}"
+	#define PORT 5000
+	#define API_PATH "/api/authorizeDoor/"
 	int ips[] = {$IP1, $IP2, $IP3, $IP4};
 
 An example of this:
@@ -101,6 +103,8 @@ An example of this:
 	#define WIFI_SSID "SSecurity"
 	#define WIFI_PASSWORD "SSPassword"
 	#define ROOM_NAME "Room1"
+	#define PORT 1337
+	#define API_PATH "/api/entry_point"
 	int ips[] {192, 168, 1, 1};
 ## Dependencies
 
