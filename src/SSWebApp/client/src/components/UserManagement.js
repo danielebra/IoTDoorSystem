@@ -35,6 +35,7 @@ class UserManagement extends Component {
             emailAddress: '',
             phoneNumber: '',
             message: '',
+            cardNumber: '',
             alertIsOpen: false,
             alertStyle: 'alert alert-success'
         }
@@ -127,22 +128,28 @@ class UserManagement extends Component {
             case "Assign Card To User":
                 console.log("Assign Card To User to User was Assigned")
                 axios.post('/api/addOwnership/' + this.state.cardNumber + '/' + this.state.userNumber).then((res, err) => {
+                    console.log("Inside assign card to user")
                     if (err) {
+                        console.log("INSIDE")
+                        this.showAlert(err, false)
                         console(err)
-                        this.setState({
-                            message: err
-                        })
                     } if (res) {
+                        console.log(res)
+                        if (res.data.success === false || res.data === "No User Number Found")
+                        {
+                            this.showAlert("Failed to assign card to user", false)
+                        }
+                        else
+                        {
+                            this.showAlert("Assigned card to user", true)
+                        }
                         console.log('Card is assigned to user')
-                        this.setState({
-                            message: 'Card is assigned to user'
-                        })
                     } else {
                         console.log('Fail to assign card to user')
-                        this.setState({
-                            message: 'Fail to assign card to user'
-                        })
+                        this.showAlert("Failed to assign card to user", false)
                     }
+                }).catch((err) => {
+                    this.showAlert("Failed to assign card to user", false)
                 })
                 break;
             case "Delete User":
@@ -151,20 +158,16 @@ class UserManagement extends Component {
                 axios.post('/api/users/removeUser/' + this.state.userNumber).then((res, err) => {
                     if (err) {
                         console(err)
-                        this.setState({
-                            message: err
-                        })
+                        this.showAlert(err, false)
                     } if (res) {
                         console.log('User is removed')
-                        this.setState({
-                            message: 'User is removed'
-                        })
+                        this.showAlert("User successfully removed", true)
                     } else {
                         console.log('Fail to remove user')
-                        this.setState({
-                            message: 'Fail to remove user'
-                        })
+                        this.showAlert("Failed to remove user", false)
                     }
+                }).catch((err) => {
+                    this.showAlert("User not found. Unable to delete user", false)
                 })
                 break;
 
@@ -174,7 +177,7 @@ class UserManagement extends Component {
         }
         this.closeModal()
         console.log("Updating table")
-        setTimeout(this.updateTableData.bind(this), 1000);
+        setTimeout(this.updateTableData.bind(this), 3000);
 
     }
 
