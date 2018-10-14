@@ -20,10 +20,12 @@ router.get('/', (req,res) => {
 //Access public
 
 router.post('/create/:cardNumber', (req,res) => {
-    if (!req.body.cardNumber) {
+    if (!req.params.cardNumber) {
         res.json({ success: false, message: 'cardNumber is required' });
-    } else {
+    } 
+    else {
     const cardNumberParam = req.params.cardNumber
+
     const newCard = new Card({
         _id: mongoose.Types.ObjectId(),
         cardNumber: cardNumberParam, //req.body.cardNumber,
