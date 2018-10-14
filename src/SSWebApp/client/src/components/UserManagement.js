@@ -44,6 +44,9 @@ class UserManagement extends Component {
         this.setEmailAddressState = this.setEmailAddressState.bind(this)
         this.setPhoneNumberState = this.setPhoneNumberState.bind(this)
 
+        this.setCardNumberState = this.setCardNumberState.bind(this)
+        this.setUserNumberState = this.setUserNumberState.bind(this)
+
 
         this.openCardActionModal = this.openCardActionModal.bind(this)
         this.closeModal = this.closeModal.bind(this)
@@ -88,9 +91,11 @@ class UserManagement extends Component {
                     console.log("Card created")
                 })
                 break;
-            case "Assign Card To User": 
+            case "Assign Card": 
                 console.log("Assign Card to User was Assigned")
-                axios.post('/api/addOwnership')
+                axios.post('/api/addOwnership/'+ this.state.cardNumber + '/' + this.state.userNumber).then( res => {
+                    console.log("Assigned")
+                })
 
             default:
                 console.log("Unknown action")
@@ -104,8 +109,7 @@ class UserManagement extends Component {
     }
 
     setUserNumberState(val) {
-        let hello = this.setState({userNumber: val.target.value})
-        console.log('asdfsadfdsd' +hello)  
+        this.setState({userNumber: val.target.value})
     }
 
     setFirstNameState(val) {
@@ -119,6 +123,13 @@ class UserManagement extends Component {
     }
     setPhoneNumberState(val) {
         this.setState({ phoneNumber: val.target.value })
+    }
+
+    setUserNumberState(val) {
+        this.setState({ userNumber: val.target.value})
+    }
+    setCardNumberState(val) {
+        this.setState({ cardNumber: val.target.value})
     }
 
     componentDidMount() {
@@ -137,13 +148,15 @@ class UserManagement extends Component {
                 <BootstrapTable keyField='_id' data={this.state.users} columns={this.columns} />
 
                 <Button onClick={this.openCardActionModal.bind(this, 'Add User')} bsStyle="primary">Add User</Button>
+                <Button onClick={this.openCardActionModal.bind(this, 'Assign Card')} bsStyle="primary">Assign User</Button>
+
                 <Modal
-                    isOpen={this.state.modalIsOpen}
+                    isOpen={this.state.modalIsOpen && this.state.cardAction === 'Add User'}
                     contentLabel="Example"
                     style={customStyles}
                     onRequestClose={this.closeModal}
-                    shouldCloseOnOverlayClick={true}
-                >
+                    shouldCloseOnOverlayClick={true}>
+                    
                     <p>Add user</p>
                     <Form>
                         <div class="form-group">
@@ -201,6 +214,45 @@ class UserManagement extends Component {
                     </Form>
 
                 </Modal>
+
+            <Modal
+                    isOpen={this.state.modalIsOpen && this.state.cardAction === 'Assign Card'}
+                    contentLabel="Example"
+                    style={customStyles}
+                    onRequestClose={this.closeModal}
+                    shouldCloseOnOverlayClick={true}
+                >
+                    <p>Assign card</p>
+                    <Form>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">User Number</label>
+                            <FormControl
+                                type="text"
+                                placeholder="User Number"
+                                value={this.state.userNumber}
+                                onChange={this.setUserNumberState} />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Card Number</label>
+                            <FormControl
+                                type="text"
+                                placeholder="Card Number"
+                                value={this.state.cardNumber}
+                                onChange={this.setCardNumberState} />
+                        </div>
+
+                       
+
+                        <div>
+                            <center style={{ marginTop: 10 }}>
+                                <Button onClick={this.performCardAction} bsStyle="primary">{this.state.cardAction}</Button>
+                            </center>
+                        </div>
+                    </Form>
+
+                </Modal>
+
             </div>
 
 
