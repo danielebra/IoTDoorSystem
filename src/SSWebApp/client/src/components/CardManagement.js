@@ -23,7 +23,6 @@ Modal.setAppElement('body')
 class CardManagement extends Component {
     constructor(props)
     {
-        console.log("correctpage")
         super(props)
         this.state = {
                         cards: [], 

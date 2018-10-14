@@ -51,6 +51,7 @@ class UserManagement extends Component {
         this.columns = [
             { dataField: 'userNumber', text: 'User Number', sort: true },
             { dataField: 'firstName', text: 'First Name', sort: true },
+            { dataField: 'lastName', text: 'Last Name', sort: true },
             { dataField: 'emailAddress', text: 'Email Address', sort: true },
             { dataField: 'cardId.cardNumber', text: 'Card Number', sort: true }
         ]
@@ -88,10 +89,17 @@ class UserManagement extends Component {
                     console.log("Card created")
                 })
                 break;
-            case "Assign Card": 
-                console.log("Assign Card to User was Assigned")
+            case "Assign Card To User": 
+                console.log("Assign Card To User to User was Assigned")
                 axios.post('/api/addOwnership/'+ this.state.cardNumber + '/' + this.state.userNumber).then( res => {
                     console.log("Assigned")
+                })
+                break;
+            case "Delete User":
+            console.log(this.state.userNumber)
+                console.log("Remove User was chosen")
+                axios.post('/api/users/removeUser/' + this.state.userNumber).then( res => {
+                    console.log("Deleted")
                 })
 
             default:
@@ -120,10 +128,6 @@ class UserManagement extends Component {
     setPhoneNumberState(val) {
         this.setState({ phoneNumber: val.target.value })
     }
-
-    setUserNumberState(val) {
-        this.setState({ userNumber: val.target.value})
-    }
     setCardNumberState(val) {
         this.setState({ cardNumber: val.target.value})
     }
@@ -142,10 +146,11 @@ class UserManagement extends Component {
             <div style={{ marginRight: 50 }}>
                 <center><div><h1>User Management</h1></div></center>
                 <BootstrapTable keyField='_id' data={this.state.users} columns={this.columns} />
-
+                <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
                 <Button onClick={this.openCardActionModal.bind(this, 'Add User')} bsStyle="primary">Add User</Button>
-                <Button onClick={this.openCardActionModal.bind(this, 'Assign Card')} bsStyle="primary">Assign User</Button>
-
+                <Button onClick={this.openCardActionModal.bind(this, 'Assign Card To User')} bsStyle="primary">Assign Card To User</Button>
+                <Button onClick={this.openCardActionModal.bind(this, 'Delete User')} bsStyle="danger">Delete User</Button>
+                </div>
                 <Modal
                     isOpen={this.state.modalIsOpen && this.state.cardAction === 'Add User'}
                     contentLabel="Example"
@@ -212,13 +217,13 @@ class UserManagement extends Component {
                 </Modal>
 
             <Modal
-                    isOpen={this.state.modalIsOpen && this.state.cardAction === 'Assign Card'}
+                    isOpen={this.state.modalIsOpen && this.state.cardAction === 'Assign Card To User'}
                     contentLabel="Example"
                     style={customStyles}
                     onRequestClose={this.closeModal}
                     shouldCloseOnOverlayClick={true}
                 >
-                    <p>Assign card</p>
+                    <p>Assign Card To User</p>
                     <Form>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">User Number</label>
@@ -246,7 +251,30 @@ class UserManagement extends Component {
                     </Form>
 
                 </Modal>
+            <Modal
+                isOpen={this.state.modalIsOpen && this.state.cardAction == "Delete User"}
+                style={customStyles}
+                onRequestClose={this.closeModal}
+                shouldCloseOnOverlayClick={true}
+                >
+                 <Form>
+                     <p>Delete User</p>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">User Number</label>
+                            <FormControl
+                                type="text"
+                                placeholder="User Number"
+                                value={this.state.userNumber}
+                                onChange={this.setUserNumberState} />
+                        </div>
 
+                        <div>
+                            <center style={{ marginTop: 10 }}>
+                                <Button onClick={this.performCardAction} bsStyle="danger">{this.state.cardAction}</Button>
+                            </center>
+                        </div>
+                    </Form>
+                </Modal>
             </div>
         )
     }

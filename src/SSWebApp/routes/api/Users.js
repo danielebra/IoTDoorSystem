@@ -103,4 +103,21 @@ router.delete('/:userId',(req,res,next) => {
         });
 })
 
+//Delete each user by UserNumber
+router.post('/removeUser/:userNumber',(req,res,next) => {
+    const userNumber = req.params.userNumber;
+    User.findOneAndRemove({"userNumber": userNumber})
+        .exec()
+        .then(user => {
+            if(user) {
+                res.status(200).json({message: 'User ' + userNumber +' has been deleted'})
+            } else {
+                res.status(404).json({message:'No id found'})
+            }
+        })
+        .catch(err => {
+            res.status(500).json({error:err})
+        });
+})
+
 module.exports = router;
