@@ -34,7 +34,8 @@ class AccessManager extends Component {
             allowedCards: [],
             modalIsOpen: false,
             cardNumber: '',
-            modalAction: ''
+            modalAction: '',
+            accessManager:'',
         }
         this.columns = [
             {
@@ -69,12 +70,19 @@ class AccessManager extends Component {
     }
 
     performCardAction() {
-        switch (this.state.cardAction) {
+        switch (this.state.modalAction) {
             case "Add Card":
                 // TODO: Add card to AccessManager
+                console.log('fuck you')
+                console.log(this.state.accessManager._id)
+                axios.post('/api/accessManager/addAllowCard/' + this.state.accessManager._id + '/' + this.state.cardNumber)
+                    .then(res => {
+                        console.log('card Added')
+                    })
                 break;
             case "Remove Card":
                 // TODO: Remove card from AccessManager
+                
                 break;
 
             default:
@@ -94,8 +102,11 @@ class AccessManager extends Component {
             .then((resp) => {
                 if (resp.data.accessManagerId != undefined)
                     this.setState({
-                        allowedCards: resp.data.accessManagerId.allowedCards
+                        accessManager: resp.data.accessManagerId,
+                        allowedCards: resp.data.accessManagerId.allowedCards,
+                        
                     })
+
             })
     }
     setCardNumberState(val) {
@@ -129,7 +140,6 @@ class AccessManager extends Component {
                                 placeholder="Card Number"
                                 value={this.state.cardNumber}
                                 onChange={this.setCardNumberState}
-
                             />
                             <center style={{ marginTop: 10 }}>
                                 <Button onClick={this.performCardAction} bsStyle="primary">{this.state.modalAction}</Button>
