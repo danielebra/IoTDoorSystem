@@ -110,7 +110,7 @@ export default class Home extends Component {
             qlist.push("cardNumber="+this.state.queryCard)  
         }
         if (this.state.queryRoom!=''){
-            qlist.push("roomNumber="+this.state.queryRoom)  
+            qlist.push("roomName="+this.state.queryRoom)  
         }
         if (this.state.queryOutcome!=''){
             qlist.push("outcome="+this.state.queryOutcome)  
@@ -177,7 +177,7 @@ export default class Home extends Component {
                                 
                                 <FormControl
                                     type="text"
-                                    placeholder="Room Number"
+                                    placeholder="Room Name"
                                     value={this.state.queryRoom}
                                     onChange={this.setQueryRoom}
                                 />

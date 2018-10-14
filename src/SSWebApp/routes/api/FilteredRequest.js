@@ -21,7 +21,7 @@ http://localhost/articles?year=2016&month=1&day=19
 */
 
 router.get('/', (req,res,next) => {
-    const roomNumber = req.query.roomNumber
+    const roomName = req.query.roomName
     const cardNumber = req.query.cardNumber
     const startDate = req.query.startDate ? new Date(req.query.startDate) : undefined
     const endDate = req.query.endDate ? new Date(req.query.endDate) : undefined
@@ -33,9 +33,9 @@ router.get('/', (req,res,next) => {
                     return e.cardNumber == cardNumber
                 })
             }
-            if (roomNumber != undefined){
+            if (roomName != undefined){
                 entry = entry.filter( e=>{
-                    return e.roomNumber == roomNumber
+                    return e.roomName == roomName
                 })
             }
             
