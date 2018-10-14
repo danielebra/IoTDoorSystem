@@ -99,8 +99,8 @@ class UserManagement extends Component {
                 break;
         }
         this.closeModal()
-        // TODO: Update interface 
-        //setTimeout(this.updateTableData, 3000);
+        console.log("Updating table")
+        setTimeout(this.updateTableData.bind(this), 1000);
 
     }
 
