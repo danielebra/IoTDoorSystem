@@ -51,6 +51,7 @@ class UserManagement extends Component {
         this.columns = [
             { dataField: 'userNumber', text: 'User Number', sort: true },
             { dataField: 'firstName', text: 'First Name', sort: true },
+            { dataField: 'lastName', text: 'Last Name', sort: true },
             { dataField: 'emailAddress', text: 'Email Address', sort: true },
             { dataField: 'cardId.cardNumber', text: 'Card Number', sort: true }
         ]
@@ -95,8 +96,11 @@ class UserManagement extends Component {
                 })
                 break;
             case "Delete User":
-                // TODO: Delete a user
-            break;
+            console.log(this.state.userNumber)
+                console.log("Remove User was chosen")
+                axios.post('/api/users/removeUser/' + this.state.userNumber).then( res => {
+                    console.log("Deleted")
+                })
 
             default:
                 console.log("Unknown action")
@@ -123,10 +127,6 @@ class UserManagement extends Component {
     }
     setPhoneNumberState(val) {
         this.setState({ phoneNumber: val.target.value })
-    }
-
-    setUserNumberState(val) {
-        this.setState({ userNumber: val.target.value})
     }
     setCardNumberState(val) {
         this.setState({ cardNumber: val.target.value})
