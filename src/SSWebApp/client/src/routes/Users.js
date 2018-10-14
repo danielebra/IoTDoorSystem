@@ -3,7 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
 import paginationFactory from 'react-bootstrap-table2-paginator';
-
+// THIS PAGE IS REDUNDANT DUE TO UserManagement
 
 const axios = require('axios');
 
@@ -33,13 +33,9 @@ class Users extends Component {
 
 
     componentDidMount() {
-        console.log("Making API request");
         axios.get('/api/users')
             .then(
-                // const users = response.data.map(obj => obj.data);
-                // const users = response.data;
                 response => response.data,
-                // console.log(response)
             )
             .then(data => this.setState({ data }))
             .catch((err) => {

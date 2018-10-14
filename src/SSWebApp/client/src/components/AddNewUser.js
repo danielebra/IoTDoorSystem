@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
 const axios = require('axios');
-
+// THIS FILE CAN BE DELETED
 class AddNewUser extends Component {
     constructor(props) {
         super(props)

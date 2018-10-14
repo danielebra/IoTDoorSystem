@@ -19,7 +19,6 @@ class RoomGenerator extends Component {
         axios.get('/api/rooms/allRoomsByLocation/' + this.props.match.params.location)
         .then(resp => 
             {
-                console.log(resp.data)
                 this.setState({
                 rooms: resp.data
                 })

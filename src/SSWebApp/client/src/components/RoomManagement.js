@@ -15,8 +15,6 @@ class RoomManagement extends Component {
     }
     componentDidMount()
     {
-        console.log("look here this is new")
-        console.log(this.props)
         axios.get('/api/rooms/allRoomsByLocation/' + this.state.location)
         .then(resp => 
             {
