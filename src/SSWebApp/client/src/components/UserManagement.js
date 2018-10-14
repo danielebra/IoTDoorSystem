@@ -22,6 +22,7 @@ const customStyles = {
     }
 };
 
+
 Modal.setAppElement('body')
 class UserManagement extends Component {
     constructor(props) {
@@ -67,6 +68,21 @@ class UserManagement extends Component {
         setTimeout(this.closeAlert.bind(this), 2000);
 
     }
+
+    validateAddUserField = (event) => {
+        let error = []
+        event.preventDefault();
+        
+        if(typeof(this.state.userNumber) === 'undefined'){
+            this.showError('User Number is undefined')
+        }
+        else if (this.state.userNumber === '') {
+            this.showError('User Number is empty')
+        } else if(this.state.userNumber === null){
+            this.showError('User Number is empty')
+        }
+    }
+
     closeAlert()
     {
         this.setState({
@@ -212,11 +228,12 @@ class UserManagement extends Component {
                     shouldCloseOnOverlayClick={true}>
 
                     <p>Add user</p>
-                    <Form>
+                    <Form onSubmit={this.validateAddUserField}>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">User Number</label>
                             <FormControl
                                 type="text"
+                                ref="userNumber"
                                 placeholder="User Number"
                                 value={this.state.userNumber}
                                 onChange={this.setUserNumberState} />
@@ -282,7 +299,8 @@ class UserManagement extends Component {
                                 type="text"
                                 placeholder="User Number"
                                 value={this.state.userNumber}
-                                onChange={this.setUserNumberState} />
+                                onChange={this.setUserNumberState}
+                                />
                         </div>
 
                         <div class="form-group">
