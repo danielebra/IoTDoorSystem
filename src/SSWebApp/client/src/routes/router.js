@@ -4,8 +4,6 @@ import SideNavigationBar from '../components/SideNavigationBar'
 import Card from '../components/Card'
 import { Route } from "react-router-dom";
 import { Switch } from "react-router";
-import Rush from './Rush'
-import UTSDoor from './UTSDoor'
 import Authorization from './Authorization'
 import SiteGenerator from '../components/SiteGenerator';
 import RoomGenerator from '../components/RoomGenerator';

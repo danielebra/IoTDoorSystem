@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import utsDoor from './images/utsDoor.jpg'
 import { Link } from "react-router-dom";
 
 class Card extends Component {
