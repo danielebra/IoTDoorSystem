@@ -10,6 +10,7 @@
     "react-bootstrap-table2-paginator": "^1.0.3",
     "react-circular-progressbar": "^1.0.0",
     "react-dom": "^16.5.2",
+    "react-flash-message": "^1.0.2",
     "react-icons-kit": "^1.1.7",
     "react-modal": "^3.6.1",
     "react-router": "^4.3.1",

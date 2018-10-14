@@ -59,8 +59,6 @@ router.get('/:roomName/:cardNumber', (req, res) => {
                         res.send('0')
                 })
             }
-
-
         })
 
 })

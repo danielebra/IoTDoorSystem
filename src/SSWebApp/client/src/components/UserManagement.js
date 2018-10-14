@@ -96,16 +96,16 @@ class UserManagement extends Component {
                                 message: err
                             })
                         } if (res) {
-                            console.log('Success')
+                            console.log('New Card is Added')
                             this.setState({
                                 alertIsOpen: true,
-                                message: 'Success'
+                                message: 'New Card is Added'
                             })
                         } else {
-                            console.log('Fail')
+                            console.log('New Card is Added')
                             this.setState({
                                 alertIsOpen: true,
-                                message: 'Fail'
+                                message: 'New Card is Added'
                             })
                         }
                     })
@@ -114,11 +114,20 @@ class UserManagement extends Component {
                 console.log("Assign Card To User to User was Assigned")
                 axios.post('/api/addOwnership/' + this.state.cardNumber + '/' + this.state.userNumber).then((res, err) => {
                     if (err) {
-                        console.log(err)
+                        console(err)
+                        this.setState({
+                            message: err
+                        })
                     } if (res) {
-                        console.log('Success')
+                        console.log('Card is assigned to user')
+                        this.setState({
+                            message: 'Card is assigned to user'
+                        })
                     } else {
-                        console.log('Fail')
+                        console.log('Fail to assign card to user')
+                        this.setState({
+                            message: 'Fail to assign card to user'
+                        })
                     }
                 })
                 break;
@@ -127,11 +136,20 @@ class UserManagement extends Component {
                 console.log("Remove User was chosen")
                 axios.post('/api/users/removeUser/' + this.state.userNumber).then((res, err) => {
                     if (err) {
-                        console.log(err)
+                        console(err)
+                        this.setState({
+                            message: err
+                        })
                     } if (res) {
-                        console.log('Success')
+                        console.log('User is removed')
+                        this.setState({
+                            message: 'User is removed'
+                        })
                     } else {
-                        console.log('Fail')
+                        console.log('Fail to remove user')
+                        this.setState({
+                            message: 'Fail to remove user'
+                        })
                     }
                 })
                 break;
@@ -168,8 +186,8 @@ class UserManagement extends Component {
     render() {
         return (
             <div style={{ marginRight: 50 }}>
-                <FlashMassage duration={5000} persistOnHover={true} isOpen={this.state.alertIsOpen} bsStyle="hiii">
-                    <p value = {this.state.message}></p>
+                <FlashMassage duration={10000} persistOnHover={true} >
+                <div class="alert alert-success" role="alert">{this.state.message}</div>
                 </FlashMassage>
 
                 <center><div><h1>User Management</h1></div></center>

@@ -6,6 +6,8 @@ import Modal from 'react-modal';
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import FlashMassage from 'react-flash-message'
+
 const axios = require('axios');
 
 const customStyles = {
@@ -28,7 +30,9 @@ class CardManagement extends Component {
                         cards: [], 
                         modalIsOpen: false,
                         cardNumber: '',
-                        cardAction: ''
+                        cardAction: '',
+                        message: ''
+
                     }
 
         this.performCardAction = this.performCardAction.bind(this)
@@ -84,25 +88,85 @@ class CardManagement extends Component {
         {
             case "Add Card":
                 console.log("Add Card action was chosen")
-                axios.post('/api/cards/create/' + this.state.cardNumber).then(res => {
-                        console.log("Card created")
-                    })
+                axios.post('/api/cards/create/' + this.state.cardNumber).then((res, err) => {
+                    if (err) {
+                        console(err)
+                        this.setState({
+                            message: err
+                        })
+                    } if (res) {
+                        console.log('Success')
+                        this.setState({
+                            message: 'New Card is Added'
+                        })
+                    } else {
+                        console.log('Fail')
+                        this.setState({
+                            message: 'Fail to add new card'
+                        })
+                    }
+                })
                 break;
             case "Block Card":
-                axios.get('/api/cards/blockCard/' + this.state.cardNumber).then(res => {
-                        console.log("Card blocked")
-                    })
+                axios.get('/api/cards/blockCard/' + this.state.cardNumber).then((res, err) => {
+                    if (err) {
+                        console(err)
+                        this.setState({
+                            message: err
+                        })
+                    } if (res) {
+                        console.log('Success')
+                        this.setState({
+                            message: 'Card is blocked'
+                        })
+                    } else {
+                        console.log('Fail')
+                        this.setState({
+                            message: 'Fail to block card'
+                        })
+                    }
+                })
                 break;
             case "Unblock Card":
-                axios.get('/api/cards/unblockCard/' + this.state.cardNumber).then(res => {
-                        console.log("Card unblocked")
-                    })
+                axios.get('/api/cards/unblockCard/' + this.state.cardNumber).then((res, err) => {
+                    if (err) {
+                        console(err)
+                        this.setState({
+                            message: err
+                        })
+                    } if (res) {
+                        console.log('Success')
+                        this.setState({
+                            message: 'Card is unblocked'
+                        })
+                    } else {
+                        console.log('Fail')
+                        this.setState({
+                            message: 'Fail to unblock card'
+                        })
+                    }
+                })
                 break;
             case "Delete Card":
                     // TODO: The api doesnt support cardNumber.. ffs dalley
-                axios.get('/api/cards/deleteCard/' + this.state.cardNumber).then(res => {
-                        console.log("Card deleted")
-                    })
+                axios.get('/api/cards/deleteCard/' + this.state.cardNumber).then((res, err) => {
+                    if (err) {
+                        console(err)
+                        this.setState({
+                            message: err
+                        })
+                    } if (res) {
+                        console.log('Card is deleted')
+                        this.setState({
+                            message: 'Card is deleted'
+                        })
+                    } else {
+                        console.log('Fail')
+                        this.setState({
+                            message: 'Fail to delete card'
+                        })
+                    }
+                })
                     break;
             default:
                 console.log("Unknown action")
@@ -120,6 +184,10 @@ class CardManagement extends Component {
         return (
             
             <div style={{marginRight: 50}}>
+            <FlashMassage duration={10000} persistOnHover={true} >
+                <div class="alert alert-success" role="alert">{this.state.message}</div>
+                </FlashMassage>
+
             <center><div><h1>Card Management</h1></div></center>
             <p>Amount of Cards: {this.state.cards.length}</p>
             <BootstrapTable keyField='_id' data={ this.state.cards } columns={ this.columns } pagination={ paginationFactory() }/>

@@ -89,23 +89,21 @@ router.get('/findCardByNumber/:cardNumber',(req,res,next) => {
 
 router.get('/blockCard/:cardNumber', (req,res,next) => {
     const cardNumber = req.params.cardNumber;
-    Card.findOneAndUpdate({"cardNumber": cardNumber}, {$addToSet:{isActive: false}}, (err,result) => {
+    Card.findOneAndUpdate({"cardNumber": cardNumber}, {$set: {isActive: false}},{$upsert:false}, (err,result) => {
         if(err) {
             res.status(500).json(err)
-        } 
+        }
         else {
-            res.status(200).json("Card Number " + cardNumber + " has been blocked")
+            res.status(404).json('No card found')
         }
     })
 })
 
 router.get('/unblockCard/:cardNumber', (req,res,next) => {
     const cardNumber = req.params.cardNumber;
-    Card.findOneAndUpdate({"cardNumber": cardNumber}, {$addToSet:{isActive: true}}, {upsert:true}, (err,result) => {
+    Card.findOneAndUpdate({"cardNumber": cardNumber}, {$set:{isActive: true}},{$upsert:false}, (err,result) => {
         if(err) {
             res.status(500).json('Error Found')
-        } if(result) {
-            res.status(200).json("Card Number " + cardNumber + " is now active")
         }
         else {
             res.status(404).json('No card Found')
