@@ -16,27 +16,26 @@ const room5 = require("../resources/images/rooms/room5.jpg")
 const axios = require('axios');
 
 const customStyles = {
-    content : {
-      top                   : '50%',
-      left                  : '50%',
-      right                 : 'auto',
-      bottom                : 'auto',
-      marginRight           : '-50%',
-      transform             : 'translate(-50%, -50%)'
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)'
     }
-  };
+};
 
 Modal.setAppElement('body')
 class AccessManager extends Component {
-    constructor(props)
-    {
+    constructor(props) {
         super(props)
         this.state = {
-                        allowedCards: [],
-                        modalIsOpen: false,
-                        cardNumber: '',
-                        modalAction: ''
-                    }
+            allowedCards: [],
+            modalIsOpen: false,
+            cardNumber: '',
+            modalAction: ''
+        }
         this.columns = [
             {
                 dataField: 'cardNumber',
@@ -58,12 +57,10 @@ class AccessManager extends Component {
         this.setCardNumberState = this.setCardNumberState.bind(this)
         this.performCardAction = this.performCardAction.bind(this)
     }
-    closeModal()
-    {
-        this.setState({modalIsOpen: false})
+    closeModal() {
+        this.setState({ modalIsOpen: false })
     }
-    openModal(action)
-    {
+    openModal(action) {
         this.setState({
             modalIsOpen: true,
             modalAction: action
@@ -72,82 +69,76 @@ class AccessManager extends Component {
     }
 
     performCardAction() {
-        switch (this.state.cardAction)
-        {
+        switch (this.state.cardAction) {
             case "Add Card":
                 // TODO: Add card to AccessManager
                 break;
             case "Remove Card":
                 // TODO: Remove card from AccessManager
                 break;
-            
+
             default:
                 console.log("Unknown action")
                 break;
         }
         this.closeModal()
         setTimeout(this.updateTableData.bind(this), 1000);
-        
+
     }
-    componentDidMount()
-    {
+    componentDidMount() {
         this.updateTableData()
     }
-    updateTableData()
-    {
-        
-        axios.get('/api/accessManager/findAccessManagerByRoomName/' + this.props.match.params.room)
-        .then(resp => 
-            {
-                console.log(resp)
-                this.setState({
-                allowedCards: resp.data.accessManagerId.allowedCards
-                })
+    updateTableData() {
 
+        axios.get('/api/accessManager/findAccessManagerByRoomName/' + this.props.match.params.room)
+            .then((resp) => {
+                if (resp.data.accessManagerId != undefined)
+                    this.setState({
+                        allowedCards: resp.data.accessManagerId.allowedCards
+                    })
             })
     }
-    setCardNumberState(val)
-    {
-        this.setState({cardNumber: val.target.value})
+    setCardNumberState(val) {
+        this.setState({ cardNumber: val.target.value })
     }
     render() {
         return (
             <div>
                 <center><div><h1>Room Management for {this.props.match.params.room}</h1></div></center>
-                <div style={{marginRight: 50}}>
+                <div style={{ marginRight: 50 }}>
 
-                <BootstrapTable keyField='_id' data={ this.state.allowedCards} columns={ this.columns } pagination={ paginationFactory() }/>
+                    <BootstrapTable keyField='_id' data={this.state.allowedCards} columns={this.columns} pagination={paginationFactory()} />
                 </div>
-                <div style={{display: "flex", justifyContent:"space-around", flexWrap: "wrap"}}>
+                <div style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap" }}>
                     <Button onClick={this.openModal.bind(this, 'Add Card')} bsStyle="primary">Add Card</Button>
                     <Button onClick={this.openModal.bind(this, 'Remove Card')} bsStyle="danger">Remove Card</Button>
                 </div>
-                
+
                 <Modal
                     isOpen={this.state.modalIsOpen}
                     contentLabel="Example"
                     style={customStyles}
                     onRequestClose={this.closeModal}
-                    shouldCloseOnOverlayClick={true} 
-                    >
+                    shouldCloseOnOverlayClick={true}
+                >
                     <p>Perform Action</p>
                     <Form>
-                    <div> 
-                                <FormControl
+                        <div>
+                            <FormControl
                                 type="text"
                                 placeholder="Card Number"
                                 value={this.state.cardNumber}
                                 onChange={this.setCardNumberState}
-                                
-                                />
-                            <center style={{marginTop:10}}>
+
+                            />
+                            <center style={{ marginTop: 10 }}>
                                 <Button onClick={this.performCardAction} bsStyle="primary">{this.state.modalAction}</Button>
                             </center>
-                            </div>
+                        </div>
                     </Form>
-                    </Modal>
+                </Modal>
             </div>
-            )
+        )
     }
 }
 
