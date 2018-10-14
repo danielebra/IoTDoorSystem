@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
     const newAccessManager = new AccessManager({
         _id: new mongoose.Types.ObjectId(),
         allowedCards: req.body.cardId,
-        roomNumber: req.body.roomNumber
+        roomName: req.body.roomName
     });
     newAccessManager.save().then(accessManager => res.json(accessManager));
 });
@@ -36,8 +36,6 @@ router.post('/', (req, res) => {
 router.post('/addAllowCard/:accessManagerId/:cardNumber', (req, res) => {
     const accessManagerId = req.params.accessManagerId;
     const cardNumber = req.params.cardNumber;
-
-    const cardId = req.params.cardId;
 
     AccessManager.findById(accessManagerId, (err, accessManager) => {
         if (err) {
@@ -72,6 +70,43 @@ router.post('/addAllowCard/:accessManagerId/:cardNumber', (req, res) => {
 
 })
 
+router.post('/deleteAccessManagerCard/:accessManagerId/:cardNumber',(req,res)=> {
+    const accessManagerId = req.params.accessManagerId;
+    const cardNumber = req.params.cardNumber
+
+    AccessManager.findById(accessManagerId, (err, accessManager) => {
+        if (err) {
+            res.json('An Error Occured')
+        }
+        if (accessManager) {
+            Card.findOne({ "cardNumber": cardNumber }, (err, card) => {
+                if (err) {
+                    res.status(500).json(err)
+                } if (card) {
+                    accessManager.update({ $pull: { "allowedCards": card._id } }, (err, result) => {
+                        console.log(accessManagerId)
+                        if (err) {
+                            console.log('err')
+                            res.json(err)
+                        } else if (result) {
+                            console.log(result)
+                            res.json(result)
+                        } else {
+                            res.json('not found')
+                        }
+                    })
+                } else {
+                    res.json("not found")
+                }
+            })
+        }
+        else {
+            res.json('No Access Manager Found')
+        }
+    })
+
+})
+
 router.get('/findAccessManagerByRoomName/:roomName', (req, res, next) => {
     const roomName = req.params.roomName;
 
@@ -82,11 +117,6 @@ router.get('/findAccessManagerByRoomName/:roomName', (req, res, next) => {
             console.log(err)
         }
         if(result) {
-        //     result.accessManagerId.populate("cardId").exec((err, result) =>
-        // {
-        //     console.log(result)
-        //     res.json(result)
-        // })
             res.json(result)
         } 
         
@@ -96,12 +126,11 @@ router.get('/findAccessManagerByRoomName/:roomName', (req, res, next) => {
     })
 })
 
-router.post('/addAvailableRoom/:accessMangerId', (req, res) => {
+router.post('/addAvailableRoom/:accessMangerId/:roomName', (req, res) => {
     const accessManager = req.params.id;
-    const roomId = req.body.roomId;
+    const roomName = req.body.roomName;
 
-    AccessManager.findOneAndUpdate(accessManager, { $set: { roomId: roomId } },
-
+    AccessManager.findOneAndUpdate(accessManager, { $addToSet: { roomName: roomName } },
         function (err, doc) {
             if (err) {
                 res.status(500).json({ message: 'Fail to update' })
