@@ -108,6 +108,10 @@ class RoomDashboard extends Component {
 
                 return {path: {stroke: "rgba(0, 200, 0, 150)" }}
             }
+            else if (item.value == this.state.metrics[2].value)
+            {
+                return {}
+            }
             else
             {
                 return {path: {stroke: "rgba(200, 0, 0, 150)" }}
