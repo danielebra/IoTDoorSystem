@@ -37,6 +37,7 @@ class CardManagement extends Component {
 
         this.performCardAction = this.performCardAction.bind(this)
         this.setCardNumberState = this.setCardNumberState.bind(this)
+        this.validateAndExecute = this.validateAndExecute.bind(this)
         this.openCardActionModal = this.openCardActionModal.bind(this)
         this.closeModal = this.closeModal.bind(this)
         this.columns = [
@@ -56,6 +57,20 @@ class CardManagement extends Component {
                 sort: true
             }
         ];
+    }
+    validateAndExecute = (validateArray, executionFunction) => {
+        let invalidFields = []
+        validateArray.forEach((item) => {
+            if (this.state[item] === "") {
+                invalidFields.push(item)
+            }
+        })
+        if (invalidFields.length > 1) {
+            this.setState({modalIsOpen:false})
+            this.showAlert("The Fields " + invalidFields.toString() + " is required",false)
+        } else {
+            executionFunction()
+        }
     }
     closeModal()
     {
@@ -213,7 +228,7 @@ class CardManagement extends Component {
                             onChange={this.setCardNumberState}
                             />
                         <center style={{marginTop:10}}>
-                            <Button onClick={this.performCardAction} bsStyle="primary">{this.state.cardAction}</Button>
+                            <Button onClick={()=>this.validateAndExecute(['cardNumber'],this.performCardAction)} bsStyle="primary">{this.state.cardAction}</Button>
                         </center>
                         </div>
                 </Form>

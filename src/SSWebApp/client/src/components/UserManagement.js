@@ -7,7 +7,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import Modal from 'react-modal';
 import FlashMassage from 'react-flash-message'
 
-import { Button, Alert } from 'react-bootstrap';
+import { Button} from 'react-bootstrap';
 
 const axios = require('axios');
 
@@ -49,6 +49,7 @@ class UserManagement extends Component {
 
         this.setCardNumberState = this.setCardNumberState.bind(this)
         this.setUserNumberState = this.setUserNumberState.bind(this)
+        this.validateAndExecute = this.validateAndExecute.bind(this)
 
         this.openCardActionModal = this.openCardActionModal.bind(this)
         this.closeModal = this.closeModal.bind(this)
@@ -61,8 +62,7 @@ class UserManagement extends Component {
             { dataField: 'cardId.cardNumber', text: 'Card Number', sort: true }
         ]
     }
-    showAlert(msg, isSuccess)
-    {
+    showAlert(msg, isSuccess) {
         this.setState({
             alertIsOpen: true,
             message: msg,
@@ -71,23 +71,22 @@ class UserManagement extends Component {
         setTimeout(this.closeAlert.bind(this), 2000);
 
     }
-
-    validateAddUserField = (event) => {
-        let error = []
-        event.preventDefault();
-        
-        if(typeof(this.state.userNumber) === 'undefined'){
-            this.showError('User Number is undefined')
-        }
-        else if (this.state.userNumber === '') {
-            this.showError('User Number is empty')
-        } else if(this.state.userNumber === null){
-            this.showError('User Number is empty')
+    validateAndExecute = (validateArray, executionFunction) => {
+        let invalidFields = []
+        validateArray.forEach((item) => {
+            if (this.state[item] == "") {
+                invalidFields.push(item)
+            }
+        })
+        if (invalidFields.length > 1) {
+            this.setState({modalIsOpen:false})
+            this.showAlert("The Fields " + invalidFields.toString() + " is required",false)
+        } else {
+            executionFunction()
         }
     }
 
-    closeAlert()
-    {
+    closeAlert() {
         this.setState({
             alertIsOpen: false
         })
@@ -126,13 +125,11 @@ class UserManagement extends Component {
                             console(err)
                             this.showAlert(err)
                         } if (res) {
-                            if (res.data.success == undefined)
-                            {
+                            if (res.data.success === undefined) {
                                 console.log('New Card is Added')
                                 this.showAlert("New Card Added", true)
                             }
-                            else
-                            {
+                            else {
                                 this.showAlert("Card Not Added", false)
                             }
                         } else {
@@ -151,12 +148,10 @@ class UserManagement extends Component {
                         console(err)
                     } if (res) {
                         console.log(res)
-                        if (res.data.success === false || res.data === "No User Number Found")
-                        {
+                        if (res.data.success === false || res.data === "No User Number Found") {
                             this.showAlert("Failed to assign card to user", false)
                         }
-                        else
-                        {
+                        else {
                             this.showAlert("Assigned card to user", true)
                         }
                         console.log('Card is assigned to user')
@@ -220,9 +215,9 @@ class UserManagement extends Component {
         return (
             <div style={{ marginRight: 50 }}>
                 {this.state.alertIsOpen &&
-                <FlashMassage persistOnHover={true} >
-                <div class={this.state.alertStyle} role="alert">{this.state.message}</div>
-                </FlashMassage>}
+                    <FlashMassage persistOnHover={true} >
+                        <div class={this.state.alertStyle} role="alert">{this.state.message}</div>
+                    </FlashMassage>}
 
                 <center><div><h1>User Management</h1></div></center>
                 <p>Amount of Users: {this.state.users.length}</p>
@@ -241,7 +236,7 @@ class UserManagement extends Component {
                     shouldCloseOnOverlayClick={true}>
 
                     <p>Add user</p>
-                    <Form onSubmit={this.validateAddUserField}>
+                    <Form>
                         <div class="form-group">
                             <label for="exampleFormControlInput1">User Number</label>
                             <FormControl
@@ -290,7 +285,7 @@ class UserManagement extends Component {
 
                         <div>
                             <center style={{ marginTop: 10 }}>
-                                <Button onClick={this.performCardAction} bsStyle="primary">{this.state.cardAction}</Button>
+                                <Button onClick={()=>this.validateAndExecute(['userNumber','firstName','lastName','emailAddress', 'phoneNumber'],this.performCardAction)} bsStyle="primary">{this.state.cardAction}</Button>
                             </center>
                         </div>
                     </Form>
@@ -313,7 +308,7 @@ class UserManagement extends Component {
                                 placeholder="User Number"
                                 value={this.state.userNumber}
                                 onChange={this.setUserNumberState}
-                                />
+                            />
                         </div>
 
                         <div class="form-group">
@@ -327,17 +322,17 @@ class UserManagement extends Component {
 
                         <div>
                             <center style={{ marginTop: 10 }}>
-                                <Button onClick={this.performCardAction} bsStyle="primary">{this.state.cardAction}</Button>
+                                <Button onClick={()=>this.validateAndExecute(['userNumber, cardNumber'],this.performCardAction)} bsStyle="primary">{this.state.cardAction}</Button>
                             </center>
                         </div>
                     </Form>
 
                 </Modal>
-            <Modal
-                isOpen={this.state.modalIsOpen && this.state.cardAction === "Delete User"}
-                style={customStyles}
-                onRequestClose={this.closeModal}
-                shouldCloseOnOverlayClick={true}
+                <Modal
+                    isOpen={this.state.modalIsOpen && this.state.cardAction === "Delete User"}
+                    style={customStyles}
+                    onRequestClose={this.closeModal}
+                    shouldCloseOnOverlayClick={true}
                 >
                     <Form>
                         <p>Delete User</p>
@@ -352,7 +347,7 @@ class UserManagement extends Component {
 
                         <div>
                             <center style={{ marginTop: 10 }}>
-                                <Button onClick={this.performCardAction} bsStyle="danger">{this.state.cardAction}</Button>
+                                <Button onClick={()=>this.validateAndExecute(['userNumber'],this.performCardAction)} bsStyle="danger">{this.state.cardAction}</Button>
                             </center>
                         </div>
                     </Form>
