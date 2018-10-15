@@ -46,8 +46,6 @@ router.post('/create/:cardNumber', (req,res) => {
     }
 });
 
-// TODO: Use Card.findOne() and populate the data
-//
 router.get('/', (req,res) => {
     Card.find("")
     exec(function (err, cards) {
@@ -115,7 +113,6 @@ router.get('/unblockCard/:cardNumber', (req,res,next) => {
     })
 })
 
-//TODO: show card infomation
 router.get('/cardNumber/:cardNumber', (req,res,next) => {
     const cardNumber = req.param.cardNumber;
     Card.getCardByNumber(cardNumber, (err) => {
@@ -153,7 +150,5 @@ router.get('/deleteCard/:cardNumber',(req,res,next) => {
             res.status(500).json({error:err})
         });
 })
-//TODO: Use router.patch
-//When we wanted to change the card status to false
 
 module.exports = router;

@@ -46,12 +46,8 @@ class Users extends Component {
     
 
     render() {
-        //TODO: Get this .map thing working, then the json data could be shown in a table foraat
-
-        // const data = this.state.userList.Data;
 
         return (
-            // <div>asdfasdfd</div>
             <BootstrapTable keyField='_id' data={ this.state.data } columns={ this.columns } pagination={ paginationFactory() }/>
         )
     }
