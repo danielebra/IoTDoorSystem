@@ -74,7 +74,6 @@ void loop(void) {
 
 int sendRequest(String msg)
 {
-  // TODO: test that this returns a value appropriately
   if (client.connect(server, 5000))
   {
     Serial.println("Connected to server");

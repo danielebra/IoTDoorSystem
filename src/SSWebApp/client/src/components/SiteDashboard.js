@@ -7,8 +7,6 @@ class SiteDashboard extends Component {
     }
     componentDidMount()
     {
-        // TODO:
-        // Populate card information from database
 
         this.setState({
             locations: cards

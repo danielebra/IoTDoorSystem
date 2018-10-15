@@ -31,7 +31,9 @@ class CardManagement extends Component {
                         modalIsOpen: false,
                         cardNumber: '',
                         cardAction: '',
-                        message: ''
+                        message: '',
+                        alertIsOpen: false,
+                        alertStyle: 'alert alert-success'
 
                     }
 
@@ -72,6 +74,22 @@ class CardManagement extends Component {
             executionFunction()
         }
     }
+    showAlert(msg, isSuccess)
+    {
+        this.setState({
+            alertIsOpen: true,
+            message: msg,
+            alertStyle: isSuccess ? 'alert alert-success' : 'alert alert-warning'
+        })
+        setTimeout(this.closeAlert.bind(this), 5000);
+
+    }
+    closeAlert()
+    {
+        this.setState({
+            alertIsOpen: false
+        })
+    }
     closeModal()
     {
         this.setState({modalIsOpen:false})
@@ -110,77 +128,64 @@ class CardManagement extends Component {
                             message: err
                         })
                     } if (res) {
-                        console.log('Success')
-                        this.setState({
-                            message: 'New Card is Added'
-                        })
+                        this.showAlert("Card successfully added", true)
                     } else {
                         console.log('Fail')
-                        this.setState({
-                            message: 'Fail to add new card'
-                        })
+                        this.showAlert("Failed to add card", false)
                     }
+                }).catch((err) => {
+                    this.showAlert("Failed to add card", false)
                 })
                 break;
             case "Block Card":
                 axios.get('/api/cards/blockCard/' + this.state.cardNumber).then((res, err) => {
                     if (err) {
                         console(err)
-                        this.setState({
-                            message: err
-                        })
+                        this.showAlert(err, false)
                     } if (res) {
+                        console.log(res)
                         console.log('Success')
-                        this.setState({
-                            message: 'Card is blocked'
-                        })
+                        this.showAlert(res.data, true)
                     } else {
                         console.log('Fail')
-                        this.setState({
-                            message: 'Fail to block card'
-                        })
+                        this.showAlert("Failed to block card")
                     }
+                }).catch((err) => {
+                    this.showAlert("Failed to block card", false)
                 })
                 break;
             case "Unblock Card":
                 axios.get('/api/cards/unblockCard/' + this.state.cardNumber).then((res, err) => {
                     if (err) {
                         console(err)
-                        this.setState({
-                            message: err
-                        })
+                        this.showAlert(err, false)
                     } if (res) {
+                        this.showAlert(res.data, true)
                         console.log('Success')
-                        this.setState({
-                            message: 'Card is unblocked'
-                        })
                     } else {
                         console.log('Fail')
-                        this.setState({
-                            message: 'Fail to unblock card'
-                        })
+                        this.showAlert("Failed to unblock card", false)
                     }
+                }).catch((err) =>
+                {
+                    this.showAlert("Failed to unblock card. Does the card exist?")
                 })
                 break;
             case "Delete Card":
-                    // TODO: The api doesnt support cardNumber.. ffs dalley
                 axios.get('/api/cards/deleteCard/' + this.state.cardNumber).then((res, err) => {
                     if (err) {
                         console(err)
-                        this.setState({
-                            message: err
-                        })
+                        this.showAlert(err, false)
                     } if (res) {
-                        console.log('Card is deleted')
-                        this.setState({
-                            message: 'Card is deleted'
-                        })
+                        console.log(res)
+                        this.showAlert(res.data.message, true)
                     } else {
                         console.log('Fail')
-                        this.setState({
-                            message: 'Fail to delete card'
-                        })
+                        this.showAlert("Failed to delete card", false)
                     }
+                }).catch((err) =>
+                {
+                    this.showAlert("Failed to delete card. Does the card exist?")
                 })
                     break;
             default:
@@ -199,9 +204,10 @@ class CardManagement extends Component {
         return (
             
             <div style={{marginRight: 50}}>
-            <FlashMassage duration={10000} persistOnHover={true} >
-                <div class="alert alert-success" role="alert">{this.state.message}</div>
-                </FlashMassage>
+            {this.state.alertIsOpen &&
+            <FlashMassage persistOnHover={true} >
+                <div class={this.state.alertStyle} role="alert">{this.state.message}</div>
+                </FlashMassage>}
 
             <center><div><h1>Card Management</h1></div></center>
             <p>Amount of Cards: {this.state.cards.length}</p>

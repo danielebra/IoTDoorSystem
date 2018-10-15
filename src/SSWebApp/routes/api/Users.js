@@ -45,8 +45,6 @@ router.post('/addUser/', (req,res) => {
 }
 });
 
-//TODO: Fix CastError when trying to find wrong object Id
-
 //Get each user by Id
 router.get('/:userId',(req,res,next) => {
     const id = req.params.userId;

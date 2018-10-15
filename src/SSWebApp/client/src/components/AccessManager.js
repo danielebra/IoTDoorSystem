@@ -3,7 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import Modal from 'react-modal';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import Button from 'react-bootstrap/lib/Button';
-
+import FlashMassage from 'react-flash-message'
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
 const axios = require('axios');
@@ -29,6 +29,8 @@ class AccessManager extends Component {
             cardNumber: '',
             modalAction: '',
             accessManager:'',
+            alertIsOpen: false,
+            alertStyle: 'alert alert-success'
         }
         this.columns = [
             {
@@ -51,6 +53,22 @@ class AccessManager extends Component {
         this.setCardNumberState = this.setCardNumberState.bind(this)
         this.performCardAction = this.performCardAction.bind(this)
     }
+    showAlert(msg, isSuccess)
+    {
+        this.setState({
+            alertIsOpen: true,
+            message: msg,
+            alertStyle: isSuccess ? 'alert alert-success' : 'alert alert-warning'
+        })
+        setTimeout(this.closeAlert.bind(this), 2000);
+
+    }
+    closeAlert()
+    {
+        this.setState({
+            alertIsOpen: false
+        })
+    }
     closeModal() {
         this.setState({ modalIsOpen: false })
     }
@@ -67,7 +85,17 @@ class AccessManager extends Component {
             case "Add Card":
                 axios.post('/api/accessManager/addAllowCard/' + this.state.accessManager._id + '/' + this.state.cardNumber)
                     .then(res => {
-                        console.log('card Added')
+                        console.log(res)
+                        if (res.data == "Card not found")
+                        {
+                            this.showAlert(res.data, false)
+                        }
+                        else
+                        {
+                            this.showAlert("Card added", true)
+                        }
+                    }).catch((err) => {
+                        this.showAlert("Failed to add a new card", false)
                     })
                 break;
             case "Remove Card":
@@ -109,6 +137,10 @@ class AccessManager extends Component {
     render() {
         return (
             <div>
+                {this.state.alertIsOpen &&
+                <FlashMassage persistOnHover={true} >
+                <div class={this.state.alertStyle} role="alert">{this.state.message}</div>
+                </FlashMassage>}
                 <center><div><h1>Room Management for {this.props.match.params.room}</h1></div></center>
                 <div style={{ marginRight: 50 }}>
 

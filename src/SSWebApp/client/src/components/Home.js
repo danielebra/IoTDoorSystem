@@ -7,6 +7,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import FlashMassage from 'react-flash-message'
 
 const axios = require('axios')
 const customStyles = {
@@ -44,7 +45,10 @@ export default class Home extends Component {
             queryCard: '',
             queryRoom:'',
             queryOutcome:'',
-            entries: []
+            entries: [],
+            message: '',
+            alertIsOpen: false,
+            alertStyle: 'alert alert-success'
         }
         this.openFilterModal = this.openFilterModal.bind(this)
         this.closeModal = this.closeModal.bind(this)
@@ -100,6 +104,7 @@ export default class Home extends Component {
     performFilter() {
         this.updateTableData(this.queryBuilder())
         this.closeModal()
+        this.showAlert("Filtering results", true)
         //setTimeout(this.updateTableData('').bind(this), 1000);    
     }
     queryBuilder(){
@@ -119,6 +124,22 @@ export default class Home extends Component {
             query="?"+query
         }
         return query
+    }
+    showAlert(msg, isSuccess)
+    {
+        this.setState({
+            alertIsOpen: true,
+            message: msg,
+            alertStyle: isSuccess ? 'alert alert-success' : 'alert alert-warning'
+        })
+        setTimeout(this.closeAlert.bind(this), 5000);
+
+    }
+    closeAlert()
+    {
+        this.setState({
+            alertIsOpen: false
+        })
     }
     closeModal() {
         this.setState({ modalIsOpen: false })
@@ -151,6 +172,11 @@ export default class Home extends Component {
     render() {
         return (
             <div>
+                {this.state.alertIsOpen &&
+                <FlashMassage persistOnHover={true} >
+                <div class={this.state.alertStyle} role="alert">{this.state.message}</div>
+                </FlashMassage>}
+                <center><div><h1>Entries Dashboard</h1></div></center>
                 <p>Amount of Entries: {this.state.entries.length}</p>
                 <Button onClick={this.openFilterModal.bind(this, 'Filter')} bsStyle="primary">Filter</Button>
                 <div style={{ marginRight: 50 }}>
@@ -165,23 +191,24 @@ export default class Home extends Component {
                         onRequestClose={this.closeModal}
                         shouldCloseOnOverlayClick={true}
                     >
-                        <p>Filter</p>
+                        <p>Populate fields to filter results</p>
                         <Form>
                             <div>
+                                <p>Card Number</p>
                                 <FormControl
                                     type="text"
                                     placeholder="Card Number"
                                     value={this.state.queryCard}
                                     onChange={this.setQueryCard}
                                 />
-                                
+                                <p>Room Name</p>
                                 <FormControl
                                     type="text"
                                     placeholder="Room Name"
                                     value={this.state.queryRoom}
                                     onChange={this.setQueryRoom}
                                 />
-                                
+                                <p>Outcome</p>
                                 <FormControl
                                     type="text"
                                     placeholder="Outcome"

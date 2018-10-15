@@ -40,10 +40,6 @@ class SiteRooms extends Component {
     }
     componentDidMount()
     {
-        // TODO:
-        // Populate room information from database
-        // this.props.match.params.location
-
         this.setState({
             rooms: existingRooms
         })
