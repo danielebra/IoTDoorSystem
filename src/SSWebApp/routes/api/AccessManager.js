@@ -55,11 +55,11 @@ router.post('/addAllowCard/:accessManagerId/:cardNumber', (req, res) => {
                             console.log(result)
                             res.json(result)
                         } else {
-                            res.json('not found')
+                            res.json('Card not found')
                         }
                     })
                 } else {
-                    res.json("not found")
+                    res.json("Card not found")
                 }
             })
         }
@@ -92,11 +92,11 @@ router.post('/deleteAccessManagerCard/:accessManagerId/:cardNumber',(req,res)=> 
                             console.log(result)
                             res.json(result)
                         } else {
-                            res.json('not found')
+                            res.json('Card not found')
                         }
                     })
                 } else {
-                    res.json("not found")
+                    res.json("Card not found")
                 }
             })
         }
