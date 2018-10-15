@@ -67,7 +67,7 @@ class CardManagement extends Component {
                 invalidFields.push(item)
             }
         })
-        if (invalidFields.length > 1) {
+        if (invalidFields.length > 0) {
             this.setState({modalIsOpen:false})
             this.showAlert("The Fields " + invalidFields.toString() + " is required",false)
         } else {
