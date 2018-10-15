@@ -74,12 +74,11 @@ void loop(void) {
 
 int sendRequest(String msg)
 {
-  if (client.connect(server, 5000))
+  if (client.connect(server, port))
   {
     Serial.println("Connected to server");
     client.print("GET ");
     client.print(api_path);
-    client.print("/CB06.01.01/");
     client.print(msg);
     client.print(" HTTP/1.0\n\n");
     String response = String("");
