@@ -74,7 +74,7 @@ class UserManagement extends Component {
     validateAndExecute = (validateArray, executionFunction) => {
         let invalidFields = []
         validateArray.forEach((item) => {
-            if (this.state[item] == "") {
+            if (this.state[item] == "" || this.state[item] == undefined) {
                 invalidFields.push(item)
             }
         })
@@ -322,7 +322,7 @@ class UserManagement extends Component {
 
                         <div>
                             <center style={{ marginTop: 10 }}>
-                                <Button onClick={()=>this.validateAndExecute(['userNumber, cardNumber'],this.performCardAction)} bsStyle="primary">{this.state.cardAction}</Button>
+                                <Button onClick={()=>this.validateAndExecute(['userNumber', 'cardNumber'],this.performCardAction)} bsStyle="primary">{this.state.cardAction}</Button>
                             </center>
                         </div>
                     </Form>
@@ -347,7 +347,7 @@ class UserManagement extends Component {
 
                         <div>
                             <center style={{ marginTop: 10 }}>
-                                <Button onClick={()=>this.validateAndExecute(['userNumber'],this.performCardAction)} bsStyle="danger">{this.state.cardAction}</Button>
+                                <Button onClick={()=>this.validateAndExecute(['userNumber',],this.performCardAction)} bsStyle="danger">{this.state.cardAction}</Button>
                             </center>
                         </div>
                     </Form>
