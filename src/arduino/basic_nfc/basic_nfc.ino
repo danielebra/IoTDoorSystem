@@ -79,6 +79,8 @@ int sendRequest(String msg)
     Serial.println("Connected to server");
     client.print("GET ");
     client.print(api_path);
+    client.print(room_name);
+    client.print("/");
     client.print(msg);
     client.print(" HTTP/1.0\n\n");
     String response = String("");
