@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const path = require('path');
 
 const authorizeDoor = require('./routes/api/AuthorizeDoor');
 const users = require('./routes/api/Users');
@@ -36,8 +37,16 @@ app.use('/api/accessManager', accessManager);
 app.use('/api/rooms', rooms);
 app.use('/api/get/accessRequests', accessRequest); // This URL may change in the future
 app.use('/api/filter/', filterRequest);
-app.use(express.static(__dirname));
 
-var server = app.listen(5000, () => {
+//front end
+//app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'client','build')));
+
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client','build', 'index.html'));
+  });
+
+
+var server = app.listen(process.env.PORT || 5000, () => {
     console.log('server is listening on port', server.address().port)
 })

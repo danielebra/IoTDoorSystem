@@ -4,11 +4,17 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "start":"node server.js",
     "client-install": "npm install --prefix client",
     "test": "jest",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+  },
+  "engines": {
+    "node": "10.9.0",
+    "npm": "6.2.0"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +29,7 @@
     "mongoose": "^5.2.10",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.4",
+    "path": "^0.12.7",
     "react": "^16.5.2",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.5.2",
